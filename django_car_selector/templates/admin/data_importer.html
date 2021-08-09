@@ -1,0 +1,129 @@
+{% extends "admin/base.html" %}
+{% load i18n admin_urls static admin_modify %}
+{% block title %}Import | Auto configurator{% endblock %}
+{% block extrahead %}{{ block.super }}
+    <script type="text/javascript" src="{% url 'admin:jsi18n' %}"></script>
+    {{ media }}
+{% endblock %}
+{% block extrastyle %}{{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">{% endblock %}
+
+{% block coltype %}colM{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-form{% endblock %}
+
+{% if not is_popup %}
+    {% block breadcrumbs %}
+        <div class="breadcrumbs">
+            <a href="{% url 'admin:index' %}">{% trans 'Home' %}</a>
+            &rsaquo;Import
+        </div>
+    {% endblock %}
+{% endif %}
+{% block content %}
+
+    <style>
+        #bar {
+            height: 30px;
+            width: 100%;
+            position: relative;
+            background: #555;
+            box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+        }
+    </style>
+    <div id="content-main">
+        <h1>Select XLSX file with cars</h1>
+        <form method="post" onsubmit="return false" id="add_cars" enctype="multipart/form-data" style="margin-bottom: 25px">
+            {% csrf_token %}
+            <input class="upload_file_input" type="file" name="data_file">
+            <input type="hidden" name="type" value="cars">
+            <button class="button" onclick="upload_file('add_cars')" type="submit">Upload</button>
+        </form>
+        <hr>
+
+        <h1 style="margin-top: 25px">Select XLSX file with parameters</h1>
+        <form method="post" onsubmit="return false" id="add_parameters" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input class="upload_file_input" type="file" name="data_file">
+            <input type="hidden" name="type" value="parameters">
+            <button class="button" onclick="upload_file('add_parameters')" type="submit">Upload</button>
+        </form>
+        <h3 id="info-text" style="margin-top: 30px">State</h3>
+        <progress id="bar" value="0" max="100"></progress>
+
+    </div>
+    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script>
+        setInterval(function () {
+            check_status();
+        }, 1000);
+
+        function check_status() {
+            $.ajax({
+                url: '{% url 'ajax-check-status' %}',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 1) {
+                        enable_form();
+                    } else if (data.status == 2) {
+                        disbale_form();
+                    }
+                    $('#info-text').html(data.message);
+                    $('#bar').attr('value', data.current_item);
+                    $('#bar').attr('max', data.all_items);
+                }
+            });
+        }
+
+
+        function enable_form() {
+            $('.button').prop("disabled", false);
+        }
+
+        function disbale_form() {
+            if ($('.upload_file_input').get(0).files.length === 0) {
+                $('#info-text').html('Please choose a valid file and try again.')
+            } else {
+                $('.button').prop("disabled", true);
+            }
+        }
+
+        $('#upload_input').on("change", function () {
+            var fileInput = this
+            var filePath = fileInput.value;
+            var allowedExtensions =
+                /(\.xlsx)$/i;
+            if (!allowedExtensions.exec(filePath)) {
+                $('#info-text').html('Please choose a valid file and try again.')
+                fileInput.value = '';
+                return false;
+            } else {
+                $('#info-text').html('State')
+            }
+        });
+
+        function upload_file(form_name) {
+            var bar = $('#bar');
+            disbale_form();
+            jQuery.ajax({
+                type: 'POST',
+                url: '{% url 'import-cars-data' %}',
+                data: new FormData($(`#${form_name}`)[0]),
+                processData: false,
+                contentType: false,
+                success: function (returnval) {
+                },
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = (evt.loaded / evt.total) * 100;
+                            bar.val(percentComplete);
+                        }
+                    }, false);
+                    return xhr;
+                },
+            });
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,29 @@
+version: "3.3"
+
+services:
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "${REDIS_PORT}:6379"
+  web-backend:
+    build: ./django_car_selector
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000 &&
+             celery -A CarSelector worker --loglevel=INFO"
+
+    volumes:
+      - .:/code
+    ports:
+      - "${BACKEND_PORT}:8000"
+    depends_on:
+      - redis
+  web-fontend:
+    build:
+      context: ./vue_car_selector
+      args:
+        - VUE_APP_BACKEND_URL=http://${HOST}:${BACKEND_PORT}
+    volumes:
+      - .:/code
+    ports:
+      - "${FRONTEND_PORT}:8080"
