@@ -41,7 +41,7 @@ export default {
   },
   data: function () {
     return {
-      question_number: 17,
+      question_number: 1,
     };
   },
   methods:{

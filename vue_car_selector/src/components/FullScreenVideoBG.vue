@@ -26,7 +26,7 @@ export default {
 }
 .brand img{
   height: auto;
-  width: 100%;
+  width: 75%;
 }
 .fullscreen_bg {
   position: fixed;

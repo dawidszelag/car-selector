@@ -55,7 +55,7 @@ export default {
 
 .img {
   height: auto;
-  width: 100%;
+  width: 75%;
   z-index: 1;
 }
 
@@ -64,7 +64,7 @@ export default {
   opacity: 0;
   position: absolute;
   top: 55%;
-  width: 30%;
+  width: 25%;
   z-index: 100;
   animation: show_up;
   animation-delay: 2s;
@@ -76,7 +76,8 @@ export default {
   position: absolute;
   left: 0;
   content: '';
-  width: 100vw;
+  width: 50vw;
+  left: 25vw;
   height: 25vh;
   background: #000;
   animation-name: loading-bg;
@@ -89,6 +90,7 @@ export default {
   left: 0;
   content: '';
   width: 0;
+  left: 25vw;
   height: 25vh;
   background: #000;
   animation-name: loading;
@@ -107,11 +109,11 @@ export default {
 
 @keyframes loading {
   from {
-    width: 25vw;
+    width: 10vw;
     background: #ff005a;
   }
   to {
-    width: 100vw;
+    width: 50vw;
     background: #ff005a;
   }
 }
@@ -136,11 +138,11 @@ export default {
 
 @media only screen and (max-width: 600px) {
   .loading_box--white {
-    height: 200px;
+    height: 150px;
   }
 
   .loading_box {
-    height: 200px;
+    height: 150px;
   }
 }
 </style>
