@@ -1,7 +1,19 @@
-# syntax=docker/dockerfile:1
-FROM python:3
-ENV PYTHONUNBUFFERED=1
-WORKDIR /app
-COPY req.txt /app/
+FROM python:3.9
+
+RUN pip install --upgrade pip
+
+# set work directory
+WORKDIR /usr/src/app
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# copy project
+COPY . /usr/src/app
+
+# install dependencies
+COPY req.txt ./
 RUN pip install -r req.txt
-COPY . .
+
+RUN python manage.py migrate

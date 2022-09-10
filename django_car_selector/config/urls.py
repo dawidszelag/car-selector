@@ -17,20 +17,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from core.api.views import CarListAPIView, CarModelAPIView, BrandCarAPIView, BudgetAPIView, BodyCarAPIView, \
-    CarAPIView
-from core.views import ajax_check_upload_data_status, import_data
+from apps.importer.views import ajax_check_upload_data_status, import_data
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/v1/car/<int:pk>', CarAPIView.as_view()),
-    path('api/v1/cars-list', CarListAPIView.as_view()),
-    path('api/v1/models', CarModelAPIView.as_view()),
-    path('api/v1/brand', BrandCarAPIView.as_view()),
-    path('api/v1/budget', BudgetAPIView.as_view()),
-    path('api/v1/body', BodyCarAPIView.as_view()),
+    # path('api/v1/car/<int:pk>', CarAPIView.as_view()),
+    # path('api/v1/cars-list', CarListAPIView.as_view()),
+    # path('api/v1/models', CarModelAPIView.as_view()),
+    # path('api/v1/brand', BrandCarAPIView.as_view()),
+    # path('api/v1/budget', BudgetAPIView.as_view()),
+    # path('api/v1/body', BodyCarAPIView.as_view()),
     path('admin/ajax/upload-data-status', ajax_check_upload_data_status, name='ajax-check-status'),
     path('admin/import-data', import_data, name='import-cars-data'),
+    path('admin/', admin.site.urls),
 ]
 
 if settings.DEBUG:

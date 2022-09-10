@@ -2,12 +2,10 @@ import os
 import re
 import traceback
 import pandas as pd
-from django.apps import apps
-from celery import shared_task
-from django.core.exceptions import ObjectDoesNotExist
 
-from CarSelector.celery import app
-from core.models import Car, CarModel, Market, CarOnTheMarket, UploadDataInfo, CarBrand, CarBody
+from apps.cars.models import Market, CarOnTheMarket, CarBrand, CarModel, Car
+from apps.importer.models import UploadDataInfo
+from config.celery import app
 
 
 @app.task
@@ -194,7 +192,7 @@ def add_parameters_to_database(clear_data):
     return True
 
 
-def set_info_object(lenght=0, current=0, message='', status=1):
+def set_info_object(lenght=0, current=0, message='', status: UploadDataInfo.Status = 1):
     info_obj, _ = UploadDataInfo.objects.get_or_create(pk=1)
     info_obj.all_items = lenght
     info_obj.current_item = current
