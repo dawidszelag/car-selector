@@ -210,8 +210,8 @@ class CarsService:
             return BudgetOut(min=0, max=0)
 
         min_budget = 0
-        max_budget = prices['price_au__max'] if prices['price_au__max'] > prices['price_nz__max'] \
-            else prices['price_nz__max']
+        max_budget = prices['price_au__max'] if prices['price_au__max'] and prices['price_au__max'] > prices[
+            'price_nz__max'] else prices['price_nz__max']
         return BudgetOut(min=min_budget, max=max_budget)
 
 
