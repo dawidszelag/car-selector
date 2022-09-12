@@ -9,8 +9,7 @@ services:
   web-backend:
     build: ./django_car_selector
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000 &&
-             celery -A CarSelector worker --loglevel=INFO"
+      sh -c "python manage.py runserver 0.0.0.0:8000"
 
     volumes:
       - .:/code
@@ -18,6 +17,16 @@ services:
       - "${BACKEND_PORT}:8000"
     depends_on:
       - redis
+
+  web-worker:
+    build: ./django_car_selector
+    command: >
+      sh -c "celery -A config worker --loglevel=INFO"
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+
   web-fontend:
     build:
       context: ./vue-car-selector

@@ -204,7 +204,10 @@ class CarsService:
     @staticmethod
     def get_budget() -> BudgetOut:
         prices = Car.objects.aggregate(Max('price_au'),
-                                       Max('price_nz'), )
+                                       Max('price_nz'))
+
+        if not prices:
+            return BudgetOut(min=0, max=0)
 
         min_budget = 0
         max_budget = prices['price_au__max'] if prices['price_au__max'] > prices['price_nz__max'] \
