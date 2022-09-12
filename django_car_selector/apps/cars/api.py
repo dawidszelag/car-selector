@@ -28,7 +28,7 @@ class CarsApiController:
     def get_brands(self):
         return self.car_service.get_brands()
 
-    @http_get('bodies', response=List[CarBrandOut], operation_id='get_bodies')
+    @http_get('bodies', response=List[CarBodyOut], operation_id='get_bodies')
     def get_bodies(self):
         return self.car_service.get_bodies()
 
