@@ -245,13 +245,10 @@ def get_question_2_filter(filters: CarsFilters):
 def get_question_3_filter(filters: CarsFilters):
     question = Q()
     if filters.short_distance:
-        question |= Q(short_distance=filters.short_distance)
+        question |= ~Q(fuel_type=FuelType.DIESEL)
 
     if filters.long_distance:
-        question |= Q(long_distance=filters.long_distance)
-
-    if filters.mixed_distance:
-        question |= Q(mixed_distance=filters.mixed_distance)
+        question |= ~Q(fuel_type=FuelType.ELECTRIC)
 
     if filters.perfect_city_car:
         question |= Q(perfect_city_car=filters.perfect_city_car)
