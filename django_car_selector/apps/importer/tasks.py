@@ -3,100 +3,167 @@ import re
 import traceback
 import pandas as pd
 
-from apps.cars.models import Market, CarOnTheMarket, CarBrand, CarModel, Car
+from apps.cars.models import Market, CarOnTheMarket, CarBrand, CarModel, Car, RaceTrackScale, FuelType, DriveType, \
+    CarBody
 from apps.importer.models import UploadDataInfo
 from config.celery import app
 
 
 @app.task
-def add_cars_data_to_database(file_path):
+def add_cars_data_to_database(file_path, remove_file: bool = True):
     try:
-        df = pd.read_excel(file_path, sheet_name='Database')
+        df = pd.read_excel(file_path, sheet_name=0)
         clear_df = df.dropna(subset=['ID', ]).fillna(0)
         add_brands_with_models(clear_df)
         add_cars_to_database(clear_df)
-        if os.path.isfile(file_path):
+        if remove_file and os.path.isfile(file_path):
             os.remove(file_path)
-        set_info_object(lenght=1, current=0, message=f'Done', status=1)
+        set_info_object(lenght=1, current=0, message=f'Done', status=UploadDataInfo.Status.FINISH)
     except Exception as e:
-        set_info_object(lenght=1, current=0, message=traceback.format_exc(), status=1)
+        tb = traceback.format_exc()
+        print(tb)
+        set_info_object(lenght=1, current=0, message=traceback.format_exc(), status=UploadDataInfo.Status.ERROR)
 
 
 def add_cars_to_database(clear_data):
-    lenght = len(clear_data)
-    au_market, _ = Market.objects.get_or_create(name='AU', currency='AUD')
-    nz_market, _ = Market.objects.get_or_create(name='NZ', currency='NZD')
+    length = len(clear_data)
     for index, row in clear_data.iterrows():
-        car, created = Car.objects.get_or_create(pk=int(row['ID']))
+        car_id = int(row['ID'])
+        car, created = Car.objects.get_or_create(pk=car_id)
         try:
-            car.name = row['NAMING'].split(' ', 1)[1] if row['NAMING'].split(' ')[0].isdigit() else row['NAMING']
+            car.name = row['NAMING']
 
             action_name = 'Adding' if created else 'Updating'
-            set_info_object(lenght=lenght, current=(index + 1), message=f"{action_name} car ({car.name})...",
-                            status=2)
+            set_info_object(lenght=length, current=(index + 1), message=f"{action_name} car ({car.name})...",
+                            status=UploadDataInfo.Status.PROCESSING)
 
             car.model = get_car_model(row['MODEL'], row['MAKE'])
-            car.body = str(row['BODY']).strip()
+            car.body = get_car_body(row['BODY'])
             car.transmission = str(row['TRANSMISSION']).strip()
-            car.drive = str(row['DRIVE']).strip()
+            car.drive = get_drivel_type(row['DRIVE'])
             car.engine_location = str(row['ENGINE LOCATION']).strip()
             car.engine_configuration = str(row['ENGINE CONFIGURATION']).strip()
-            car.fuel_type = str(row['FUEL TYPE']).strip()
+            car.fuel_type = get_fuel_type(row['FUEL TYPE'])
             car.badge = str(row['BADGE']).strip()
-            car.doors = int(float(str(row['DOORS'])))
-            car.seats = int(float(str(row['SEATS'])))
-            car.gears = int(float(str(row['GEARS'])))
-            car.engine_size = int(float(row['ENGINE SIZE']))
-            car.cylinders = int(float(row['CYLINDERS']))
-            car.power_kw = str(row['POWER kW']).strip()
-            car.power_hp = str(row['POWER HP *1.341']).strip()
+
+            car.doors = convert_value_to_int(row['DOORS'])
+            car.seats = convert_value_to_int(row['SEATS'])
+            car.gears = convert_value_to_int(row['GEARS'])
+
+            car.engine_size = convert_value_to_int(row['ENGINE SIZE'])
+            car.cylinders = convert_value_to_int(row['CYLINDERS'])
+            car.power_kw = convert_value_to_int(row['POWERkW'])
+            car.power_hp = convert_value_to_int(row['POWERHP *1.341'])
             car.power_rpm = str(row['POWER (rpm)']).strip()
-            car.torque_nm = str(row['TORQUE Nm']).strip()
+            car.torque_nm = convert_value_to_int(row['TORQUE Nm'])
             car.torque_rpm = str(row['TORQUE RPM']).strip()
-            car.acceleration = str(row['ACCELERATION 0-100 SEC']).strip()
-            car.top_speed = str(row['TOP SPEED KM/H']).strip()
-            car.fuel_capacity = str(row['FUEL CAPACITY L']).strip()
-            car.fuel_combined = str(row['FUEL COMBINED L/KM']).strip()
-            car.fuel_urban = str(row['FUEL CITY L/KM']).strip()
-            car.fuel_average_distance = str(row['FUEL AVERAGE DISTANCE (KM)']).strip()
-            car.max_fuel_distance = str(row['MAX FUEL DISTANCE KM']).strip()
-            car.min_fuel_distance = str(row['MIN FUEL DISTANCE KM']).strip()
-            car.length = str(row['LENGTH (MM)']).strip()
-            car.width = str(row['WIDTH (MM)']).strip()
-            car.height = str(row['HEIGHT (MM)']).strip()
-            car.wheelbase = str(row['WHEELBASE (MM)']).strip()
-            car.tare_mass = str(row['TARE MASS KG']).strip()
-            car.ground_clearance = str(row['GROUND CLEARANCE (MM)']).strip()
-            car.min_boot_space = str(row['MIN BOOT SPACE (L) ']).strip()
-            car.max_boot_space = str(row['MAX BOOT SPACE (L)']).strip()
-            car.foldable_seats = bool(int(float(row['FOLDABLE SEATS'])))
-            car.ancap = str(row['ANCAP']).strip()
-            car.warranty_years = str(row['WARRANTY (YEARS)']).strip()
+            car.acceleration = convert_value_to_float(row['ACCELERATION 0-100 SEC'])
+            car.top_speed = convert_value_to_int(row['TOP SPEED KM/H)'])
+            car.fuel_capacity = convert_value_to_int(row['FUEL CAPACITY L'])
+            car.fuel_combined = convert_value_to_float(row['FUEL COMBINED L/KM'])
+            car.fuel_urban = convert_value_to_float(row['FUEL CITY    L/KM'])
+            car.fuel_average_distance = convert_value_to_int(row['FUEL AVERAGE DISTANCE (KM)'])
+            car.charging_time = convert_value_to_float(row['CHARGING TIME 0-100% 7.4 KW'])
+            car.max_fuel_distance = convert_value_to_int(row['MAX FUEL DISTANCE KM'])
+            car.min_fuel_distance = convert_value_to_int(row['MIN FUEL DISTANCE KM'])
+            car.length = convert_value_to_int(row['LENGTH (MM)'])
+            car.width = convert_value_to_int(row['WIDTH (MM)'])
+            car.height = convert_value_to_int(row['HEIGHT (MM)'])
+            car.wheelbase = convert_value_to_int(row['WHEELBASE (MM)'])
+            car.tare_mass = convert_value_to_int(row['TARE MASS KG'])
+            car.ground_clearance = convert_value_to_int(row['GROUND CLEARANCE (MM)'])
+            car.min_boot_space = convert_value_to_int(row['MIN BOOT SPACE (L) '])
+            car.max_boot_space = convert_value_to_int(row['MAX BOOT SPACE (L)'])
+            car.foldable_seats = convert_value_to_bool(row['FOLDABLE SEATS'])
+
+            car.ancap = convert_value_to_int(row['ANCAP “0”  i “N/A”brak oceny '])
+
+            warranty_years_au = convert_value_to_int(str(row['WARRANTY (YEARS)']).strip()[0])
+            warranty_years_nz = convert_value_to_int(str(row['WARRANTY (YEARS)']).strip()[-2]) if len(
+                str(row['WARRANTY (YEARS)']).strip()) > 1 else None
+
+            car.warranty_years_au = warranty_years_au
+            car.warranty_years_nz = warranty_years_nz
             car.warranty_distance = str(row['WARRANTY (KM)']).strip()
 
-            try:
-                price = re.sub("[^0-9]", "", str(row['AU PRICE']))
-                print(f'{index} {price}')
-                tmp_market, _ = CarOnTheMarket.objects.get_or_create(market=au_market, car=car)
-                tmp_market.price = int(float(price)) if price != '' else 0
-                tmp_market.save()
-            except Exception as e:
-                print(e)
-
-            try:
-                price = re.sub("[^0-9]", "", row['NZ PRICE'].strip())
-                tmp_market, _ = CarOnTheMarket.objects.get_or_create(market=nz_market, car=car)
-                tmp_market.price = int(float(price)) if price != '' else 0
-                tmp_market.save()
-            except:
-                pass
+            price_au = re.sub("[^0-9]", "", str(row['AU PRICE']).strip())
+            price_nz = re.sub("[^0-9]", "", str(row['NZ PRICE']).strip())
+            car.price_au = int(price_au) if bool(row['AU']) and price_au else None
+            car.price_nz = int(price_nz) if bool(row['NZ']) and price_nz else None
 
             car.error = False
             car.save()
         except Exception as e:
-            print(e)
+            tb = traceback.format_exc()
+            print(tb)
+            print(car.id)
             car.error = True
             car.save()
+
+
+def get_car_body(value):
+    str_value = str(value).strip()
+    if str_value == 'TBC' or str_value == 'N/A':
+        return None
+    body, _ = CarBody.objects.get_or_create(name=str_value)
+    return body
+
+
+def get_drivel_type(value):
+    str_value = str(value).strip()
+    if str_value == 'All Wheel Drive':
+        return DriveType.AWD
+    elif str_value == 'Front Wheel Drive':
+        return DriveType.FWD
+    elif str_value == 'Rear Wheel Drive':
+        return DriveType.RWD
+    return None
+
+
+def get_fuel_type(value):
+    str_value = str(value).strip()
+    if str_value == 'Petrol':
+        return FuelType.PETROL
+    elif str_value == 'Diesel':
+        return FuelType.DIESEL
+    elif str_value == 'Electric':
+        return FuelType.ELECTRIC
+    elif str_value == 'Plug in Hybrid & Petrol':
+        return FuelType.PLUGIN
+    elif str_value == 'Hybrid Petrol':
+        return FuelType.HYBRID_PETROL
+    return None
+
+
+def convert_value_to_int(value):
+    str_value = str(value).upper().strip()
+    if str_value == 'TBC' or str_value == 'N/A':
+        return None
+
+    int_value = int(float(str_value))
+    if int_value == 0:
+        return None
+    return int_value
+
+
+def convert_value_to_bool(value):
+    str_value = str(value).upper().strip()
+    if str_value == 'TBC' or str_value == 'N/A':
+        return None
+
+    return bool(str_value)
+
+
+def convert_value_to_float(value):
+    str_value = str(value).upper().strip()
+    if str_value == 'TBC' or str_value == 'N/A':
+        return None
+
+    float_value = float(str_value)
+    if float_value == 0:
+        return None
+
+    return float_value
 
 
 def get_car_model(model, brand):
@@ -111,85 +178,124 @@ def get_car_brand(brand):
 
 
 def add_brands_with_models(clear_data):
-    lenght = len(clear_data)
+    length = len(clear_data)
     for index, row in enumerate(zip(clear_data['MAKE'], clear_data['MODEL'])):
         brand_name = str(row[0]).strip()
         model_name = str(row[1]).strip()
         brand, _ = CarBrand.objects.get_or_create(name=brand_name)
         CarModel.objects.get_or_create(brand=brand, name=model_name)
-        set_info_object(lenght=lenght, current=(index + 1), message=f"Adding models ({brand_name} {model_name})...",
-                        status=2)
+        set_info_object(lenght=length, current=(index + 1), message=f"Adding models ({brand_name} {model_name})...",
+                        status=UploadDataInfo.Status.PROCESSING)
 
 
 @app.task
-def add_cars_parameters_data_to_database(file_path):
+def add_cars_parameters_data_to_database(file_path, remove_file: bool = True):
     try:
-        df = pd.read_excel(file_path, sheet_name='Database - Table 1')
+        df = pd.read_excel(file_path, sheet_name=2)
 
         clear_df = df.dropna(subset=['ID', ]).fillna(0)
         correct = add_parameters_to_database(clear_df)
         if not correct:
-            set_info_object(lenght=1, current=0, message=f'Error: Invalid data in file', status=1)
+            set_info_object(lenght=1, current=0, message=f'Error: Invalid data in file',
+                            status=UploadDataInfo.Status.FINISH)
 
-        if os.path.isfile(file_path):
+        if remove_file and os.path.isfile(file_path):
             os.remove(file_path)
 
         if correct:
-            set_info_object(lenght=1, current=0, message=f'Done', status=1)
+            set_info_object(lenght=1, current=0, message=f'Done', status=UploadDataInfo.Status.FINISH)
     except Exception as e:
-        set_info_object(lenght=1, current=0, message=f'Error: {e}', status=1)
+        tb = traceback.format_exc()
+        print(tb)
+        set_info_object(lenght=1, current=0, message=f'Error: {e}', status=UploadDataInfo.Status.ERROR)
 
 
 def add_parameters_to_database(clear_data):
-    lenght = len(clear_data)
-
+    """
+    Columns:
+                                  'ID',                        'NAMING',
+                         'ANNA’S CARS',              'ANNA’S FOR WOMEN',
+                               '16-23',                              60,
+                    'PERFECT CITY CAR',                       'COMPACT',
+                              'MEDIUM',                         'LARGE',
+       'BIG FAMILY (MORE THAN 2 KIDS)',        '1 & 2 ADULTS BACK SEAT',
+                  '3 ADULTS BACK SEAT',                      'CHILDREN',
+                  'ELDERLY FRONT SEAT',             'ELDERLY BACK SEAT',
+                                'DOGS',                      'FLEXIBLE',
+                             'COMFORT',                  'PRACTICALITY',
+                               'CABIN',                         'STYLE',
+                         'INFO SYSTEM',                   'SPORTY FEEL',
+                            'HANDLING',             'RACE TRACK -/+/++',
+                      'LIGHT OFF ROAD',            'HEAVY     OFF ROAD',
+                         'TALL DRIVER',             'FIRST TIME DRIVER',
+                        'SAFETY ADULT',                  'SAFETY CHILD',
+        'SAFETY PEDESTRIAN PROTECTION',                'SAFETY SYSTEMS'
+    """
+    length = len(clear_data)
     for index, row in clear_data.iterrows():
+        car_id = int(row['ID'])
         try:
+            try:
+                car = Car.objects.get(pk=car_id)
+            except Car.DoesNotExist:
+                continue
 
-            if index > 100:
-                break
-            car = Car.objects.get(pk=int(row['ID']))
-            set_info_object(lenght=lenght, current=(index + 1), message=f"Adding car parameters ({car.name})...",
-                            status=2)
+            set_info_object(lenght=length, current=(index + 1), message=f"Adding car parameters ({car.name})...",
+                            status=UploadDataInfo.Status.PROCESSING)
 
-            car.anna_cars = row['ANNA’S CARS']
-            car.anna_for_women = row['ANNA’S FOR WOMEN']
-            car.anna_for_teens = row['ANNA’S FOR TEENS']
-            car.young_driver = row['16-23']
-            car.older_driver = row['60+']
-            car.perfect_city_car = row['PERFECT CITY CAR']
-            car.compact = row['COMPACT']
-            car.medium = row['MEDIUM']
-            car.large = row['LARGE']
-            car.big_family = row['BIG FAMILY']
-            car.regularly_plus_one_adult = row['REGULARLY 1+ ADULT']
-            car.three_adults_back_seat = row['3 ADULTS BACK SEAT (comfortably long periods)']
-            car.children = row['CHILDREN']
-            car.elderly_front_seat = row['ELDERLY FRONT SEAT']
-            car.elderly_back_seat = row['ELDERLY BACK SEAT']
-            car.dogs = row['DOGS']
-            car.flexible = row['FLEXIBLE']
-            car.comfort = row['COMFORT']
-            car.practicality = row['PRACTICALITY']
-            car.style = row['STYLE']
-            car.info_system = row['INFO SYSTEM']
-            car.sport_feel = row['SPORTY FEEL']
-            car.handling = row['HANDLING']
-            car.race_track = row['RACE TRACK']
-            car.light_off_road = row['LIGHT OFF ROAD']
-            car.extreme_off_road = row['EXTREME OFF ROAD']
-            car.tall_driver = row['TALL DRIVER']
-            car.first_time_drive = row['FIRST TIME DRIVER']
-            car.safety_adult = row['SAFETY ADULT']
-            car.safety_child = row['SAFETY CHILD']
-            car.safety_road_user = row['SAFETY PEDESTRIAN PROTECTION']
-            car.safety_systems = row['SAFETY SYSTEMS']
-            car.uber_recommendation = row['UBER RECOMMENDATION']
+            car.anna_cars = bool(row['ANNA’S CARS'])
+            car.anna_for_women = bool(row['ANNA’S FOR WOMEN'])
+            car.young_driver = bool(row['16-23'])
+            car.older_driver = bool(row[60])
+            car.perfect_city_car = bool(row['PERFECT CITY CAR'])
+            car.compact = bool(row['COMPACT'])
+            car.medium = bool(row['MEDIUM'])
+            car.large = bool(row['LARGE'])
+            car.big_family = bool(row['BIG FAMILY (MORE THAN 2 KIDS)'])
+            car.regularly_plus_one_adult = bool(row['1 & 2 ADULTS BACK SEAT'])
+            car.three_adults_back_seat = bool(row['3 ADULTS BACK SEAT'])
+            car.children = bool(row['CHILDREN'])
+            car.elderly_front_seat = bool(row['ELDERLY FRONT SEAT'])
+            car.elderly_back_seat = bool(row['ELDERLY BACK SEAT'])
+            car.dogs = bool(row['DOGS'])
+            car.flexible = bool(row['FLEXIBLE'])
+            car.comfort = convert_value_to_int(row['COMFORT'])
+            car.practicality = convert_value_to_int(row['PRACTICALITY'])
+            car.cabin = convert_value_to_int(row['CABIN'])
+            car.style = convert_value_to_int(row['STYLE'])
+            car.info_system = convert_value_to_int(row['INFO SYSTEM'])
+            car.sport_feel = convert_value_to_int(row['SPORTY FEEL'])
+            car.handling = convert_value_to_int(row['HANDLING'])
+            car.race_track = get_race_track_scale(row['RACE TRACK -/+/++'])
+            car.light_off_road = bool(row['LIGHT OFF ROAD'])
+            car.heavy_off_road = bool(row['HEAVY     OFF ROAD'])
+            car.tall_driver = bool(row['TALL DRIVER'])
+            car.first_time_drive = bool(row['FIRST TIME DRIVER'])
+            car.safety_adult = convert_value_to_int(row['SAFETY ADULT'])
+            car.safety_child = convert_value_to_int(row['SAFETY CHILD'])
+            car.safety_road_user = convert_value_to_int(row['SAFETY PEDESTRIAN PROTECTION'])
+            car.safety_systems = convert_value_to_int(row['SAFETY SYSTEMS'])
             car.save()
-        except Exception as e:
-            print(getattr(e, 'message', repr(e)))
+        except Exception:
+            tb = traceback.format_exc()
+            print(tb)
+            print(car_id)
             return False
     return True
+
+
+def get_race_track_scale(race_tack_scale: str):
+    if race_tack_scale == '-':
+        return RaceTrackScale.NO
+
+    elif race_tack_scale == '+':
+        return RaceTrackScale.MEDIUM
+
+    elif race_tack_scale == '++':
+        return RaceTrackScale.YES
+
+    else:
+        return None
 
 
 def set_info_object(lenght=0, current=0, message='', status: UploadDataInfo.Status = 1):

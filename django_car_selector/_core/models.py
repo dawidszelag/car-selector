@@ -162,7 +162,7 @@ class CarBrand(models.Model):
 
 
 class CarModel(models.Model):
-    brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE, related_name="markets")
+    brand = models.ForeignKey(CarBrand, on_delete=models.CASCADE, related_name="models")
     name = models.CharField(max_length=300)
     image = models.ImageField(upload_to="model_images")
 
@@ -171,29 +171,6 @@ class CarModel(models.Model):
 
     class Meta:
         ordering = ('-name',)
-
-
-class Market(models.Model):
-    name = models.CharField(max_length=30)
-    currency = models.CharField(max_length=30)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        unique_together = ('name', 'currency',)
-
-
-class CarOnTheMarket(models.Model):
-    car = models.ForeignKey(Car, on_delete=models.CASCADE, related_name="markets")
-    market = models.ForeignKey(Market, related_name="cars", on_delete=models.CASCADE)
-    price = models.PositiveSmallIntegerField(null=True)
-
-    def __str__(self):
-        return f"{self.car} ({self.market})"
-
-    class Meta:
-        unique_together = ('car', 'market',)
 
 
 class CarImage(models.Model):

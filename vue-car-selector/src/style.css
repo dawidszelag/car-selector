@@ -1,0 +1,179 @@
+* {
+    box-sizing: border-box;
+}
+.section-text{
+    margin: 10px  0 5px -10px;
+    font-weight: 700;
+}
+
+.section-text-d{
+    margin: 10px  0;
+    font-weight: 700;
+}
+
+.section-subtext{
+    margin: 10px  0 5px -10px;
+    font-size: 12px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+:root {
+    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    height: 100%;
+    /*overflow: hidden;*/
+}
+
+
+.answers-box {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-left: 95px;
+    position: relative;
+}
+.filed{
+    position: relative;
+}
+
+
+.multi-range-slider {
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.multi-range-slider .bar-inner {
+    background: linear-gradient(rgba(215, 29, 128, 0.6), rgba(196, 44, 140, 0.6)) !important;
+    box-shadow: none !important;
+    border: none !important;
+}
+
+.multi-range-slider .bar-left,
+.multi-range-slider .bar-right {
+    background: linear-gradient(rgba(215, 29, 128, 0.3), rgba(196, 44, 140, 0.3)) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.multi-range-slider .thumb::before {
+    content: "" !important;
+    background: linear-gradient(rgba(215, 29, 128, 0.8), rgba(196, 44, 140, 0.8)) !important;
+    position: absolute !important;
+    width: 7px !important;
+    height: 20px !important;
+    border: solid 1px black !important;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.8) !important;
+    border-radius: 0 !important;
+    z-index: 1 !important;
+    margin: -8px !important;
+}
+
+.multi-range-slider .thumb .caption * {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+}
+
+.multi-range-slider .thumb .caption {
+    display: flex !important;
+}
+
+.select-boxes {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    max-width: 625px;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 100px 0;
+    font-weight: 700;
+}
+
+
+.logo img{
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    max-width: 150px;
+}
+
+
+.nav-right {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+/*Loading animation*/
+.lds-hourglass {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+.lds-hourglass:after {
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    width: 0;
+    height: 0;
+    margin: 8px;
+    box-sizing: border-box;
+    border: 32px solid #fff;
+    border-color: #fff transparent #fff transparent;
+    animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+    0% {
+        transform: rotate(0);
+        animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+    50% {
+        transform: rotate(900deg);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    100% {
+        transform: rotate(1800deg);
+    }
+}
+
+/*Loading animation*/
+
+
+*::-webkit-scrollbar {
+    background: rgba(36, 36, 36, 0.5);
+    width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: rgba(169, 169, 169, 0.4);
+}

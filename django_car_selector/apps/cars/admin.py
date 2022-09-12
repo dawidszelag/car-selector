@@ -21,13 +21,6 @@ def set_ready(queryset):
 set_ready.short_description = 'Set as "Ready"'
 
 
-class CarMarket(admin.TabularInline):
-    model = CarOnTheMarket
-    extra = 0
-    verbose_name = "Market"
-    verbose_name_plural = "Markets"
-
-
 class CarGallery(admin.StackedInline):
     model = CarImage
     extra = 1
@@ -42,20 +35,21 @@ class CarAdmin(admin.ModelAdmin):
     search_fields = ('name',)
     actions = [set_unready, set_ready]
     list_filter = ('error', 'ready')
-    inlines = (CarMarket, CarGallery)
+    inlines = (CarGallery,)
     list_per_page = 100
 
     fieldsets = [
         ('Properties',
-         {'fields': ['compact', 'medium', 'large', 'car_for_woman', 'car_for_man', 'young_driver', 'driver_23_45',
-                     'middle_aged_driver', 'older_driver', 'short_distance', 'long_distance', 'mixed_distance',
-                     'solo_drive', 'big_family', 'regularly_plus_one_adult', 'three_adults_back_seat', 'children',
-                     'elderly_front_seat', 'elderly_back_seat',
-                     'dogs', 'flexible', 'safety_adult', 'safety_child', 'safety_road_user', 'safety_systems',
+         {'fields': [('compact', 'medium', 'large'), ('car_for_woman', 'car_for_man', 'young_driver', 'driver_23_45',
+                                                      'middle_aged_driver', 'older_driver'),
+                     ('short_distance', 'long_distance', 'mixed_distance'),
+                     ('solo_drive', 'big_family', 'regularly_plus_one_adult', 'three_adults_back_seat', 'children',
+                      'elderly_front_seat', 'elderly_back_seat',
+                      'dogs', 'flexible'), ('safety_adult', 'safety_child', 'safety_road_user', 'safety_systems'),
                      'comfort',
                      'practicality', 'cabin', 'style', 'info_system', 'sport_feel', 'handling', 'race_track',
-                     'light_off_road', 'extreme_off_road', 'all_drive', 'first_time_drive', 'tall_driver',
-                     'uber_recommendation', 'anna_cars', 'anna_for_women', 'anna_for_teens', 'perfect_city_car']}),
+                     'light_off_road', 'heavy_off_road', 'all_drive', 'first_time_drive', 'tall_driver', 'anna_cars',
+                     'anna_for_women', 'perfect_city_car']}),
         ('Metadata',
          {'fields': ['ready', 'error']}),
         ('Car info',
@@ -67,9 +61,9 @@ class CarAdmin(admin.ModelAdmin):
                      'fuel_type', 'fuel_capacity', 'fuel_combined', 'fuel_urban', 'fuel_average_distance',
                      'max_fuel_distance', 'min_fuel_distance', 'electric_range']}),
         ('Other',
-         {'fields': ['length', 'width', 'height', 'wheelbase', 'tare_mass', 'ground_clearance',
+         {'fields': [('length', 'width', 'height'), 'wheelbase', 'tare_mass', 'ground_clearance',
                      'min_boot_space', 'max_boot_space', 'foldable_seats',
-                     'ancap', 'warranty_years', 'warranty_distance', 'battery_warranty_years',
+                     'ancap', ('warranty_years_au', 'warranty_years_nz'), 'warranty_distance', 'battery_warranty_years',
                      'battery_warranty_distance']}),
 
     ]

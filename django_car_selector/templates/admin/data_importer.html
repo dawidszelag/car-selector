@@ -48,7 +48,7 @@
             <input type="hidden" name="type" value="parameters">
             <button class="button" onclick="upload_file('add_parameters')" type="submit">Upload</button>
         </form>
-        <h3 id="info-text" style="margin-top: 30px">State</h3>
+        <h3 id="info-text" style="margin-top: 30px"></h3>
         <progress id="bar" value="0" max="100"></progress>
 
     </div>
@@ -63,14 +63,16 @@
                 url: '{% url 'ajax-check-status' %}',
                 dataType: 'json',
                 success: function (data) {
-                    if (data.status == 1) {
+                    if (data.status === 1 || data.status === 3 || !data.status) {
                         enable_form();
-                    } else if (data.status == 2) {
-                        disbale_form();
+                    } else if (data.status === 2) {
+                        disable_form();
                     }
-                    $('#info-text').html(data.message);
-                    $('#bar').attr('value', data.current_item);
-                    $('#bar').attr('max', data.all_items);
+                     $('#info-text').html(data.message);
+                     $('#bar').attr('value', data.current_item);
+                     $('#bar').attr('max', data.all_items);
+
+
                 }
             });
         }
@@ -80,7 +82,7 @@
             $('.button').prop("disabled", false);
         }
 
-        function disbale_form() {
+        function disable_form() {
             if ($('.upload_file_input').get(0).files.length === 0) {
                 $('#info-text').html('Please choose a valid file and try again.')
             } else {
@@ -104,7 +106,7 @@
 
         function upload_file(form_name) {
             var bar = $('#bar');
-            disbale_form();
+            disable_form();
             jQuery.ajax({
                 type: 'POST',
                 url: '{% url 'import-cars-data' %}',

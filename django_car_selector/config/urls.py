@@ -17,7 +17,17 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
+
 from apps.importer.views import ajax_check_upload_data_status, import_data
+
+from ninja_extra import NinjaExtraAPI
+
+from apps.cars.api import CarsApiController
+
+api = NinjaExtraAPI(docs_url='docs')
+
+api.register_controllers(CarsApiController)
+
 
 urlpatterns = [
     # path('api/v1/car/<int:pk>', CarAPIView.as_view()),
@@ -26,6 +36,7 @@ urlpatterns = [
     # path('api/v1/brand', BrandCarAPIView.as_view()),
     # path('api/v1/budget', BudgetAPIView.as_view()),
     # path('api/v1/body', BodyCarAPIView.as_view()),
+    path("api/", api.urls),
     path('admin/ajax/upload-data-status', ajax_check_upload_data_status, name='ajax-check-status'),
     path('admin/import-data', import_data, name='import-cars-data'),
     path('admin/', admin.site.urls),

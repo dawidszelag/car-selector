@@ -115,7 +115,7 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = True
 
@@ -138,10 +138,9 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
-print(os.environ.get("HOST"))
-
-BROKER_URL = f'redis://{os.environ.get("HOST")}:{os.environ.get("REDIS_PORT", 6379)}'
-CELERY_RESULT_BACKEND = f'redis://{os.environ.get("HOST")}:{os.environ.get("REDIS_PORT", 6379)}'
+NINJA_DOCS_VIEW = 'redoc'
+BROKER_URL = f'redis://{os.environ.get("HOST", "127.0.0.1")}:{os.environ.get("REDIS_PORT", 6379)}'
+CELERY_RESULT_BACKEND = f'redis://{os.environ.get("HOST", "127.0.0.1")}:{os.environ.get("REDIS_PORT", 6379)}'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
