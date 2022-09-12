@@ -230,11 +230,11 @@ def get_question_2_filter(filters: CarsFilters):
     if filters.young_driver:
         question |= Q(young_driver=filters.young_driver)
 
-    if filters.driver_23_45:
-        question |= Q(driver_23_45=filters.driver_23_45)
-
-    if filters.middle_aged_driver:
-        question |= Q(middle_aged_driver=filters.middle_aged_driver)
+    # if filters.driver_23_45:
+    #     question |= Q(driver_23_45=filters.driver_23_45)
+    #
+    # if filters.middle_aged_driver:
+    #     question |= Q(middle_aged_driver=filters.middle_aged_driver)
 
     if filters.older_driver:
         question |= Q(older_driver=filters.older_driver)
