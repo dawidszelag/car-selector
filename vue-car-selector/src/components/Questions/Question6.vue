@@ -1,7 +1,7 @@
 <template>
   <div>
     <question-label
-        number="5"
+        number="6"
         help-text="- select all that apply"
         question="Which body types would you like?"/>
     <div class="answers-box-no-margin select-boxes">
