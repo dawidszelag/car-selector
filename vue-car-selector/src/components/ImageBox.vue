@@ -51,8 +51,8 @@ defineProps({
   text-align: center;
   word-break: break-word;
   text-transform: uppercase;
-  width: 100px;
-  min-height: 100px;
+  width: 90px;
+  min-height: 90px;
   padding: 5px;
   background: rgba(0, 0, 0, 0.2);
   margin: 5px;
