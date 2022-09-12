@@ -190,10 +190,10 @@ class CarsService:
         return Car.objects.annotate(thumbnail=Subquery(images.values('image')[:1])).filter(_filter)
 
     def get_brands(self) -> List[CarBrandOut]:
-        return [CarBrandOut(id=body.id,
-                            name=body.name,
-                            thumbnail=self.BASE_URL + body.image.url if body.image else None)
-                for body in CarBrand.objects.all()]
+        return [CarBrandOut(id=brand.id,
+                            name=brand.name,
+                            thumbnail=self.BASE_URL + brand.image.url if brand.image else None)
+                for brand in CarBrand.objects.all()]
 
     def get_bodies(self) -> List[CarBodyOut]:
         return [CarBodyOut(id=body.id,
