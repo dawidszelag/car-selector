@@ -122,7 +122,7 @@ class ModelDetailsOut(ModelSchema):
         model_fields = "__all__"
 
 
-class CarBodyOut(ModelSchema):
+class CarBodyModelOut(ModelSchema):
     class Config:
         model = CarBody
         model_fields = "__all__"
@@ -141,7 +141,7 @@ class CarListImageOut(ModelSchema):
 
 
 class CarDetailsOut(ModelSchema):
-    body: CarBodyOut
+    body: CarBodyModelOut
     model: ModelDetailsOut
     images: List[CarImageOut] = []
 
