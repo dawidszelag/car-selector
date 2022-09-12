@@ -208,7 +208,7 @@ onBeforeMount(async () => {
   position: fixed;
   z-index: 100;
   bottom: 0;
-  right: 15px;
+  right: 5px;
   padding: 10px 20px;
   font-weight: 900;
   font-size: 14px;
