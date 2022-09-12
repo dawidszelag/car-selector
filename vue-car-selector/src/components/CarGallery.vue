@@ -29,7 +29,8 @@ const showImage = (imageIdx) => {
 <style lang="less" scoped>
 
 .main-image img {
-  height: 300px;
+  width: 100%;
+  height: auto;
 }
 
 .car_gallery img,
