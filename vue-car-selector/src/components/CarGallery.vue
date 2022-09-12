@@ -20,7 +20,6 @@
 
 import {OpenAPI} from '../api';
 import {defineProps, ref} from "vue";
-
 const props = defineProps(['images'])
 const currentImage = ref(props.images[0])
 const showImage = (imageIdx) => {
@@ -28,7 +27,8 @@ const showImage = (imageIdx) => {
 }
 </script>
 <style lang="less" scoped>
-.main-image {
+
+.main-image img {
   height: 300px;
 }
 
@@ -48,12 +48,18 @@ const showImage = (imageIdx) => {
 
 .image-list{
   width: 25%;
+  padding: 0 5px;
   max-height: 500px;
-  .gallery_item{
+  overflow-y: scroll;
+  .gallery_item img{
     width: 100%;
+    height: auto;
   }
 }
-
+.gallery_item{
+  width: 100%;
+  height: auto;
+}
 .main-image{
   width: 73%;
 }

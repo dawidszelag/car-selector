@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "openapi": "openapi --input http://127.0.0.1:8000/api/openapi.json --client axios  --useOptions --output ./src/api"
   },

@@ -3,7 +3,20 @@
        :style="{ backgroundImage: 'url(' +  carBGImage  + ')' }"
        style="background-position: center; background-size: cover;">
     <car-info v-if="car" :car="car" class="box"/>
-    <car-gallery v-if="car" :images="car.images" class="box"/>
+    <div class="box" v-if="car">
+      <car-gallery :images="car.images"/>
+      <div>
+        <div class="section-text-d" style="margin-top: 20px">
+          CARMATCH #
+        </div>
+        <div class="carmatch">
+          <div class="badge" v-if="car?.anna_cars">
+            <img :src="BagdeAnnaChoice" alt="">
+          </div>
+        </div>
+      </div>
+
+    </div>
 
     <div class="nav-right" @click="$router.push({name: 'home'})">
       BACK TO LIST
@@ -14,7 +27,7 @@
 <script setup>
 import bgImage from "@/assets/bg-pc.jpg"
 import {OpenAPI} from '../api';
-import Logo from "@/assets/logo.png"
+import BagdeAnnaChoice from "@/assets/badge-1.png"
 import {computed, onBeforeMount, ref} from "vue";
 import {useRoute} from "vue-router"
 import {CarsService} from "../api";
@@ -34,6 +47,14 @@ const carBGImage = computed(() => {
 </script>
 
 <style scoped lang="less">
+.carmatch {
+  display: flex;
+
+  .badge img {
+    max-width: 80px;
+  }
+}
+
 .container {
   display: flex;
   width: 100%;
