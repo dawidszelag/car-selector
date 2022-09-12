@@ -6,8 +6,11 @@ services:
     image: "redis:alpine"
     ports:
       - "${REDIS_PORT}:6379"
+
   web-backend:
     build: ./django_car_selector
+    env_file:
+      - .env
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
 
@@ -20,6 +23,8 @@ services:
 
   web-worker:
     build: ./django_car_selector
+    env_file:
+      - .env
     command: >
       sh -c "celery -A config worker --loglevel=INFO"
     volumes:
@@ -32,8 +37,7 @@ services:
       context: ./vue-car-selector
       args:
         - VITE_BACKEND_URL=http://${HOST}:${BACKEND_PORT}
-    volumes:
-      - .:/code
+
     ports:
       - "${FRONTEND_PORT}:3000"
     volumes:
