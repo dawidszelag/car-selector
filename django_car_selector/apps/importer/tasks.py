@@ -159,7 +159,7 @@ def convert_value_to_float(value):
     if str_value == 'TBC' or str_value == 'N/A':
         return None
 
-    float_value = float(str_value)
+    float_value = float(str_value.replace('L/100KM', ''))
     if float_value == 0:
         return None
 
