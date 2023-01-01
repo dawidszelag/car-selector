@@ -5,7 +5,7 @@
         help-text="- select all that apply"
         question="Who will drive the car?"/>
     <div class="answers-box">
-      <checkout-field v-model="question.carForWoman" label="Female"/>
+      <checkout-field v-model="question.annaForWomen" label="Female"/>
       <checkout-field v-model="question.carForMan" label="Male"/>
       <checkout-field v-model="question.preferNotToSay" label="Prefer not to say"/>
     </div>
@@ -19,7 +19,7 @@ import CheckoutField from "../CheckoutField";
 
 const emit = defineEmits(['answers'])
 const question = reactive({
-  carForWoman: null,
+  annaForWomen: null,
   carForMan: null,
   preferNotToSay: null
 })
@@ -27,19 +27,18 @@ const question = reactive({
 
 watch(() => question.preferNotToSay, () => {
       if (question.preferNotToSay) {
-        question.carForWoman = null;
+        question.annaForWomen = null;
         question.carForMan = null;
       }
     }
 )
 
-watch(() => [question.carForWoman, question.carForMan], () => {
-      if (question.carForWoman || question.carForMan) {
+watch(() => [question.annaForWomen, question.carForMan], () => {
+      if (question.annaForWomen || question.carForMan) {
         question.preferNotToSay = null;
       }
       emit('answers', {
-        carForWoman: question.carForWoman,
-        carForMan: question.carForMan
+        annaForWomen: question.annaForWomen,
       })
     }
 )

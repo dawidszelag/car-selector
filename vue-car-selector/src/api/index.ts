@@ -8,6 +8,8 @@ export type { OpenAPIConfig } from './core/OpenAPI';
 
 export type { BrandDetailsOut } from './models/BrandDetailsOut';
 export type { BudgetOut } from './models/BudgetOut';
+export type { CarBodyModelOut } from './models/CarBodyModelOut';
+export type { CarBodyOut } from './models/CarBodyOut';
 export type { CarBrandOut } from './models/CarBrandOut';
 export type { CarDetailsOut } from './models/CarDetailsOut';
 export type { CarImageOut } from './models/CarImageOut';

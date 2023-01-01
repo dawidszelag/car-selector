@@ -27,6 +27,7 @@ class Car(models.Model):
     """
     Car model contains information about car
     """
+    id = models.CharField(max_length=20, primary_key=True)
 
     # # Car base information
     model = models.ForeignKey("CarModel", related_name='car', on_delete=models.CASCADE, null=True)
@@ -58,6 +59,8 @@ class Car(models.Model):
     electric_range = models.PositiveIntegerField(verbose_name="Electric range (KM)", default=None, null=True,
                                                  blank=True)
     charging_time = models.FloatField(verbose_name="Charging time 0-100% 7.4 KW", null=True, blank=True)
+    max_charging_time = models.FloatField(verbose_name="Fastcharge time 10%-80%", null=True, blank=True)
+    max_charging_max_kw = models.FloatField(verbose_name="Fastcharge power max KW", null=True, blank=True)
     max_fuel_distance = models.PositiveIntegerField(verbose_name="Max fuel distance (KM)", null=True, blank=True)
     min_fuel_distance = models.PositiveIntegerField(verbose_name="Min fuel distance (KM)", null=True, blank=True)
     length = models.PositiveIntegerField(verbose_name="Length (MM)", null=True)
@@ -82,10 +85,6 @@ class Car(models.Model):
     compact = models.BooleanField(default=False)
     medium = models.BooleanField(default=False)
     large = models.BooleanField(default=False)
-
-    # # Gender(s) of the driver(s)
-    car_for_woman = models.BooleanField(default=False)
-    car_for_man = models.BooleanField(default=False)
 
     # # Age group of the driver(s)
     young_driver = models.BooleanField(verbose_name="Young drivers (16-23)", default=False)
@@ -178,7 +177,7 @@ class CarBody(models.Model):
 
     class Meta:
         verbose_name_plural = 'Car bodies'
-        ordering = ('name',)
+        ordering = ('order', 'name',)
 
 
 class CarBrand(models.Model):

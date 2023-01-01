@@ -3,7 +3,7 @@
     <question-label
         number="12"
         help-text="- select one"
-        question="What boot capacity do you need?"/>
+        question="What is the MINIMUM boot capacity that you need?"/>
     <div class="answers-box">
       <radio-fields name="question12" keyValue="up_200" label="x- small - up to 200 L" @change="keyHandler"/>
       <radio-fields name="question12" keyValue="200" label="small - minimum 200 L" @change="keyHandler"/>

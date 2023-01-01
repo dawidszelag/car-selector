@@ -5,10 +5,10 @@
         help-text="- select one"
         question="What drive line would you like?"/>
     <div class="answers-box">
-      <radio-fields name="question13" keyValue="fwd" label="front wheel drive - GOOD ECONOMICAL ALL ROUNDERL"
+      <radio-fields name="question13" keyValue="fwd" label="FRONT WHEEL DRIVE - good economical all rounder"
                     @change="keyHandler"/>
-      <radio-fields name="question13" keyValue="rwd" label="rear wheel drive - SPORTIER FEELL" @change="keyHandler"/>
-      <radio-fields name="question13" keyValue="awd" label="all-wheel drive - GREAT FOR ALL SEASONSL"
+      <radio-fields name="question13" keyValue="rwd" label="REAR WHEEL DRIVE - sportier feel" @change="keyHandler"/>
+      <radio-fields name="question13" keyValue="awd" label="ALL-WHEEL DRIVE - great for all seasons"
                     @change="keyHandler"/>
       <radio-fields name="question13" keyValue="0" label="unsure" @change="keyHandler"/>
       <radio-fields name="question13" keyValue="0" label="doesn’t matter" @change="keyHandler"/>

@@ -2,32 +2,29 @@
   <div>
     <question-label
         number="4"
-        help-text="- select range"
+        help-text="- select a range"
         question="What is your budget?"/>
     <div class="answers-box" style="padding-top: 20px">
-      <MultiRangeSlider
-          style="max-width: 535px"
-          :min="minValue"
-          :max="maxValue"
-          :step="1000"
-          :ruler="false"
-          :label="false"
-          :minValue="minValue"
-          :maxValue="maxValue"
-          @input="valueHandler"
-      />
+      <Slider :min="minValue"
+              :max="maxValue"
+              :step="1000"
+              v-model="price_range.value"
+              v-bind="price_range"
+              class="price"/>
     </div>
   </div>
 </template>
 
 <script setup>
-import {reactive, defineEmits, defineProps} from "vue";
+import {reactive, watch, defineEmits, defineProps } from "vue";
 import QuestionLabel from "../QuestionLabel";
-import MultiRangeSlider from "multi-range-slider-vue";
+import Slider from '@vueform/slider'
 
 const emit = defineEmits(['answers'])
 const props = defineProps(['minValue', 'maxValue'])
-
+const price_range = reactive({
+  value: [props.minValue, props.maxValue]
+})
 const question = reactive({
   priceAuGte: null,
   priceAuLte: null,
@@ -35,19 +32,18 @@ const question = reactive({
   priceNzLte: null,
 })
 
-const valueHandler = (e) => {
-  e.minValue !== props.minValue ? question.priceAuGte = e.minValue : question.priceAuGte = null;
-  e.maxValue !== props.maxValue ? question.priceAuLte = e.maxValue : question.priceAuLte = null;
-  e.minValue !== props.minValue ? question.priceNzGte = e.minValue : question.priceNzGte = null;
-  e.maxValue !== props.maxValue ? question.priceNzLte = e.maxValue : question.priceNzLte = null;
+watch(price_range, () => {
+  price_range.value[0] !== props.minValue ? question.priceAuGte = price_range.value[0] : question.priceAuGte = null;
+  price_range.value[1] !== props.maxValue ? question.priceAuLte = price_range.value[1] : question.priceAuLte = null;
+  price_range.value[0] !== props.minValue ? question.priceNzGte = price_range.value[0] : question.priceNzGte = null;
+  price_range.value[1] !== props.maxValue ? question.priceNzLte = price_range.value[1] : question.priceNzLte = null;
   emit("answers", question)
-}
+})
 
 
 </script>
-<style scoped>
-:deep(.multi-range-slider .thumb .caption *:before),
-:deep(.labels .label:before) {
+<style>
+.price .slider-tooltip-top:after {
   content: '$';
 }
 

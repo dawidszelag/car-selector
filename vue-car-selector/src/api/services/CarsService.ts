@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BudgetOut } from '../models/BudgetOut';
+import type { CarBodyOut } from '../models/CarBodyOut';
 import type { CarBrandOut } from '../models/CarBrandOut';
 import type { CarDetailsOut } from '../models/CarDetailsOut';
 import type { PaginatedResponseSchema_CarOut_ } from '../models/PaginatedResponseSchema_CarOut_';
@@ -37,8 +38,7 @@ export class CarsService {
      * @throws ApiError
      */
     public static getCars({
-        carForWoman,
-        carForMan,
+        annaForWomen,
         youngDriver,
         driver2345,
         middleAgedDriver,
@@ -106,8 +106,7 @@ export class CarsService {
         page = 1,
         pageSize = 10,
     }: {
-        carForWoman?: boolean,
-        carForMan?: boolean,
+        annaForWomen?: boolean,
         youngDriver?: boolean,
         driver2345?: boolean,
         middleAgedDriver?: boolean,
@@ -179,8 +178,7 @@ export class CarsService {
             method: 'GET',
             url: '/api/cars',
             query: {
-                'car_for_woman': carForWoman,
-                'car_for_man': carForMan,
+                'anna_for_women': annaForWomen,
                 'young_driver': youngDriver,
                 'driver_23_45': driver2345,
                 'middle_aged_driver': middleAgedDriver,
@@ -265,10 +263,10 @@ export class CarsService {
 
     /**
      * Get Bodies
-     * @returns CarBrandOut OK
+     * @returns CarBodyOut OK
      * @throws ApiError
      */
-    public static getBodies(): CancelablePromise<Array<CarBrandOut>> {
+    public static getBodies(): CancelablePromise<Array<CarBodyOut>> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/api/bodies',

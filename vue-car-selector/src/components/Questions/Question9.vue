@@ -3,7 +3,7 @@
     <question-label
         number="9"
         help-text="- select all that apply"
-        question="What car size would you like?"/>
+        question="The number of doors that you need?"/>
     <div class="answers-box">
       <checkout-field v-model="question.twoDoors" label="2 doors"/>
       <checkout-field v-model="question.fourDoors" label="4 doors"/>

@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CarBodyModelOut } from './CarBodyModelOut';
 import type { CarImageOut } from './CarImageOut';
 import type { ModelDetailsOut } from './ModelDetailsOut';
 
@@ -10,7 +11,7 @@ export type CarDetailsOut = {
     model: ModelDetailsOut;
     name: string;
     badge?: string;
-    body?: number;
+    body: CarBodyModelOut;
     doors?: number;
     seats?: number;
     transmission?: string;
@@ -54,8 +55,6 @@ export type CarDetailsOut = {
     compact?: boolean;
     medium?: boolean;
     large?: boolean;
-    car_for_woman?: boolean;
-    car_for_man?: boolean;
     young_driver?: boolean;
     driver_23_45?: boolean;
     middle_aged_driver?: boolean;

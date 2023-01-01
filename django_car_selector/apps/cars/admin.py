@@ -40,8 +40,8 @@ class CarAdmin(admin.ModelAdmin):
 
     fieldsets = [
         ('Properties',
-         {'fields': [('compact', 'medium', 'large'), ('car_for_woman', 'car_for_man', 'young_driver', 'driver_23_45',
-                                                      'middle_aged_driver', 'older_driver'),
+         {'fields': [('compact', 'medium', 'large'),
+                     ('young_driver', 'driver_23_45', 'middle_aged_driver', 'older_driver'),
                      ('short_distance', 'long_distance', 'mixed_distance'),
                      ('solo_drive', 'big_family', 'regularly_plus_one_adult', 'three_adults_back_seat', 'children',
                       'elderly_front_seat', 'elderly_back_seat',
@@ -59,7 +59,8 @@ class CarAdmin(admin.ModelAdmin):
          {'fields': ['engine_location', 'engine_size', 'engine_configuration', 'cylinders', 'power_kw', 'power_hp',
                      'power_rpm', 'torque_rpm', 'acceleration', 'top_speed',
                      'fuel_type', 'fuel_capacity', 'fuel_combined', 'fuel_urban', 'fuel_average_distance',
-                     'max_fuel_distance', 'min_fuel_distance', 'electric_range']}),
+                     'max_fuel_distance', 'min_fuel_distance', 'electric_range', 'charging_time', 'fast_charging_time',
+                     'fast_charging_time_max_kw']}),
         ('Other',
          {'fields': [('length', 'width', 'height'), 'wheelbase', 'tare_mass', 'ground_clearance',
                      'min_boot_space', 'max_boot_space', 'foldable_seats',

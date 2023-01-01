@@ -2,9 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type CarOut = {
+export type CarBodyModelOut = {
     id?: number;
     name: string;
-    thumbnail?: string;
+    image?: string;
+    order?: number;
 };
 

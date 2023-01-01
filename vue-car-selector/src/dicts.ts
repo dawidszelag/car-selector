@@ -12,4 +12,11 @@ export const FuelType = {
     5: 'Hybrid Petrol',
 }
 
+export enum FuelTypeEnum {
+    PETROL = 1,
+    DIESEL,
+    ELECTRIC,
+    PHEV,
+    HYBRID,
+}
 

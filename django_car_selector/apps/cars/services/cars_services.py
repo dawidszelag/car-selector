@@ -9,8 +9,7 @@ from apps.cars.models import Car, CarBrand, CarBody, FuelType, DriveType, RaceTr
 
 class CarsFilters(Schema):
     """"""
-    car_for_woman: bool = None
-    car_for_man: bool = None
+    anna_for_women: bool = None
 
     young_driver: bool = None
     driver_23_45: bool = None
@@ -84,11 +83,8 @@ class CarsFilters(Schema):
     fuel_economy__gte: int = None
     fuel_economy__lte: int = None
     power__gte: int = None
-    power__lte: int = None
-    acceleration__gte: int = None
     acceleration__lte: int = None
     engine__gte: float = None
-    engine__lte: float = None
 
 
 class CarBrandOut(Schema):
@@ -217,11 +213,9 @@ class CarsService:
 
 def get_question_1_filter(filters: CarsFilters):
     question = Q()
-    if filters.car_for_woman:
-        question |= Q(car_for_woman=filters.car_for_woman)
+    if filters.anna_for_women:
+        question |= Q(anna_for_women=filters.anna_for_women)
 
-    if filters.car_for_man:
-        question |= Q(car_for_man=filters.car_for_man)
     return question
 
 
@@ -468,19 +462,10 @@ def get_question_15_2_filter(filters: CarsFilters):
     if filters.power__gte:
         question &= Q(power_kw__gte=filters.power__gte)
 
-    if filters.power__lte:
-        question &= Q(power_kw__lte=filters.power__lte)
-
-    if filters.acceleration__gte:
-        question &= Q(acceleration__gte=filters.acceleration__gte)
-
     if filters.acceleration__lte:
         question &= Q(acceleration__lte=filters.acceleration__lte)
 
     if filters.engine__gte:
         question &= Q(engine_size__gte=filters.engine__gte * 1000)
-
-    if filters.engine__lte:
-        question &= Q(engine_size__lte=filters.engine__lte * 1000)
 
     return question

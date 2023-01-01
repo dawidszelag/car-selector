@@ -3,7 +3,7 @@
     <question-label
         number="10"
         help-text="- select one"
-        question="How many seats do you need?"/>
+        question="What is the MINIMUM number of seats that you need?"/>
     <div class="answers-box">
       <radio-fields name="question10" keyValue="2" label="2" @change="keyHandler"/>
       <radio-fields name="question10" keyValue="4" label="4" @change="keyHandler"/>

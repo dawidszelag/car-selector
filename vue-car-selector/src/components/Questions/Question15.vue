@@ -2,105 +2,91 @@
   <div>
     <question-label
         number="15"
-        help-text="- select all that apply"
-        question="Which feature are important to you?"/>
+        help-text="The more specific you can be - the better the match. But feel free to skip if you aren’t quite sure!"
+        question="Which features are important to you?"/>
     <div class="answers-box">
 
-      <div class="section-text">GENERAL:</div>
+      <div class="section-text">GENERAL</div>
       <checkout-field v-model="question.comfort" label="comfort"/>
       <checkout-field v-model="question.overall_style" label="overall style"/>
       <checkout-field v-model="question.min_5_years_warranty" label="minimum 5 years warranty"/>
 
-      <div class="section-text">CABIN:</div>
+      <div class="section-text">CABIN</div>
       <checkout-field v-model="question.practicality_cabin" label="practicality - cabin & space"/>
       <checkout-field v-model="question.premium_cabin" label="premium cabin"/>
       <checkout-field v-model="question.folding_back_seats" label="folding back seats"/>
       <checkout-field v-model="question.high_tech_info_system" label="high-tech infotainment system"/>
 
-      <div class="section-text">SAFETY:</div>
+      <div class="section-text">SAFETY</div>
       <checkout-field v-model="question.adult_safe" label="keeping adults safe"/>
       <checkout-field v-model="question.children_safe" label="keeping children safe"/>
       <checkout-field v-model="question.other_road_users_safe" label="keeping other road users safe"/>
       <checkout-field v-model="question.assistance_system" label="having the safest assistance systems"/>
 
 
-      <div class="section-text">SPORTINESS:</div>
+      <div class="section-text">SPORTINESS</div>
       <checkout-field v-model="question.sport_feel" label="sporty feel"/>
       <checkout-field v-model="question.handling_dynamics" label="handling dynamics"/>
       <checkout-field v-model="question.race_track" label="I want to take my car to a racetrack"/>
 
-      <div class="section-text" style="margin-top: 30px">How efficient should your car be?</div>
-      <div class="section-subtext">RANGE (km)</div>
-      <MultiRangeSlider
-          class="range-km"
-          style="max-width: 535px"
-          :min="0"
-          :max="1200"
-          :step="10"
-          :ruler="false"
-          :label="false"
-          :minValue="0"
-          :maxValue="1200"
-          @input="rangeHandler"
-      />
+      <div class="section-text" style="margin-top: 30px">EFFICIENCY</div>
+      <div class="section-subtext">RANGE (km) - including ELECTRIC cars</div>
+      <div class="slider">
+        <span>0 km</span>
+        <Slider :min="0"
+                :max="MAX_RANGE_KM"
+                class="range-km"
+                connects='c-slider-connects'
+                v-model="range_km.value"
+                v-bind="range_km"/>
+        <span>{{ MAX_RANGE_KM }} km</span>
+      </div>
 
       <div class="section-subtext">FUEL ECONOMY (L/100km)</div>
-      <MultiRangeSlider
-          class="fuel-economy"
-          style="max-width: 535px"
-          :min="0"
-          :max="25"
-          :step="1"
-          :ruler="false"
-          :label="false"
-          :minValue="0"
-          :maxValue="25"
-          @input="fuelEconomyHandler"
-      />
+      <div class="slider">
+        <span>0 L</span>
+        <Slider :min="0"
+                :max="25"
+                class="fuel-economy"
+                connects='c-slider-connects'
+                v-model="fuel_economy.value"
+                v-bind="fuel_economy"/>
+        <span>{{ 25 }} L</span>
+      </div>
 
-      <div class="section-text" style="margin-top: 30px">Let's talk numbers?</div>
-      <div class="section-subtext">Power (kW)</div>
-      <MultiRangeSlider
-          class="power-kw"
-          style="max-width: 535px"
-          :min="0"
-          :max="1000"
-          :step="10"
-          :ruler="false"
-          :label="false"
-          :minValue="0"
-          :maxValue="1000"
-          @input="powerHandler"
-      />
+      <div class="section-text" style="margin-top: 30px">LET’S TALK NUMBERS</div>
+      <div class="section-subtext">POWER - minimum kW</div>
+      <div class="slider">
+        <span>0 kW</span>
+        <Slider :min="0"
+                :max="MAX_POWER_KW"
+                class="power-kw"
+                connects='c-slider-connects'
+                v-model="question.power__gte"/>
+        <span>{{ MAX_POWER_KW }} kW</span>
+      </div>
 
-      <div class="section-subtext">Acceleration 0-100 km/h (seconds)</div>
-      <MultiRangeSlider
-          class="acceleration"
-          style="max-width: 535px"
-          :min="0"
-          :max="20"
-          :step="1"
-          :ruler="false"
-          :label="false"
-          :minValue="0"
-          :maxValue="20"
-          @input="accelerationHandler"
-      />
 
-      <div class="section-subtext">Engine size (L)</div>
-      <MultiRangeSlider
-          class="engine"
-          style="max-width: 535px"
-          :min="0"
-          :max="9"
-          :step="0.5"
-          :ruler="false"
-          :label="false"
-          :minValue="0"
-          :maxValue="9"
-          @input="engineHandler"
-      />
-
+      <div class="section-subtext">ACCELERATION 0-100 km/h - maximum seconds</div>
+      <div class="slider">
+        <span>0 sec</span>
+        <Slider :min="0"
+                :max="MAX_ACCELERATE"
+                class="acceleration"
+                connects='c-slider-connects'
+                v-model="question.acceleration__lte"/>
+        <span>{{ MAX_ACCELERATE }} sec</span>
+      </div>
+      <div class="section-subtext">ENGINE SIZE - L - minimum volume</div>
+      <div class="slider">
+        <span>0 L</span>
+        <Slider :min="0"
+                :max="MAX_ENGINE_SIZE"
+                class="engine"
+                connects='c-slider-connects'
+                v-model="question.engine__gte"/>
+        <span>{{ MAX_ENGINE_SIZE }} L</span>
+      </div>
     </div>
     <div>
 
@@ -112,9 +98,20 @@
 import {reactive, watch} from "vue";
 import QuestionLabel from "../QuestionLabel";
 import CheckoutField from "../CheckoutField";
-import MultiRangeSlider from "multi-range-slider-vue";
+import Slider from '@vueform/slider'
 
+const MAX_RANGE_KM = 2143;
+const MAX_ENGINE_SIZE = 7;
+const MAX_ACCELERATE = 20;
+const MAX_POWER_KW = 588;
 const emit = defineEmits(['answers'])
+
+const range_km = reactive({
+  value: [0, MAX_RANGE_KM]
+})
+const fuel_economy = reactive({
+  value: [0, 25]
+})
 const question = reactive({
   comfort: null,
   overall_style: null,
@@ -132,44 +129,49 @@ const question = reactive({
   fuel_economy__gte: null,
   fuel_economy__lte: null,
   power__gte: null,
-  power__lte: null,
-  acceleration__gte: null,
   acceleration__lte: null,
   engine__gte: null,
-  engine__lte: null,
   sport_feel: null,
   handling_dynamics: null,
   race_track: null,
 
 })
-const rangeHandler = (e) => {
-  e.minValue !== 0 ? question.km_range__gte = e.minValue : question.km_range__gte = null;
-  e.maxValue !== 1200 ? question.km_range__lte = e.maxValue : question.km_range__lte = null;
-}
 
+watch(() => question.acceleration__lte, () => {
+  if (question.acceleration__lte === 0) {
+    question.acceleration__lte = null;
+  }
+})
 
-const fuelEconomyHandler = (e) => {
-  e.minValue !== 0 ? question.fuel_economy__gte = e.minValue : question.fuel_economy__gte = null;
-  e.maxValue !== 25 ? question.fuel_economy__lte = e.maxValue : question.fuel_economy__lte = null;
-}
+watch(() => question.power__gte, () => {
+  if (question.power__gte === 0) {
+    question.power__gte = null;
+  }
+})
 
-const powerHandler = (e) => {
-  e.minValue !== 0 ? question.power__gte = e.minValue : question.power__gte = null;
-  e.maxValue !== 1000 ? question.power__lte = e.maxValue : question.power__lte = null;
-}
+watch(() => question.engine__gte, () => {
+  if (question.engine__gte === 0) {
+    question.engine__gte = null;
+  }
+})
 
-const accelerationHandler = (e) => {
-  e.minValue !== 0 ? question.acceleration__gte = e.minValue : question.acceleration__gte = null;
-  e.maxValue !== 20 ? question.acceleration__lte = e.maxValue : question.acceleration__lte = null;
-}
+watch(range_km, () => {
+  question.km_range__lte = range_km.value[1];
+  range_km.value[0] ? question.km_range__gte = range_km.value[0] : question.km_range__gte = null;
+})
 
-const engineHandler = (e) => {
-  e.minValue !== 0 ? question.engine__gte = e.minValue : question.engine__gte = null;
-  e.maxValue !== 9 ? question.engine__lte = e.maxValue : question.engine__lte = null;
+watch(fuel_economy, () => {
+  question.fuel_economy__lte = fuel_economy.value[1];
+  fuel_economy.value[0] ? question.fuel_economy__gte = fuel_economy.value[0] : question.fuel_economy__gte = null;
+})
 
-}
 
 watch(question, () => {
+  emitData();
+})
+
+
+const emitData = () =>{
   emit('answers', {
         comfort: question.comfort,
         overallStyle: question.overall_style,
@@ -190,37 +192,64 @@ watch(question, () => {
         fuelEconomyGte: question.fuel_economy__gte,
         fuelEconomyLte: question.fuel_economy__lte,
         powerGte: question.power__gte,
-        powerLte: question.power__lte,
-        accelerationGte: question.acceleration__gte,
         accelerationLte: question.acceleration__lte,
         engineGte: question.engine__gte,
-        engineLte: question.engine__lte,
       }
   )
-})
+}
 </script>
+<style>
+.engine .slider-tooltip-top:after {
+  content: ' L';
+}
+
+.range-km .slider-tooltip-top:after {
+  content: ' km';
+}
+
+.power-kw .slider-tooltip-top:after {
+  content: ' kW';
+}
+
+.acceleration .slider-tooltip-top:after {
+  content: ' sec';
+}
+
+.fuel-economy .slider-tooltip-top:after {
+  content: ' L';
+}
+</style>
 <style scoped>
-:deep(.range-km.multi-range-slider .thumb .caption *:after),
-:deep(.range-km.labels .label:after) {
-  content: 'km';
+
+.slider div {
+  width: 100%;
 }
 
-:deep(.acceleration.multi-range-slider .thumb .caption *:after),
-:deep(.acceleration.labels .label:after) {
-  content: 'sec';
+.slider span:last-child,
+.slider span:first-child {
+  position: absolute;
+  top: 15px;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
 }
 
-:deep(.power-kw.multi-range-slider .thumb .caption *:after),
-:deep(.power-kw.labels .label:after) {
-  content: 'kW';
+.slider span:first-child {
+  left: -10px;
 }
 
+.slider span:last-child {
+  right: -10px;
+}
 
-:deep(.fuel-economy.multi-range-slider .thumb .caption *:after),
-:deep(.fuel-economy.labels .label:after),
-:deep(.engine.multi-range-slider .thumb .caption *:after),
-:deep(.engine.labels .label:after) {
-  content: 'L';
+.slider {
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin-bottom: 40px;
+  margin-top: 15px;
 }
 
 </style>
+<style src="@vueform/slider/themes/default.css"></style>

@@ -8,7 +8,14 @@
 
 .section-text-d{
     margin: 10px  0;
-    font-weight: 700;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.section-text-subtitle{
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(206, 189, 189, 0.57);
 }
 
 .section-subtext{
@@ -51,48 +58,39 @@ body {
     position: relative;
 }
 
-
-.multi-range-slider {
-    border: none !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-}
-
-.multi-range-slider .bar-inner {
-    background: linear-gradient(rgba(215, 29, 128, 0.6), rgba(196, 44, 140, 0.6)) !important;
-    box-shadow: none !important;
-    border: none !important;
-}
-
-.multi-range-slider .bar-left,
-.multi-range-slider .bar-right {
+.slider-connects,
+.slider-base {
     background: linear-gradient(rgba(215, 29, 128, 0.3), rgba(196, 44, 140, 0.3)) !important;
     border-radius: 0 !important;
-    box-shadow: none !important;
 }
 
-.multi-range-slider .thumb::before {
-    content: "" !important;
+.slider-connect {
     background: linear-gradient(rgba(215, 29, 128, 0.8), rgba(196, 44, 140, 0.8)) !important;
-    position: absolute !important;
-    width: 7px !important;
-    height: 20px !important;
-    border: solid 1px black !important;
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.8) !important;
-    border-radius: 0 !important;
-    z-index: 1 !important;
-    margin: -8px !important;
 }
 
-.multi-range-slider .thumb .caption * {
-    background-color: transparent !important;
-    box-shadow: none !important;
+.slider-horizontal .slider-tooltip-top:before {
+    border: none !important;
+    border-top-color: inherit !important;
+    bottom: 0;
+}
+
+.slider-horizontal .slider-tooltip-top {
+    bottom: 18px !important;
+}
+
+.slider-tooltip {
+    background: none !important;
+    border: none !important;
     font-size: 12px !important;
     font-weight: 800 !important;
 }
 
-.multi-range-slider .thumb .caption {
-    display: flex !important;
+.slider-handle {
+    background: rgba(215, 29, 128, 1) !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    border: 1px solid rgba(128, 67, 67, 0.6) !important;
+    width: 8px !important;
 }
 
 .select-boxes {

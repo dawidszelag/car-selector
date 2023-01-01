@@ -3,7 +3,7 @@
     <question-label
         number="8"
         help-text="- select all that apply"
-        question="What car size would you like?"/>
+        question="Which fuel type would you like?"/>
     <div class="answers-box">
       <checkout-field v-model="question.petrol" label="petrol"/>
       <checkout-field v-model="question.diesel" label="diesel"/>

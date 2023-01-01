@@ -11,7 +11,7 @@
       <div class="section-text"> NEXT TO ME:</div>
       <checkout-field v-model="question.adult" label="adult"/>
       <checkout-field v-model="question.child" label="child (without a child seat)"/>
-      <checkout-field v-model="question.elderly_front_seat" label="elderly"/>
+      <checkout-field v-model="question.elderly_front_seat" label="an elderly"/>
 
       <div class="section-text"> BACK SEAT:</div>
       <checkout-field v-model="question.children_1" label="1 or 2 children in child seat(s)"/>

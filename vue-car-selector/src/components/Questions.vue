@@ -1,12 +1,15 @@
 <template>
   <div class="questions">
+    <Modal class="modal" v-model:visible="showModal">
+      <div>Combination of the selected criteria is not possible. Please change your criteria.</div>
+    </Modal>
     <div class="section-title">
-      LET'S <span>GET IT</span> STARTED
+      LET'S <span>GET</span> STARTED
     </div>
     <question1 @answers="handleAnswers" class="question"/>
     <question2 @answers="handleAnswers" class="question"/>
     <question3 @answers="handleAnswers" class="question"/>
-    <question4 @answers="handleAnswers" class="question" :minValue="budget.min" :maxValue="budget.max"/>
+    <question4 v-if="budget" @answers="handleAnswers" class="question" :minValue="budget.min" :maxValue="budget.max"/>
     <question5 @answers="handleAnswers" class="question" :brands="brands"/>
     <question6 @answers="handleAnswers" class="question" :bodies="bodies"/>
     <question7 @answers="handleAnswers" class="question"/>
@@ -51,16 +54,17 @@ import Question13 from "../components/Questions/Question13";
 import Question14 from "../components/Questions/Question14";
 import Question15 from "../components/Questions/Question15";
 import Question16 from "../components/Questions/Question16";
+import {Modal} from 'usemodal-vue3';
 
+const showModal = ref(false)
 const buttonIsVisible = ref(false)
 const brands = ref([]);
 const bodies = ref([]);
-const budget = ref([]);
+const budget = ref(null);
 const isReady = ref(false);
 const countCars = ref(0)
 const form = reactive({
-  carForWoman: null,
-  carForMan: null,
+  annaForWomen: null,
 
   youngDriver: null,
   driver2345: null,
@@ -155,6 +159,9 @@ const handleAnswers = (data) => {
 const makeRequest = async () => {
   const response = await CarsService.getCars(form);
   countCars.value = response.count;
+  if (response.count === 0) {
+    showModal.value = true;
+  }
 }
 
 onBeforeMount(async () => {
@@ -215,13 +222,37 @@ onBeforeMount(async () => {
   background: linear-gradient(rgba(215, 29, 128, 1), rgba(196, 44, 140, 1)) !important;
 }
 
-.section-title{
+.section-title {
   font-style: italic;
   font-size: 30px;
   font-weight: 800;
   margin-left: -10px;
-  span{
+
+  span {
     color: rgb(215, 29, 128);
   }
+}
+
+:deep(.modal-vue3-header) {
+  display: none;
+}
+
+:deep(.modal-vue3-content) {
+  border: none !important;
+  color: rgba(255, 255, 255, 0.85)!important;
+  background: rgba(36, 36, 36, 0.85) !important;
+  box-shadow: 0 2px 3px rgb(0 0 0 / 40%)!important;
+}
+
+:deep(.modal-vue3-footer) {
+  border-top: none !important;
+}
+
+:deep(.modal-vue3-footer-cancel) {
+  display: none !important;
+}
+
+:deep(.modal-vue3-footer-ok) {
+  background: linear-gradient(rgba(215, 29, 128, 0.9), rgba(196, 44, 140, 0.9)) !important;
 }
 </style>

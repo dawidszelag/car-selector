@@ -6,11 +6,12 @@
       <img :src="Logo">
     </div>
     <info-box class="box"/>
-    <questions class="box" @ready="handlerFormReady" v-if="!appStore.showResults"/>
-    <search-results class="box" :form="form" v-else/>
     <div class="nav-right" @click="appStore.showResults=false" v-if="appStore.showResults">
       BACK TO FORM
     </div>
+    <questions class="box" @ready="handlerFormReady" v-if="!appStore.showResults"/>
+    <search-results class="box" :form="form" v-else/>
+
   </div>
 </template>
 

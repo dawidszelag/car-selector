@@ -28,7 +28,7 @@ def add_cars_data_to_database(file_path, remove_file: bool = True):
 def add_cars_to_database(clear_data):
     length = len(clear_data)
     for index, row in clear_data.iterrows():
-        car_id = int(row['ID'])
+        car_id = row['ID']
         car, created = Car.objects.get_or_create(pk=car_id)
         try:
             car.name = row['NAMING']
@@ -64,6 +64,9 @@ def add_cars_to_database(clear_data):
             car.fuel_urban = convert_value_to_float(row['FUEL CITY    L/KM'])
             car.fuel_average_distance = convert_value_to_int(row['FUEL AVERAGE DISTANCE (KM)'])
             car.charging_time = convert_value_to_float(row['CHARGING TIME 0-100% 7.4 KW'])
+            car.electric_range = convert_value_to_float(row['ELECTRIC RANGE KM'])
+            car.fast_charging_time = convert_value_to_float(row['FASTCHARGE TIME 10-80%'])
+            car.fast_charging_time_max_kw = convert_value_to_float(row['FASTCHARGE POWER      MAX KW'])
             car.max_fuel_distance = convert_value_to_int(row['MAX FUEL DISTANCE KM'])
             car.min_fuel_distance = convert_value_to_int(row['MIN FUEL DISTANCE KM'])
             car.length = convert_value_to_int(row['LENGTH (MM)'])
@@ -233,7 +236,7 @@ def add_parameters_to_database(clear_data):
     """
     length = len(clear_data)
     for index, row in clear_data.iterrows():
-        car_id = int(row['ID'])
+        car_id = row['ID']
         try:
             try:
                 car = Car.objects.get(pk=car_id)

@@ -2,9 +2,9 @@
   <div class="container"
        :style="{ backgroundImage: 'url(' +  carBGImage  + ')' }"
        style="background-position: center; background-size: cover;">
-    <car-info v-if="car" :car="car" class="box"/>
+    <CarInfo v-if="car" :car="car" class="box"/>
     <div class="box" v-if="car">
-      <car-gallery :images="car.images"/>
+      <CarGallery :images="car.images"/>
       <div>
         <div class="section-text-d" style="margin-top: 20px">
           CARMATCH #
@@ -15,9 +15,7 @@
           </div>
         </div>
       </div>
-
     </div>
-
     <div class="nav-right" @click="$router.push({name: 'home'})">
       BACK TO LIST
     </div>
@@ -26,13 +24,13 @@
 
 <script setup>
 import bgImage from "@/assets/bg-pc.jpg"
-import {OpenAPI} from '../api';
+import {OpenAPI} from '../../api';
 import BagdeAnnaChoice from "@/assets/badge-1.png"
 import {computed, onBeforeMount, ref} from "vue";
 import {useRoute} from "vue-router"
-import {CarsService} from "../api";
-import CarGallery from "../components/CarGallery";
-import CarInfo from "../components/CarInfo";
+import {CarsService} from "../../api";
+import CarGallery from "../../components/CarGallery";
+import CarInfo from "./components/CarInfo";
 
 const car = ref(null);
 const route = useRoute();

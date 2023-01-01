@@ -3,7 +3,7 @@
     <question-label
         number="6"
         help-text="- select all that apply"
-        question="Which body types would you like?"/>
+        question="Which body type(s) would you like?"/>
     <div class="answers-box-no-margin select-boxes">
       <image-box v-for="body in bodies"
                  :key="body.id"

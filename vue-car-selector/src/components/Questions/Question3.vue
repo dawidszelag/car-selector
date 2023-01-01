@@ -5,14 +5,13 @@
         help-text="- select one"
         question="Where will you drive?"/>
     <div class="answers-box">
-      <radio-fields name="question3" keyValue="shortDistance" label="Mainly local distance" @change="keyHandler"/>
-      <radio-fields name="question3" keyValue="longDistance" label="Long distance" @change="keyHandler"/>
-      <radio-fields name="question3" keyValue="mixedDistance" label="Mixed distance" @change="keyHandler"/>
-      <radio-fields name="question3" keyValue="perfectCityCar" label="Perfect city car" @change="keyHandler"/>
+      <radio-fields name="question3" keyValue="shortDistance" label="Mainly short distance" @change="keyHandler"/>
+      <radio-fields name="question3" keyValue="longDistance" label="Mainly long distance" @change="keyHandler"/>
+      <radio-fields name="question3" keyValue="mixedDistance" label="Mixed - short & long distance" @change="keyHandler"/>
+      <radio-fields name="question3" keyValue="perfectCityCar" label="I want a perfect city car" @change="keyHandler"/>
     </div>
   </div>
 </template>
-
 <script setup>
 import {reactive} from "vue";
 import QuestionLabel from "../QuestionLabel";
