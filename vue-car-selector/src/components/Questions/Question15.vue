@@ -156,12 +156,12 @@ watch(() => question.engine__gte, () => {
 })
 
 watch(range_km, () => {
-  question.km_range__lte = range_km.value[1];
+  question.km_range__lte !== MAX_RANGE_KM ? question.km_range__lte = range_km.value[1] : question.km_range__lte = null;
   range_km.value[0] ? question.km_range__gte = range_km.value[0] : question.km_range__gte = null;
 })
 
 watch(fuel_economy, () => {
-  question.fuel_economy__lte = fuel_economy.value[1];
+  question.fuel_economy__lte !== 25 ? question.fuel_economy__lte = fuel_economy.value[1] : question.fuel_economy__lte = null;
   fuel_economy.value[0] ? question.fuel_economy__gte = fuel_economy.value[0] : question.fuel_economy__gte = null;
 })
 
