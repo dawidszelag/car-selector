@@ -50,7 +50,7 @@ const showImage = (imageIdx) => {
 
 .image-list{
   width: 25%;
-  padding: 0 5px;
+  padding-right: 5px;
   max-height: 400px;
   overflow-y: scroll;
   .gallery_item img{
