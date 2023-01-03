@@ -251,6 +251,12 @@ def get_question_3_filter(filters: CarsFilters):
 
 
 def get_question_4_filter(filters: CarsFilters):
+    if filters.price_au__gte is None \
+            and filters.price_nz__gte is None \
+            and filters.price_au__lte is None \
+            and filters.price_nz__lte is None:
+        return Q()
+
     question = Q(price_au__isnull=False) | Q(price_nz__isnull=False)
     if filters.price_au__gte is not None and filters.price_nz__gte is not None:
         question &= Q(Q(price_au__gte=filters.price_au__gte) | Q(price_nz__gte=filters.price_nz__gte))
