@@ -327,7 +327,7 @@ def get_question_9_filter(filters: CarsFilters):
 def get_question_10_filter(filters: CarsFilters):
     question = Q()
     if filters.seats:
-        question = Q(seats=filters.seats)
+        question = Q(seats__gte=filters.seats)
 
     return question
 
