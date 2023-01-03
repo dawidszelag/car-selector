@@ -32,6 +32,7 @@ export default {
     modelImg: function () {
       return {
         background: `url(${OpenAPI.BASE}/media/${this.modelInfo.thumbnail}) no-repeat center`,
+        backgroundSize: 'cover'
       }
     }
   }
