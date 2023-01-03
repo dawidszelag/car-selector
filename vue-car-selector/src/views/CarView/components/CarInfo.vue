@@ -1,31 +1,37 @@
 <template>
-  <div>
+  <div style="position: relative">
+    <div class="brand" v-if="brandThumbnail">
+      <div>
+        <img :src="brandThumbnail" alt="">
+      </div>
+    </div>
     <div class="car-name">
       <span> {{ car.model.brand.name }}</span> {{ car.model.name }}
       <div>{{ car.name }}</div>
     </div>
     <CarInfoBoxes :car="car"/>
-    <div class="section-text-d" style="margin-top: 40px;">
-      DETAILS
-      <div class="section-text-subtitle">SPECS AND FEATURES</div>
-    </div>
-    <div class="details">
-      <CarDetails :car="car"/>
-    </div>
+    <CarDetails :car="car"/>
   </div>
 </template>
 
 <script setup lang="ts">
-import {defineProps} from "vue";
-import CarDetails from "./../CarDetials.vue";
-import CarInfoBoxes from "../CarInfoBoxes.vue";
+import {computed, defineProps, onBeforeMount, ref} from "vue";
+import CarDetails from "./CarDetials.vue";
+import CarInfoBoxes from "./CarInfoBoxes.vue";
+import {CarBrandOut, CarsService, OpenAPI} from "../../../api";
+import DefaultIcon from "@/assets/default-icon.png"
 
-defineProps(['car']);
+const props = defineProps(['car']);
+const {car} = props;
+const brands = ref<CarBrandOut[]>([])
+onBeforeMount(async () => {
+  brands.value = await CarsService.getBrands();
+})
 
-const formatPrice = (value: number) => {
-  let val = (value / 1).toFixed(0).replace('.', ',')
-  return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-}
+const brandThumbnail = computed(() => {
+  return brands.value.find(item => item.id === car.model.brand.id)?.thumbnail
+})
+
 </script>
 <style lang="less" scoped>
 .details-line {
@@ -65,6 +71,16 @@ const formatPrice = (value: number) => {
     text-transform: none;
     font-size: 20px;
     font-weight: 600;
+  }
+}
+
+.brand {
+  max-width: 100px;
+  position: absolute;
+  text-align: left;
+  right: 100px;
+  img {
+    width: 100%;
   }
 }
 

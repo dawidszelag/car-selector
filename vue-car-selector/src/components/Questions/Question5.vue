@@ -5,7 +5,7 @@
         help-text="- select all that apply"
         question="Do you have a brand in mind?"/>
     <div class="answers-box-no-margin select-boxes">
-      <image-box v-for="brand in brands"
+      <ImageBox v-for="brand in brands"
                  :key="brand.id"
                  :name="brand.name"
                  :img="brand.thumbnail"
@@ -24,8 +24,7 @@
 <script setup>
 import {reactive, defineEmits, defineProps, ref, watch, watchEffect} from "vue";
 import QuestionLabel from "../QuestionLabel";
-import DefaultIcon from "../../assets/default-icon.png"
-import CheckoutField from "../CheckoutField";
+import CheckoutField from "../CheckboxField";
 import ImageBox from "../ImageBox";
 
 defineProps({

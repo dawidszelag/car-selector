@@ -1,7 +1,8 @@
 <template>
   <div class="car_gallery" v-if="images.length">
     <div class="section-text-d">
-      GALLERY
+      LET'S LOOK AT IT
+      <div class="section-text-subtitle">GALLERY</div>
     </div>
     <div class="gallery">
       <div class="image-list">
@@ -50,7 +51,7 @@ const showImage = (imageIdx) => {
 .image-list{
   width: 25%;
   padding: 0 5px;
-  max-height: 500px;
+  max-height: 400px;
   overflow-y: scroll;
   .gallery_item img{
     width: 100%;

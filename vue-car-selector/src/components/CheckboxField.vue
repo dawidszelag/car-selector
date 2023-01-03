@@ -37,7 +37,7 @@ const handleInput = (event) => {
 .field[type="checkbox"]:not(:checked) + label,
 .field[type="checkbox"]:checked + label {
   position: relative;
-  padding: 7px 15px;
+  padding: 8.5px 15px;
   font-size: 15px;
   font-weight: 800;
   color: rgba(255, 255, 255, 0.85);

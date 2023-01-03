@@ -97,7 +97,7 @@
 <script setup>
 import {reactive, watch} from "vue";
 import QuestionLabel from "../QuestionLabel";
-import CheckoutField from "../CheckoutField";
+import CheckoutField from "../CheckboxField";
 import Slider from '@vueform/slider'
 
 const MAX_RANGE_KM = 2143;

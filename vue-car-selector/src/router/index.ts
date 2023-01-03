@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "@/views/HomeView.vue";
-import CarDetailsView from "@/views/CarDetailsView/index.vue";
+import CarView from "@/views/CarView/index.vue";
 
 const routes = [
     {
@@ -11,7 +11,7 @@ const routes = [
     {
         path: "/car/:carId",
         name: "carDetailsView",
-        component: CarDetailsView,
+        component: CarView,
     },
 ];
 

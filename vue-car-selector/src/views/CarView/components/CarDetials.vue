@@ -1,4 +1,8 @@
 <template>
+  <div class="section-text-d" style="margin-top: 40px;">
+    DETAILS
+    <div class="section-text-subtitle">SPECS AND FEATURES</div>
+  </div>
   <div class="details-box">
     <ul v-for="section in CAR_DETAILS">
       <li v-for="item in section">
@@ -7,10 +11,6 @@
       </li>
     </ul>
     <ul>
-      <li>
-        <div class="name">ANCAP - SAFETY RATINGS</div>
-        <div class="value">{{ car.ancap }}/5</div>
-      </li>
       <li>
         <div class="name">SAFETY ADULT</div>
         <div class="value">{{ car.safety_adult ?? '--' }}/100</div>
@@ -29,10 +29,6 @@
       </li>
     </ul>
     <ul>
-      <li>
-        <div class="name">WARRANTY (YEARS)</div>
-        <div class="value">{{ car.warranty_years ?? '--' }}</div>
-      </li>
       <li>
         <div class="name">WARRANTY (KM)</div>
         <div class="value">{{ car.warranty_distance ?? '--' }}</div>
@@ -95,11 +91,6 @@ const props = defineProps(['car']);
 
 const {car} = props;
 
-const formatPrice = (value) => {
-  let val = (value / 1).toFixed(0).replace('.', ',')
-  return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
-}
-
 const convertToTime = (number) => {
   const hour = number ? parseInt(car.fast_charging_time / 60) : 0
   const min = number ? parseInt(car.fast_charging_time % 60) : 0
@@ -144,11 +135,13 @@ const PHEV = [
     {
       name: "TRANSMISSION",
       value: `${car.transmission ?? '--'}`
-    }],
-  {
-    name: "GEARS",
-    value: `${car.gears ?? '--'}`
-  },
+    },
+    {
+      name: "GEARS",
+      value: `${car.gears ?? '--'}`
+    },
+  ],
+
   [
     {
       name: "FUEL TYPE",
@@ -269,12 +262,12 @@ const PETROL_CAR = [
     {
       name: "TRANSMISSION",
       value: `${car.transmission ?? '--'}`
-    }],
-  {
-    name: "GEARS",
-    value: `${car.gears ?? '--'}`
-  },
-
+    },
+    {
+      name: "GEARS",
+      value: `${car.gears ?? '--'}`
+    },
+  ],
   [
     {
       name: "FUEL TYPE",
@@ -314,7 +307,7 @@ const CAR_DETAILS = computed(() => {
   margin-top: 10px;
   background: rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
-  height: 400px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
@@ -337,7 +330,7 @@ const CAR_DETAILS = computed(() => {
 }
 
 .details-box ul li .value {
-  font-weight: 700;
+  font-weight: 500;
   text-align: left;
   width: 40%;
 }

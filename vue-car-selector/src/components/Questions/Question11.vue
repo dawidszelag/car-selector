@@ -33,7 +33,7 @@
 <script setup>
 import {reactive, watch} from "vue";
 import QuestionLabel from "../QuestionLabel";
-import CheckoutField from "../CheckoutField";
+import CheckoutField from "../CheckboxField";
 
 const emit = defineEmits(['answers'])
 const question = reactive({

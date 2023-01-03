@@ -25,7 +25,7 @@
 import {reactive, defineEmits, defineProps, ref, watch} from "vue";
 import QuestionLabel from "../QuestionLabel";
 
-import CheckoutField from "../CheckoutField";
+import CheckoutField from "../CheckboxField";
 import ImageBox from "../ImageBox";
 
 defineProps({

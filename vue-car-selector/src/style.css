@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300;400;500;600;700&display=swap');
 * {
     box-sizing: border-box;
 }
@@ -26,7 +27,7 @@
 }
 
 :root {
-    font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+    font-family: 'Jura', sans-serif;
     font-size: 16px;
     font-weight: 400;
 
