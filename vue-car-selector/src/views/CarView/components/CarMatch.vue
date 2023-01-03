@@ -7,7 +7,7 @@
     <div class="carmatch">
       <div class="badge">
         <img v-if="car?.anna_cars" :src="ANNAS_CHOICE_ACTIVE" alt="ANNAS_CHOICE_ACTIVE">
-        <img v-else :src="ANNAS_CHOICE_ACTIVE" alt="ANNAS_CHOICE_ACTIVE">
+        <img v-else :src="ANNAS_CHOICE_ACTIVE" alt="ANNAS_CHOICE_INACTIVE">
       </div>
       <div class="badge">
         <img v-if="car?.perfect_city_car" :src="PERFECT_FOR_CITY_ACTIVE" alt="PERFECT_FOR_CITY_ACTIVE">

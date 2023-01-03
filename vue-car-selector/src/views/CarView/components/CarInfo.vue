@@ -18,8 +18,7 @@
 import {computed, defineProps, onBeforeMount, ref} from "vue";
 import CarDetails from "./CarDetials.vue";
 import CarInfoBoxes from "./CarInfoBoxes.vue";
-import {CarBrandOut, CarsService, OpenAPI} from "../../../api";
-import DefaultIcon from "@/assets/default-icon.png"
+import {CarBrandOut, CarsService } from "../../../api";
 
 const props = defineProps(['car']);
 const {car} = props;
