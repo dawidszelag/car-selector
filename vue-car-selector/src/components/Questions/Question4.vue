@@ -8,6 +8,7 @@
       <Slider :min="minValue"
               :max="maxValue"
               :step="1000"
+              :merge="100000"
               v-model="price_range.value"
               v-bind="price_range"
               class="price"/>
