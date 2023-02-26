@@ -6,7 +6,7 @@
       <CarInfo v-if="car" :car="car" class="box"/>
       <div class="box" v-if="car">
         <CarMatch style="min-height: 300px; margin-bottom: 100px;" :car="car"/>
-        <CarGallery style="max-height: 400px;">
+        <CarGallery style="max-height: 400px;" :images="car.images">
           <div class="footer">
             <div class="nav-button-right" @click="$router.push({name: 'home'})">
               BACK TO LIST
