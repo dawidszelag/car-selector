@@ -45,7 +45,7 @@ const PETROL_CAR = [
   {
     max: props.car.stats?.max_fuel_range,
     value: props.car.max_fuel_distance,
-    textValue: (props.car.max_fuel_distance || '--')+ ' KM',
+    textValue: (props.car.fuel_average_distance || '--')+ ' KM',
     title: "AVERAGE FUEL RANGE",
     subtitle: "KM"
   },
