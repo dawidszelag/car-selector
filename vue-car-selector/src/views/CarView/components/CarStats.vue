@@ -45,14 +45,14 @@ const PETROL_CAR = [
   {
     max: props.car.stats?.max_fuel_range,
     value: props.car.max_fuel_distance,
-    textValue: props.car.max_fuel_distance + 'KM',
+    textValue: (props.car.max_fuel_distance || '--')+ ' KM',
     title: "AVERAGE FUEL RANGE",
     subtitle: "KM"
   },
   {
     max: props.car.stats?.max_fuel_efficiency,
     value: props.car.fuel_combined,
-    textValue: props.car.fuel_combined + 'L',
+    textValue: (props.car.fuel_combined || '--') + ' L',
     title: "FUEL EFFICIENCY",
     subtitle: "L/100KM"
   }
@@ -61,7 +61,7 @@ const PHEV = [
   {
     max: props.car.stats?.max_hybrid_range,
     value: props.car.electric_range,
-    textValue: props.car.electric_range + 'KM',
+    textValue: (props.car.electric_range || '--') + ' KM' ,
     title: "MAXIMUM ELECTRIC RANGE",
     subtitle: "KM"
   },
