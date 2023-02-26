@@ -119,11 +119,21 @@ body {
     max-width: 150px;
 }
 
+.footer{
+    width: 100%;
+    bottom: 0;
+    padding: 20px 0;
+}
 
-.nav-right {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
+.nav-button {
+    padding: 10px 0;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.nav-button-right{
+    text-align: right;
+    padding: 10px 0;
     font-weight: 700;
     cursor: pointer;
 }

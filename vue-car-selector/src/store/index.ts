@@ -2,11 +2,14 @@ import {defineStore} from 'pinia';
 
 export const useAppStore = defineStore('appStore', {
     state: () => {
-        return {form: {},showResults: false }
+        return {
+            form: {},
+            showResults: false
+        }
     },
 
     actions: {
-        setForm(form) {
+        setForm(form: {}) {
             this.form = {...form}
         },
     },

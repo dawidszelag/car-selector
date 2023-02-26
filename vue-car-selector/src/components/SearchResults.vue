@@ -58,7 +58,6 @@ onBeforeMount(async () => {
 <style scoped lang="less">
 .results-container {
   position: relative;
-  height: 100vh;
 }
 
 .results {

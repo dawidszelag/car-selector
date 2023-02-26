@@ -1,7 +1,7 @@
 <template>
   <div class="questions">
     <Modal class="modal" v-model:visible="showModal">
-      <div>Combination of the selected criteria is not possible. Please change your criteria.</div>
+      <div>This selection is non-compatible with your other answers. Try another response.</div>
     </Modal>
     <div class="section-title">
       LET'S <span>GET</span> STARTED
@@ -179,7 +179,6 @@ onBeforeMount(async () => {
 
 .questions {
   position: relative;
-  height: 100vh;
 }
 
 .question:first-child {

@@ -66,7 +66,7 @@ def add_cars_to_database(clear_data):
             car.charging_time = convert_value_to_float(row['CHARGING TIME 0-100% 7.4 KW'])
             car.electric_range = convert_value_to_float(row['ELECTRIC RANGE KM'])
             car.fast_charging_time = convert_value_to_float(row['FASTCHARGE TIME 10-80%'])
-            car.fast_charging_time_max_kw = convert_value_to_float(row['FASTCHARGE POWER      MAX KW'])
+            car.fast_charging_max_kw = convert_value_to_float(row['FASTCHARGE POWER      MAX KW'])
             car.max_fuel_distance = convert_value_to_int(row['MAX FUEL DISTANCE KM'])
             car.min_fuel_distance = convert_value_to_int(row['MIN FUEL DISTANCE KM'])
             car.length = convert_value_to_int(row['LENGTH (MM)'])

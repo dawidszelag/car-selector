@@ -86,16 +86,11 @@
 <script setup>
 import {computed, defineProps} from "vue";
 import {DriveType, FuelType, FuelTypeEnum} from "../../../dicts";
+import {DataTime} from "../../../utils";
 
 const props = defineProps(['car']);
 
 const {car} = props;
-
-const convertToTime = (number) => {
-  const hour = number ? parseInt(car.fast_charging_time / 60) : 0
-  const min = number ? parseInt(car.fast_charging_time % 60) : 0
-  return `${hour}h${min}min`
-}
 
 
 const PHEV = [
@@ -171,7 +166,7 @@ const PHEV = [
     },
     {
       name: "CHARGING TIME 0 - 100% @ 7.4 kWH",
-      value: `${convertToTime(car.charging_time)}`
+      value: `${DataTime.convertToTime(car.charging_time)}`
     },
     {
       name: "CHARGING MAXIMUM SPEED",
@@ -214,11 +209,11 @@ const ELECTRIC = [
     },
     {
       name: "CHARGING TIME 0 - 100% @ 7.4 kWH",
-      value: `${convertToTime(car.charging_time)}`
+      value: `${DataTime.convertToTime(car.charging_time * 60)}`
     },
     {
-      name: "FAST CHARGING",
-      value: `FAST CHARGING 10-80% @ 150 kWh - ${convertToTime(car.fast_charging_time)}`
+      name: "FAST CHARGING 10-80% @ 150 kW",
+      value: `${DataTime.convertToTime(car.fast_charging_time)}`
     },
     {
       name: "CHARGING MAXIMUM SPEED - NP. 7.4 kW",

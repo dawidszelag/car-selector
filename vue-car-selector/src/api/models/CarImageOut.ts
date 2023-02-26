@@ -4,7 +4,7 @@
 
 export type CarImageOut = {
     id?: number;
-    car: number;
+    car: string;
     image: string;
 };
 

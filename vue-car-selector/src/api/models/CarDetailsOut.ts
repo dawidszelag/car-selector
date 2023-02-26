@@ -4,10 +4,11 @@
 
 import type { CarBodyModelOut } from './CarBodyModelOut';
 import type { CarImageOut } from './CarImageOut';
+import type { CarsStats } from './CarsStats';
 import type { ModelDetailsOut } from './ModelDetailsOut';
 
 export type CarDetailsOut = {
-    id?: number;
+    id?: string;
     model: ModelDetailsOut;
     name: string;
     badge?: string;
@@ -35,6 +36,8 @@ export type CarDetailsOut = {
     fuel_average_distance?: number;
     electric_range?: number;
     charging_time?: number;
+    fast_charging_time?: number;
+    fast_charging_max_kw?: number;
     max_fuel_distance?: number;
     min_fuel_distance?: number;
     length?: number;
@@ -135,6 +138,7 @@ export type CarDetailsOut = {
      * Data contains an error
      */
     error?: boolean;
+    stats?: CarsStats;
     images?: Array<CarImageOut>;
 };
 

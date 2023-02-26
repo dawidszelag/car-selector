@@ -10,6 +10,7 @@
       <div>{{ car.name }}</div>
     </div>
     <CarInfoBoxes :car="car"/>
+    <CarStats :car="car"/>
     <CarDetails :car="car"/>
   </div>
 </template>
@@ -18,7 +19,8 @@
 import {computed, defineProps, onBeforeMount, ref} from "vue";
 import CarDetails from "./CarDetials.vue";
 import CarInfoBoxes from "./CarInfoBoxes.vue";
-import {CarBrandOut, CarsService } from "../../../api";
+import {CarBrandOut, CarsService} from "../../../api";
+import CarStats from "./CarStats.vue";
 
 const props = defineProps(['car']);
 const {car} = props;
@@ -78,6 +80,7 @@ const brandThumbnail = computed(() => {
   position: absolute;
   text-align: left;
   right: 100px;
+
   img {
     width: 100%;
   }

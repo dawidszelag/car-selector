@@ -34,8 +34,13 @@
       <div class="slider">
         <span>0 km</span>
         <Slider :min="0"
+                :step="1"
                 :max="MAX_RANGE_KM"
                 class="range-km"
+                :format="{
+                  suffix: 'km'
+                }"
+                :merge="200"
                 connects='c-slider-connects'
                 v-model="range_km.value"
                 v-bind="range_km"/>
@@ -47,6 +52,10 @@
         <span>0 L</span>
         <Slider :min="0"
                 :max="25"
+                :format="{
+                  suffix: ' L'
+                }"
+                merge="2"
                 class="fuel-economy"
                 connects='c-slider-connects'
                 v-model="fuel_economy.value"
@@ -61,6 +70,9 @@
         <Slider :min="0"
                 :max="MAX_POWER_KW"
                 class="power-kw"
+                :format="{
+                  suffix: ' kW'
+                }"
                 connects='c-slider-connects'
                 v-model="question.power__gte"/>
         <span>{{ MAX_POWER_KW }} kW</span>
@@ -72,6 +84,9 @@
         <span>0 sec</span>
         <Slider :min="0"
                 :max="MAX_ACCELERATE"
+                :format="{
+                  suffix: ' sec'
+                }"
                 class="acceleration"
                 connects='c-slider-connects'
                 v-model="question.acceleration__lte"/>
@@ -83,6 +98,9 @@
         <Slider :min="0"
                 :max="MAX_ENGINE_SIZE"
                 class="engine"
+                :format="{
+                  suffix: ' L'
+                }"
                 connects='c-slider-connects'
                 v-model="question.engine__gte"/>
         <span>{{ MAX_ENGINE_SIZE }} L</span>
@@ -199,24 +217,8 @@ const emitData = () =>{
 }
 </script>
 <style>
-.engine .slider-tooltip-top:after {
-  content: ' L';
-}
-
-.range-km .slider-tooltip-top:after {
-  content: ' km';
-}
-
-.power-kw .slider-tooltip-top:after {
-  content: ' kW';
-}
-
-.acceleration .slider-tooltip-top:after {
-  content: ' sec';
-}
-
-.fuel-economy .slider-tooltip-top:after {
-  content: ' L';
+.slider-horizontal .slider-tooltip-top{
+  bottom: 15px!important;
 }
 </style>
 <style scoped>
@@ -242,13 +244,12 @@ const emitData = () =>{
 .slider span:last-child {
   right: -10px;
 }
-
 .slider {
   position: relative;
   display: flex;
   width: 100%;
   margin-bottom: 40px;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 </style>

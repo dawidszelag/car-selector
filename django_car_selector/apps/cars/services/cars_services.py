@@ -4,6 +4,8 @@ from typing import List
 from ninja import Schema, Field
 from django.db.models import Max, Min, Q, OuterRef, Subquery
 from ninja import ModelSchema
+from pydantic.main import BaseModel
+
 from apps.cars.models import Car, CarBrand, CarBody, FuelType, DriveType, RaceTrackScale, CarImage, CarModel
 
 
@@ -136,12 +138,23 @@ class CarListImageOut(ModelSchema):
         model_fields = ['image']
 
 
+class CarsStats(BaseModel):
+    max_fuel_range: float = None
+    max_fuel_efficiency: float = None
+    max_hybrid_range: float = None
+    max_hybrid_charging_time: float = None
+    max_electric_charging_time: float = None
+    max_electric_fast_charging_time: float = None
+
+
 class CarDetailsOut(ModelSchema):
+    stats: CarsStats = None
     body: CarBodyModelOut
     model: ModelDetailsOut
     images: List[CarImageOut] = []
 
     class Config:
+        objects = Car.objects
         model = Car
         model_fields = "__all__"
 
@@ -155,11 +168,24 @@ class CarOut(ModelSchema):
 
 
 class CarsService:
-    BASE_URL = f'http://{os.environ.get("HOST", "127.0.0.1")}:{os.environ.get("BACKEND_PORT", 8000)}'
+    BASE_URL = os.environ.get("BACKEND_URL")
 
     @staticmethod
     def get_car_details(car_id: int) -> CarDetailsOut:
-        return Car.objects.get(id=car_id)
+        car = Car.objects.get(id=car_id)
+        car = CarDetailsOut.from_orm(car)
+        car_stats = Car.objects.aggregate(
+            max_fuel_range=Max('max_fuel_distance'),
+            max_fuel_efficiency=Max('fuel_combined'),
+            max_hybrid_range=Max('electric_range',
+                                 filter=Q(fuel_type=FuelType.PLUGIN)),
+            max_hybrid_charging_time=Max('charging_time',
+                                         filter=Q(fuel_type=FuelType.PLUGIN)),
+            max_electric_charging_time=Max('charging_time'),
+            max_electric_fast_charging_time=Max('fast_charging_time'),
+        )
+        car.stats = car_stats
+        return car
 
     @staticmethod
     def get_cars(filters: CarsFilters) -> List[CarOut]:

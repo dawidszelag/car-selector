@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "openapi": "openapi --input http://127.0.0.1:8000/api/openapi.json --client axios  --useOptions --output ./src/api"
+    "openapi": "openapi --input http://127.0.0.1:9000/api/openapi.json --client axios  --useOptions --output ./src/api"
   },
   "dependencies": {
     "@formkit/vue": "^1.0.0-beta.10",

@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 export type CarOut = {
-    id?: number;
+    id?: string;
     name: string;
     thumbnail?: string;
 };

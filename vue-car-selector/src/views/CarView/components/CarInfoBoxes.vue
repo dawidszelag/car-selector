@@ -92,7 +92,7 @@ const CAR_SUMMARY= computed(() => {
   align-items: center;
   justify-content: center;
   position: relative;
-  padding: 15px 0;
+  padding: 15px 3px;
   background: rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
   font-weight: 600;
@@ -104,6 +104,7 @@ const CAR_SUMMARY= computed(() => {
 }
 .top-bottom {
   font-size: 17px;
+  text-align: center;
 }
 
 

@@ -1,7 +1,10 @@
 export const DataTime = {
-    convertToTime: (time_value: number) => {
+    convertToTime: (time_value: number | undefined) => {
         const hour = time_value ? parseInt(String(time_value / 60)) : 0
         const min = time_value ? parseInt(String(time_value % 60)) : 0
+        if (hour === 0  && min ===0){
+            return '-- h'
+        }
         return `${hour}h${min}min`
     }
 }

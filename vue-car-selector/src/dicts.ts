@@ -19,4 +19,3 @@ export enum FuelTypeEnum {
     PHEV,
     HYBRID,
 }
-

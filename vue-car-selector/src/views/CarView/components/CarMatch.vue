@@ -6,23 +6,70 @@
     </div>
     <div class="carmatch">
       <div class="badge">
-        <img v-if="car?.anna_cars" :src="ANNAS_CHOICE_ACTIVE" alt="ANNAS_CHOICE_ACTIVE">
-        <img v-else :src="ANNAS_CHOICE_ACTIVE" alt="ANNAS_CHOICE_INACTIVE">
+        <img v-if="car?.flexible && car.big_family" :src="FLEXIBILITY_AND_FAMILY_ACTIVE">
+        <img v-else :src="FLEXIBILITY_AND_FAMILY_INACTIVE">
       </div>
       <div class="badge">
-        <img v-if="car?.perfect_city_car" :src="PERFECT_FOR_CITY_ACTIVE" alt="PERFECT_FOR_CITY_ACTIVE">
-        <img v-else :src="PERFECT_FOR_CITY_INACTIVE" alt="PERFECT_FOR_CITY_ACTIVE">
+        <img v-if="car?.practicality > 8" :src="PRACTICALITY_ACTIVE">
+        <img v-else :src="PRACTICALITY_INACTIVE">
       </div>
       <div class="badge">
-        <img v-if="car?.anna_for_women" :src="PERFECT_FOR_WOMAN_ACTIVE" alt="PERFECT_FOR_WOMAN_ACTIVE">
-        <img v-else :src="PERFECT_FOR_WOMAN_INACTIVE" alt="PERFECT_FOR_WOMAN_ACTIVE">
+        <img v-if="car?.comfort > 8" :src="COMFORT_ACTIVE">
+        <img v-else :src="COMFORT_INACTIVE">
+      </div>
+      <div class="badge">
+        <img v-if="(car?.safety_road_user + car.safety_child + car.safety_adult + car.safety_systems) > 250"
+             :src="HIGHEST_SAFETY_RATING_ACTIVE">
+        <img v-else :src="HIGHEST_SAFETY_RATING_INACTIVE">
+      </div>
+      <div class="badge">
+        <img v-if="car?.min_boot_space > 250"
+             :src="BIG_BOOT_ACTIVE">
+        <img v-else :src="BIG_BOOT_INACTIVE">
+      </div>
+      <div class="badge">
+        <img v-if="car?.info_system > 8"
+             :src="HIGHTECH_INFOTAIMENT_ACTIVE">
+        <img v-else :src="HIGHTECH_INFOTAIMENT_INACTIVE">
+      </div>
+      <div class="badge">
+        <img v-if="car?.perfect_city_car" :src="PERFECT_FOR_CITY_ACTIVE">
+        <img v-else :src="PERFECT_FOR_CITY_INACTIVE">
+      </div>
+      <div class="badge">
+        <img v-if="car?.anna_for_women" :src="PERFECT_FOR_WOMAN_ACTIVE">
+        <img v-else :src="PERFECT_FOR_WOMAN_INACTIVE">
+      </div>
+      <div class="badge">
+        <img v-if="car?.sport_feel > 8"
+             :src="SPORTSCAR_ACTIVE">
+        <img v-else :src="SPORTSCAR_INACTIVE">
+      </div>
+      <div class="badge">
+<!--        TODO-->
+        <img v-if="false"
+             :src="SPORTSCAR_ACTIVE">
+        <img v-else :src="SPORTSCAR_INACTIVE">
+      </div>
+      <div class="badge">
+        <img v-if="car?.heavy_off_road"
+             :src="HEAVY_OFF_ROADER_ACTIVE">
+        <img v-else :src="HEAVY_OFF_ROADER_INACTIVE">
+      </div>
+      <div class="badge">
+        <img v-if="car?.max_charging_max_kw > 200"
+             :src="RAPID_CHARGING_ACTIVE">
+        <img v-else :src="RAPID_CHARGING_INACTIVE">
+      </div>
+      <div class="badge">
+        <img v-if="car?.anna_cars" :src="ANNAS_CHOICE_ACTIVE">
+        <img v-else :src="ANNAS_CHOICE_INACTIVE">
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import BagdeAnnaChoice from "@/assets/badge-1.png"
 import ANNAS_CHOICE_ACTIVE from "@/assets/badges/annas_choice_active.png"
 import ANNAS_CHOICE_INACTIVE from "@/assets/badges/annas_choice_inactive.png"
 import BIG_BOOT_ACTIVE from "@/assets/badges/big_boot_active.png"
@@ -49,8 +96,14 @@ import RAPID_CHARGING_ACTIVE from "@/assets/badges/rapid_charging_active.png"
 import RAPID_CHARGING_INACTIVE from "@/assets/badges/rapid_charging_inactive.png"
 import SPORTSCAR_ACTIVE from "@/assets/badges/sportscar_active.png"
 import SPORTSCAR_INACTIVE from "@/assets/badges/sportscar_inactive.png"
-import {defineProps} from "vue";
-defineProps(['car']);
+import {defineProps, PropType} from "vue";
+import type {CarDetailsOut} from "../../../api";
+
+defineProps({
+  car: {
+    type: Object as PropType<CarDetailsOut>,
+  }
+});
 </script>
 <style scoped lang="less">
 .carmatch {

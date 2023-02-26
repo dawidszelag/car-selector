@@ -1,5 +1,5 @@
 <template>
-  <div class="car_gallery" v-if="images.length">
+  <div class="car_gallery">
     <div class="section-text-d">
       LET'S LOOK AT IT
       <div class="section-text-subtitle">GALLERY</div>
@@ -7,25 +7,29 @@
     <div class="gallery">
       <div class="image-list">
         <div v-for="image in images" :key="image.id" class="gallery_item">
-          <img :src="OpenAPI.BASE + image.image" @click="showImage(images.indexOf(image))" alt="">
+          <img :src="OpenAPI.BASE + image.image" @click="currentImageIndex = images.indexOf(image)" alt="">
         </div>
       </div>
-      <div class="main-image">
-        <img :src="OpenAPI.BASE + currentImage.image" alt="">
+      <div class="main-image"
+        :style="{ backgroundImage: 'url(' +  OpenAPI.BASE + currentCarImage?.image  + ')' }"
+        style="background-position: center; background-size: cover;">
       </div>
     </div>
   </div>
+  <slot/>
 </template>
 
 <script setup lang="ts">
 
 import {OpenAPI} from '../api';
-import {defineProps, ref} from "vue";
+import {computed, defineProps, ref} from "vue";
 const props = defineProps(['images'])
-const currentImage = ref(props.images[0])
-const showImage = (imageIdx) => {
-  currentImage.value = props.images[imageIdx]
-}
+const currentImageIndex = ref(0)
+
+
+const currentCarImage = computed(() => {
+  return props.images?.length ? props.images[currentImageIndex.value] : undefined
+})
 </script>
 <style lang="less" scoped>
 
@@ -51,7 +55,7 @@ const showImage = (imageIdx) => {
 .image-list{
   width: 25%;
   padding-right: 5px;
-  max-height: 400px;
+  height: 350px;
   overflow-y: scroll;
   .gallery_item img{
     width: 100%;
@@ -64,6 +68,7 @@ const showImage = (imageIdx) => {
 }
 .main-image{
   width: 73%;
+  height: 350px;
 }
 .gallery {
   display: flex;

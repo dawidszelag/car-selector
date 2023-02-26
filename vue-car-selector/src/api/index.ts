@@ -14,6 +14,7 @@ export type { CarBrandOut } from './models/CarBrandOut';
 export type { CarDetailsOut } from './models/CarDetailsOut';
 export type { CarImageOut } from './models/CarImageOut';
 export type { CarOut } from './models/CarOut';
+export type { CarsStats } from './models/CarsStats';
 export type { ModelDetailsOut } from './models/ModelDetailsOut';
 export type { PaginatedResponseSchema_CarOut_ } from './models/PaginatedResponseSchema_CarOut_';
 

@@ -59,8 +59,8 @@ class Car(models.Model):
     electric_range = models.PositiveIntegerField(verbose_name="Electric range (KM)", default=None, null=True,
                                                  blank=True)
     charging_time = models.FloatField(verbose_name="Charging time 0-100% 7.4 KW", null=True, blank=True)
-    max_charging_time = models.FloatField(verbose_name="Fastcharge time 10%-80%", null=True, blank=True)
-    max_charging_max_kw = models.FloatField(verbose_name="Fastcharge power max KW", null=True, blank=True)
+    fast_charging_time = models.FloatField(verbose_name="Fastcharge time 10%-80%", null=True, blank=True)
+    fast_charging_max_kw = models.FloatField(verbose_name="Fastcharge power max KW", null=True, blank=True)
     max_fuel_distance = models.PositiveIntegerField(verbose_name="Max fuel distance (KM)", null=True, blank=True)
     min_fuel_distance = models.PositiveIntegerField(verbose_name="Min fuel distance (KM)", null=True, blank=True)
     length = models.PositiveIntegerField(verbose_name="Length (MM)", null=True)
