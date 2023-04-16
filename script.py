@@ -19,8 +19,9 @@ obj.close()
 
 
 import os
+from apps.cars.models import CarImage, Car
 base = "media/car_images"
-for car in cars:
+for car in Car.objects.all():
     try:
         obj = os.scandir(base+f"/{car.id}")
         for entry in obj:

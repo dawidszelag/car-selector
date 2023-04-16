@@ -5,7 +5,7 @@ export const useAppStore = defineStore('appStore', {
         return {
             form: {},
             showResults: false,
-            showFeedBack: false,
+            showFeedBack: true,
         }
     },
 
