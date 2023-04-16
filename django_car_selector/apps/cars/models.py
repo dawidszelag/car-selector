@@ -13,14 +13,19 @@ class FuelType(models.IntegerChoices):
     PETROL = 1, 'Petrol'
     DIESEL = 2, 'Diesel'
     ELECTRIC = 3, 'Electric'
-    PLUGIN = 4, 'Plug in Hybrid & Petrol'
-    HYBRID_PETROL = 5, 'Hybrid Petrol'
+    PHEV = 4, 'Plug in Hybrid & Petrol'
+    MHEV = 5, 'Hybrid Petrol'
 
 
 class DriveType(models.IntegerChoices):
     AWD = 1, 'All Wheel Drive'
     FWD = 2, 'Front Wheel Drive'
     RWD = 3, 'Rear Wheel Drive'
+
+
+class Feedback(models.Model):
+    result = models.BooleanField(default=None)
+    date = models.DateTimeField(auto_now_add=True)
 
 
 class Car(models.Model):
@@ -34,6 +39,7 @@ class Car(models.Model):
     name = models.CharField(max_length=300)
     badge = models.CharField(max_length=300, blank=True, null=True)
     body = models.ForeignKey('CarBody', on_delete=models.SET_NULL, blank=True, null=True)
+    hot_hatch = models.BooleanField(default=None, null=True)
     doors = models.PositiveSmallIntegerField(null=True)
     seats = models.PositiveSmallIntegerField(null=True)
     transmission = models.CharField(max_length=300, blank=True, null=True)

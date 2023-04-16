@@ -6,33 +6,57 @@
     </div>
     <div class="gallery">
       <div class="image-list">
-        <div v-for="image in images" :key="image.id" class="gallery_item">
-          <img :src="OpenAPI.BASE + image.image" @click="currentImageIndex = images.indexOf(image)" alt="">
+        <div v-for="image in images" :key="image.id" class="gallery_item"
+             :style="{ backgroundImage: 'url(' +  OpenAPI.BASE + image.image  + ')' }"
+             style="background-position: center; background-size: cover; filter: blur(0.2px);"
+             @click="currentImageIndex = images.indexOf(image)">
         </div>
       </div>
       <div class="main-image"
-        :style="{ backgroundImage: 'url(' +  OpenAPI.BASE + currentCarImage?.image  + ')' }"
-        style="background-position: center; background-size: cover;">
+           @click="changeIndex(currentImageIndex); show();"
+           :style="{ backgroundImage: 'url(' +  OpenAPI.BASE + currentCarImage?.image  + ')' }"
+           style="background-position: center; background-size: cover;">
       </div>
+      <vue-easy-lightbox
+          :visible="visibleRef"
+          :imgs="imgsRef"
+          :index="indexRef"
+          @hide="onHide"
+      />
     </div>
   </div>
   <slot/>
 </template>
 
 <script setup lang="ts">
-
+import VueEasyLightbox, {useEasyLightbox} from 'vue-easy-lightbox'
 import {OpenAPI} from '../api';
 import {computed, defineProps, ref} from "vue";
+
 const props = defineProps(['images'])
 const currentImageIndex = ref(0)
-
 
 const currentCarImage = computed(() => {
   return props.images?.length ? props.images[currentImageIndex.value] : undefined
 })
+
+const imageList = computed(() => {
+  return props.images.reduce((accumulator, currentValue) => {
+    accumulator.push(OpenAPI.BASE + currentValue.image);
+    return accumulator;
+  }, [])
+})
+const {
+  // methods
+  show, onHide, changeIndex,
+  // refs
+  visibleRef, indexRef, imgsRef
+} = useEasyLightbox({
+  imgs: imageList.value,
+})
+
 </script>
 <style lang="less" scoped>
-
 .main-image img {
   width: 100%;
   height: auto;
@@ -52,24 +76,29 @@ const currentCarImage = computed(() => {
   flex-basis: 70%;
 }
 
-.image-list{
+.image-list {
   width: 25%;
   padding-right: 5px;
-  height: 350px;
-  overflow-y: scroll;
-  .gallery_item img{
+  max-height: 358px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .gallery_item {
     width: 100%;
-    height: auto;
+    margin-bottom: 2px;
+    min-height: 118px;
+    cursor: pointer;
   }
 }
-.gallery_item{
-  width: 100%;
-  height: auto;
-}
-.main-image{
+
+.main-image {
   width: 73%;
-  height: 350px;
+  height: 358px;
+  cursor: pointer;
 }
+
 .gallery {
   display: flex;
   justify-content: space-between;

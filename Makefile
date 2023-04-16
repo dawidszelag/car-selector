@@ -1,8 +1,14 @@
 docker-build:
-	sudo docker-compose --env-file .env build 
+	docker-compose --env-file .env build
 
 docker-up:
-	sudo docker-compose --env-file .env up -d
+	docker-compose --env-file .env up -d
 
 docker-down:
-	sudo docker-compose down
+	docker-compose down
+
+docker-restart:
+	docker-compose restart
+
+docker-logs:
+	docker-compose logs -f

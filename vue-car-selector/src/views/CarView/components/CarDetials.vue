@@ -302,7 +302,7 @@ const CAR_DETAILS = computed(() => {
   margin-top: 10px;
   background: rgba(0, 0, 0, 0.2);
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
-  max-height: 400px;
+  max-height: 280px;
   overflow-y: auto;
 }
 

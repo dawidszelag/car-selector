@@ -20,6 +20,7 @@
     "usemodal-vue3": "^0.3.7",
     "uuid": "^9.0.0",
     "vue": "^3.2.37",
+    "vue-easy-lightbox": "^1.16.0",
     "vue-router": "^4.0.16"
   },
   "devDependencies": {

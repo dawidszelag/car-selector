@@ -46,10 +46,9 @@
         <img v-else :src="SPORTSCAR_INACTIVE">
       </div>
       <div class="badge">
-<!--        TODO-->
-        <img v-if="false"
-             :src="SPORTSCAR_ACTIVE">
-        <img v-else :src="SPORTSCAR_INACTIVE">
+        <img v-if="car?.hot_hatch"
+             :src="HOT_HATCH_ACTIVE">
+        <img v-else :src="HOT_HATCH_INACTIVE">
       </div>
       <div class="badge">
         <img v-if="car?.heavy_off_road"

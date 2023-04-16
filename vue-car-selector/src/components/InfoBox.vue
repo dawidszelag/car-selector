@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import CarMatchText from "@/assets/welcome-to-carmatch.png"
-import InfoText from "@/assets/welcome-text.png"
+import CarMatchText from "@/assets/welcome-h.png"
+import InfoText from "@/assets/welcome-tx.png"
 </script>
 <style lang="less" scoped>
 .box-info {

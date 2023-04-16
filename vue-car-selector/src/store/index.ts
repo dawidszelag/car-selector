@@ -4,7 +4,8 @@ export const useAppStore = defineStore('appStore', {
     state: () => {
         return {
             form: {},
-            showResults: false
+            showResults: false,
+            showFeedBack: false,
         }
     },
 
@@ -12,5 +13,11 @@ export const useAppStore = defineStore('appStore', {
         setForm(form: {}) {
             this.form = {...form}
         },
+        resetFeedback(){
+            this.showFeedBack = false;
+        },
+        setFeedback(){
+            this.showFeedBack = true;
+        }
     },
 })

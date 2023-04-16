@@ -178,9 +178,9 @@ class CarsService:
             max_fuel_range=Max('max_fuel_distance'),
             max_fuel_efficiency=Max('fuel_combined'),
             max_hybrid_range=Max('electric_range',
-                                 filter=Q(fuel_type=FuelType.PLUGIN)),
+                                 filter=Q(fuel_type=FuelType.PHEV)),
             max_hybrid_charging_time=Max('charging_time',
-                                         filter=Q(fuel_type=FuelType.PLUGIN)),
+                                         filter=Q(fuel_type=FuelType.PHEV)),
             max_electric_charging_time=Max('charging_time'),
             max_electric_fast_charging_time=Max('fast_charging_time'),
         )
@@ -329,13 +329,14 @@ def get_question_8_filter(filters: CarsFilters):
         question |= Q(fuel_type=FuelType.DIESEL)
 
     if filters.phev:
-        question |= Q(fuel_type=FuelType.PLUGIN)
+        question |= Q(fuel_type=FuelType.PHEV)
 
     if filters.mhev:
-        question |= Q(fuel_type=FuelType.HYBRID_PETROL)
+        question |= Q(fuel_type=FuelType.MHEV)
 
     if filters.electric:
         question |= Q(fuel_type=FuelType.ELECTRIC)
+
     return question
 
 

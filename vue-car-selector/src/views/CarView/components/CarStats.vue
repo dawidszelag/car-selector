@@ -35,8 +35,8 @@ const ELECTRIC = [
   },
   {
     max: props.car.stats?.max_electric_fast_charging_time,
-    value: DataTime.convertToTime(props.car.fast_charging_time * 60),
-    textValue: DataTime.convertToTime(props.car.fast_charging_time * 60),
+    value: props.car.fast_charging_time,
+    textValue: DataTime.convertToTime(props.car.fast_charging_time),
     title: "FAST CHARGING",
     subtitle: "10-80% @ 150 kWh"
   }

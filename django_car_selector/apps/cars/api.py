@@ -3,8 +3,10 @@ from typing import List
 from ninja_extra.pagination import (
     paginate, PageNumberPaginationExtra, PaginatedResponseSchema
 )
-from ninja_extra import http_get, api_controller
+from ninja_extra import http_get, http_post, api_controller
 from ninja import Query
+
+from apps.cars.models import Feedback
 from apps.cars.services.cars_services import CarOut, CarsService, CarsFilters, CarBrandOut, CarBodyOut, BudgetOut, \
     CarDetailsOut
 
@@ -14,6 +16,11 @@ class CarsApiController:
 
     def __init__(self):
         self.car_service = CarsService()
+
+    @http_post('feedback/', response=str, operation_id='send_feedback')
+    def send_feedback(self, feedback: bool):
+        Feedback.objects.create(result=feedback)
+        return 'success'
 
     @http_get('cars/{car_id}', response=CarDetailsOut, operation_id='get_car_details')
     def get_car_details(self, car_id: int):

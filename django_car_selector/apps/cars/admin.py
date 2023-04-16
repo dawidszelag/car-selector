@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from apps.cars.models import CarOnTheMarket, CarImage, CarModel, CarBody, CarBrand, Car
+from apps.cars.models import CarImage, CarModel, CarBody, CarBrand, Car, Feedback
 
 
 def set_unready(queryset):
@@ -97,10 +97,16 @@ class CarBrandAdmin(admin.ModelAdmin):
         return obj
 
 
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ['result', 'date']
+    search_fields = ('result', 'date')
+
+
 admin.site.register(Car, CarAdmin)
 admin.site.register(CarModel, CarModelAdmin)
 admin.site.register(CarBody, CarBodyAdmin)
 admin.site.register(CarBrand, CarBrandAdmin)
+admin.site.register(Feedback, FeedbackAdmin)
 
 admin.site.site_header = 'Auto selector'
 admin.site.site_title = 'Auto selector'

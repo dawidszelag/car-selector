@@ -30,6 +30,7 @@ import {useAppStore} from "../store";
 const appStore = useAppStore();
 const handlerFormReady = (_form: {}) => {
   appStore.setForm(_form);
+  appStore.resetFeedback();
   appStore.showResults = true;
 }
 </script>

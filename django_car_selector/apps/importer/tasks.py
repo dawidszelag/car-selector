@@ -1,9 +1,10 @@
 import os
 import re
 import traceback
+
 import pandas as pd
 
-from apps.cars.models import Market, CarOnTheMarket, CarBrand, CarModel, Car, RaceTrackScale, FuelType, DriveType, \
+from apps.cars.models import CarBrand, CarModel, Car, RaceTrackScale, FuelType, DriveType, \
     CarBody
 from apps.importer.models import UploadDataInfo
 from config.celery import app
@@ -28,7 +29,10 @@ def add_cars_data_to_database(file_path, remove_file: bool = True):
 def add_cars_to_database(clear_data):
     length = len(clear_data)
     for index, row in clear_data.iterrows():
-        car_id = row['ID']
+        car_id = convert_value_to_int(row['ID'])
+        if not car_id:
+            return
+
         car, created = Car.objects.get_or_create(pk=car_id)
         try:
             car.name = row['NAMING']
@@ -39,6 +43,7 @@ def add_cars_to_database(clear_data):
 
             car.model = get_car_model(row['MODEL'], row['MAKE'])
             car.body = get_car_body(row['BODY'])
+            car.hot_hatch = convert_value_to_bool(row['SPORTSCAR      HOT HATCH (H)'])
             car.transmission = str(row['TRANSMISSION']).strip()
             car.drive = get_drivel_type(row['DRIVE'])
             car.engine_location = str(row['ENGINE LOCATION']).strip()
@@ -61,11 +66,11 @@ def add_cars_to_database(clear_data):
             car.top_speed = convert_value_to_int(row['TOP SPEED KM/H)'])
             car.fuel_capacity = convert_value_to_int(row['FUEL CAPACITY L'])
             car.fuel_combined = convert_value_to_float(row['FUEL COMBINED L/KM'])
-            car.fuel_urban = convert_value_to_float(row['FUEL CITY    L/KM'])
+            car.fuel_urban = convert_value_to_float(row['FUEL CITY       L/KM'])
             car.fuel_average_distance = convert_value_to_int(row['FUEL AVERAGE DISTANCE (KM)'])
-            car.charging_time = convert_value_to_float(row['CHARGING TIME 0-100% 7.4 KW'])
+            car.charging_time = convert_value_to_float(row['CHARGING TIME 0-100% 7.4 KW/in hours'])
             car.electric_range = convert_value_to_float(row['ELECTRIC RANGE KM'])
-            car.fast_charging_time = convert_value_to_float(row['FASTCHARGE TIME 10-80%'])
+            car.fast_charging_time = convert_value_to_float(row['FASTCHARGE TIME 10-80%/in minutes'])
             car.fast_charging_max_kw = convert_value_to_float(row['FASTCHARGE POWER      MAX KW'])
             car.max_fuel_distance = convert_value_to_int(row['MAX FUEL DISTANCE KM'])
             car.min_fuel_distance = convert_value_to_int(row['MIN FUEL DISTANCE KM'])
@@ -79,7 +84,7 @@ def add_cars_to_database(clear_data):
             car.max_boot_space = convert_value_to_int(row['MAX BOOT SPACE (L)'])
             car.foldable_seats = convert_value_to_bool(row['FOLDABLE SEATS'])
 
-            car.ancap = convert_value_to_int(row['ANCAP “0”  i “N/A”brak oceny '])
+            car.ancap = convert_value_to_int(row['ANCAP “0”  to brak oceny '])
 
             warranty_years_au = convert_value_to_int(str(row['WARRANTY (YEARS)']).strip()[0])
             warranty_years_nz = convert_value_to_int(str(row['WARRANTY (YEARS)']).strip()[-2]) if len(
@@ -108,6 +113,7 @@ def get_car_body(value):
     str_value = str(value).strip()
     if str_value == 'TBC' or str_value == 'N/A':
         return None
+    str_value = str_value.replace('/', ' / ')
     body, _ = CarBody.objects.get_or_create(name=str_value)
     return body
 
@@ -131,10 +137,10 @@ def get_fuel_type(value):
         return FuelType.DIESEL
     elif str_value == 'Electric':
         return FuelType.ELECTRIC
-    elif str_value == 'Plug in Hybrid & Petrol':
-        return FuelType.PLUGIN
-    elif str_value == 'Hybrid Petrol':
-        return FuelType.HYBRID_PETROL
+    elif 'PHEV' in str_value:
+        return FuelType.PHEV
+    elif 'MHEV' in str_value or '(HEV)' in str_value:
+        return FuelType.MHEV
     return None
 
 
@@ -153,6 +159,11 @@ def convert_value_to_bool(value):
     str_value = str(value).upper().strip()
     if str_value == 'TBC' or str_value == 'N/A':
         return None
+    if str_value == '1':
+        return True
+
+    if str_value == '0':
+        return False
 
     return bool(str_value)
 

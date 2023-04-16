@@ -14,6 +14,25 @@ import { request as __request } from '../core/request';
 export class CarsService {
 
     /**
+     * Send Feedback
+     * @returns string OK
+     * @throws ApiError
+     */
+    public static sendFeedback({
+        feedback,
+    }: {
+        feedback: boolean,
+    }): CancelablePromise<string> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/api/feedback/',
+            query: {
+                'feedback': feedback,
+            },
+        });
+    }
+
+    /**
      * Get Car Details
      * @returns CarDetailsOut OK
      * @throws ApiError

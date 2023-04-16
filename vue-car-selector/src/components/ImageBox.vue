@@ -4,7 +4,7 @@
     <div style="line-height: 0">
       <img :style="{'height': `${iconSize}px`}" :src="img || DefaultIcon" :alt="name">
     </div>
-    <div :style="{'marginTop': `${marginTop}px`}">{{ name }}</div>
+    <div class="break" :style="{'marginTop': `${marginTop}px`}">{{ name }}</div>
   </div>
 </template>
 
@@ -40,7 +40,6 @@ defineProps({
 </script>
 
 <style scoped>
-
 .box {
   display: flex;
   justify-content: center;

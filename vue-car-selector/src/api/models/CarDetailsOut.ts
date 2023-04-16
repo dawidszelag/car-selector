@@ -13,6 +13,7 @@ export type CarDetailsOut = {
     name: string;
     badge?: string;
     body: CarBodyModelOut;
+    hot_hatch?: boolean;
     doors?: number;
     seats?: number;
     transmission?: string;
