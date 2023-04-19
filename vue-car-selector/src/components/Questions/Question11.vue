@@ -6,17 +6,16 @@
         question=" Who will be your passenger(s)?"/>
     <div class="answers-box">
       <checkout-field v-model="question.solo_drive" label="no passengers - I drive solo"/>
-      <checkout-field v-model="question.flexible" label="unsure"/>
+      <checkout-field v-model="question.flexible" label="unsure - I want flexibility "/>
 
       <div class="section-text"> NEXT TO ME:</div>
-      <checkout-field v-model="question.adult" label="adult"/>
-      <checkout-field v-model="question.child" label="child (without a child seat)"/>
+      <checkout-field v-model="question.adult" label="an adult"/>
+      <checkout-field v-model="question.child" label="a child"/>
       <checkout-field v-model="question.elderly_front_seat" label="an elderly"/>
 
       <div class="section-text"> BACK SEAT:</div>
-      <checkout-field v-model="question.children_1" label="1 or 2 children in child seat(s)"/>
+      <checkout-field v-model="question.children" label="1 or 2 children in child seat(s)"/>
       <checkout-field v-model="question.regularly_plus_one_adult" label="1 or 2 adults"/>
-      <checkout-field v-model="question.children_2" label="1 or 2 children"/>
       <checkout-field v-model="question.three_adults_back_seat" label="3 adults"/>
       <checkout-field v-model="question.elderly_back_seat" label="1 or 2 elderly"/>
 
@@ -54,7 +53,7 @@ watch(question, () => {
   emit('answers', {
         flexible: question.flexible,
         elderlyFrontSeat: question.elderly_front_seat,
-        children: question.children_1 || question.children_2,
+        children: question.children,
         regularlyPlusOneAdult: question.regularly_plus_one_adult,
         threeAdultsBackSeat: question.three_adults_back_seat,
         elderlyBackSeat: question.elderly_back_seat,

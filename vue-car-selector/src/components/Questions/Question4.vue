@@ -7,7 +7,7 @@
     <div class="answers-box" style="padding-top: 20px">
       <Slider :min="minValue"
               :max="maxValue"
-              :step="1000"
+              :step="10000"
               :merge="100000"
               v-model="price_range.value"
               v-bind="price_range"

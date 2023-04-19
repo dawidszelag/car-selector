@@ -137,10 +137,14 @@ def get_fuel_type(value):
         return FuelType.DIESEL
     elif str_value == 'Electric':
         return FuelType.ELECTRIC
-    elif 'PHEV' in str_value:
+    elif '(HEV)' in str_value:
+        return FuelType.HEV
+    elif '(PHEV)' in str_value:
         return FuelType.PHEV
-    elif 'MHEV' in str_value or '(HEV)' in str_value:
-        return FuelType.MHEV
+    elif '(MHEV) Mild Hybrid Petrol' in str_value:
+        return FuelType.MHEV_PETROL
+    elif '(MHEV) Mild Hybrid Diesel' in str_value:
+        return FuelType.MHEV_PETROL
     return None
 
 

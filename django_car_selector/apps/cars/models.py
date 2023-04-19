@@ -13,8 +13,10 @@ class FuelType(models.IntegerChoices):
     PETROL = 1, 'Petrol'
     DIESEL = 2, 'Diesel'
     ELECTRIC = 3, 'Electric'
-    PHEV = 4, 'Plug in Hybrid & Petrol'
-    MHEV = 5, 'Hybrid Petrol'
+    HEV = 4, 'Hybrid petrol'
+    PHEV = 5, 'Plug in Hybrid Petrol'
+    MHEV_PETROL = 6, 'Mild Hybrid Petrol'
+    MHEV_DIESEL = 7, 'Mild Hybrid Diesel'
 
 
 class DriveType(models.IntegerChoices):
@@ -235,6 +237,9 @@ class CarOnTheMarket(models.Model):
 class CarImage(models.Model):
     car = models.ForeignKey(Car, related_name="images", on_delete=models.CASCADE)
     image = models.ImageField(upload_to="car_images")
+
+    class Meta:
+        ordering = ["image",]
 
     def thumbnail(self):
         if self.image:

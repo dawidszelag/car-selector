@@ -37,8 +37,10 @@ class CarsFilters(Schema):
 
     petrol: bool = None
     diesel: bool = None
+    hev: bool = None
     phev: bool = None
-    mhev: bool = None
+    mhev_petrol: bool = None
+    mhev_diesel: bool = None
     electric: bool = None
 
     two_doors: bool = None
@@ -79,6 +81,12 @@ class CarsFilters(Schema):
     sport_feel: bool = None
     handling_dynamics: bool = None
     race_track: bool = None
+    race_track_plus: bool = None
+    rapid_charging: bool = None
+    light_off_road: bool = None
+    heavy_off_road: bool = None
+    tall_driver: bool = None
+    first_time_drive: bool = None
 
     km_range__gte: int = None
     km_range__lte: int = None
@@ -208,7 +216,7 @@ class CarsService:
         _filter &= get_question_15_filter(filters)
         _filter &= get_question_15_2_filter(filters)
 
-        images = CarImage.objects.filter(car_id=OuterRef("id")).order_by('pk')
+        images = CarImage.objects.filter(car_id=OuterRef("id"))
         return Car.objects.annotate(thumbnail=Subquery(images.values('image')[:1])).filter(_filter)
 
     def get_brands(self) -> List[CarBrandOut]:
@@ -328,14 +336,22 @@ def get_question_8_filter(filters: CarsFilters):
     if filters.diesel:
         question |= Q(fuel_type=FuelType.DIESEL)
 
-    if filters.phev:
-        question |= Q(fuel_type=FuelType.PHEV)
-
-    if filters.mhev:
-        question |= Q(fuel_type=FuelType.MHEV)
 
     if filters.electric:
         question |= Q(fuel_type=FuelType.ELECTRIC)
+
+    if filters.hev:
+        question |= Q(fuel_type=FuelType.HEV)
+
+    if filters.phev:
+        question |= Q(fuel_type=FuelType.PHEV)
+
+    if filters.mhev_petrol:
+        question |= Q(fuel_type=FuelType.MHEV_PETROL)
+
+    if filters.mhev_diesel:
+        question |= Q(fuel_type=FuelType.MHEV_PETROL)
+
 
     return question
 
@@ -471,6 +487,24 @@ def get_question_15_filter(filters: CarsFilters):
 
     if filters.race_track:
         question &= Q(Q(race_track=RaceTrackScale.YES) | Q(race_track=RaceTrackScale.MEDIUM))
+
+    if filters.race_track_plus:
+        question &= Q(race_track=RaceTrackScale.YES)
+
+    if filters.rapid_charging:
+        question &= Q(fast_charging_max_kw__gte=200)
+
+    if filters.light_off_road:
+        question &= Q(light_off_road=filters.light_off_road)
+
+    if filters.heavy_off_road:
+        question &= Q(heavy_off_road=filters.heavy_off_road)
+
+    if filters.tall_driver:
+        question &= Q(tall_driver=filters.tall_driver)
+
+    if filters.first_time_drive:
+        question &= Q(first_time_drive=filters.first_time_drive)
 
     return question
 

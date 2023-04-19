@@ -2,13 +2,13 @@
   <div>
     <question-label
         number="9"
-        help-text="- select all that apply"
-        question="The number of doors that you need?"/>
+        help-text="- select one"
+        question="How many doors?"/>
     <div class="answers-box">
-      <checkout-field v-model="question.twoDoors" label="2 doors"/>
-      <checkout-field v-model="question.fourDoors" label="4 doors"/>
-      <checkout-field v-model="question.unsure" label="unsure"/>
-      <checkout-field v-model="question.doesntMatter" label="doesn’t matter"/>
+      <RadioFields name="question9" keyValue="twoDoors" label="2 doors" @change="keyHandler"/>
+      <RadioFields name="question9" keyValue="fourDoors" label="4 doors" @change="keyHandler"/>
+      <RadioFields name="question9" keyValue="0" label="unsure" @change="keyHandler"/>
+      <RadioFields name="question9" keyValue="0" label="doesn’t matter" @change="keyHandler"/>
     </div>
     <div>
 
@@ -17,9 +17,9 @@
 </template>
 
 <script setup>
-import {reactive, watch} from "vue";
+import {reactive} from "vue";
+import RadioFields from "../RadioFields";
 import QuestionLabel from "../QuestionLabel";
-import CheckoutField from "../CheckboxField";
 
 const emit = defineEmits(['answers'])
 const question = reactive({
@@ -29,34 +29,13 @@ const question = reactive({
   doesntMatter: null,
 })
 
+const keyHandler = (key) => {
+  Object.keys(question).forEach(item => {
+    if (key === item) question[item] = true;
+    else question[item] = null;
+  })
 
-watch(() => question.unsure, () => {
-      if (question.unsure) {
-        question.twoDoors = null;
-        question.fourDoors = null;
-        question.doesntMatter = null;
-      }
-    }
-)
+  emit('answers', question)
+}
 
-watch(() => question.doesntMatter, () => {
-      if (question.doesntMatter) {
-        question.twoDoors = null;
-        question.fourDoors = null;
-        question.unsure = null;
-      }
-    }
-)
-
-watch(() => [question.twoDoors, question.fourDoors], () => {
-      if (question.twoDoors || question.fourDoors) {
-        question.unsure = null;
-        question.doesntMatter = null;
-      }
-      emit('answers', {
-        twoDoors: question.twoDoors,
-        fourDoors: question.fourDoors,
-      })
-    }
-)
 </script>

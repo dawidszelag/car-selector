@@ -69,7 +69,7 @@ const handleBackToList = ()=>{
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
-    padding: 100px 5%;
+    padding: 30px 5%;
     background: rgba(36, 36, 36, 0.9);
 
     &:nth-child(2) {

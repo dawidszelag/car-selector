@@ -11,4 +11,4 @@ docker-restart:
 	docker-compose restart
 
 docker-logs:
-	docker-compose logs -f
+	docker-compose logs -f web-backend

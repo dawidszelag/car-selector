@@ -3,7 +3,7 @@
     <question-label
         number="14"
         help-text="- select one"
-        question="What transmission would you like?"/>
+        question="Transmission?"/>
     <div class="answers-box">
       <radio-fields name="question14" keyValue="automatic" label="automatic" @change="keyHandler"/>
       <radio-fields name="question14" keyValue="manual" label="manual" @change="keyHandler"/>

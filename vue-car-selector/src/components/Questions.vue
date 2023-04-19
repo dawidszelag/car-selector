@@ -1,5 +1,25 @@
 <template>
   <div class="questions">
+    <Modal class="modal" v-model:visible="showModalElectric">
+      For short distances and local driving, diesel is not recommended. Instead, we suggest the following:
+      <ul>
+        <li> petrol </li>
+        <li>hybrid petrol - HEV</li>
+        <li>plug-in hybrid petrol - PHEVmild hybrid petrol - MHEV</li>
+        <li>electric</li>
+      </ul>
+    </Modal>
+    <Modal class="modal" v-model:visible="showModalDiesel">
+      For long distances, an electric car is not recommended. Instead, we suggest the following:
+      <ul>
+        <li>petrol</li>
+        <li>diesel</li>
+        <li>hybrid petrol - HEV</li>
+        <li>plug-in hybrid petrol - PHEV</li>
+        <li>mild hybrid petrol - MHEV</li>
+        <li>mild hybrid diesel - MHEV</li>
+      </ul>
+    </Modal>
     <Modal class="modal" v-model:visible="showModal">
       <div>This selection is non-compatible with your other answers. Try another response.</div>
     </Modal>
@@ -38,7 +58,7 @@
 import {vIntersectionObserver} from '@vueuse/components'
 import Question1 from "../components/Questions/Question1";
 import Question2 from "../components/Questions/Question2";
-import {onBeforeMount, reactive, ref} from "vue";
+import {onBeforeMount, reactive, ref, watch} from "vue";
 import Question3 from "../components/Questions/Question3";
 import Question4 from "../components/Questions/Question4";
 import Question5 from "../components/Questions/Question5";
@@ -57,6 +77,8 @@ import Question16 from "../components/Questions/Question16";
 import {Modal} from 'usemodal-vue3';
 
 const showModal = ref(false)
+const showModalDiesel = ref(false)
+const showModalElectric = ref(false)
 const buttonIsVisible = ref(false)
 const brands = ref([]);
 const bodies = ref([]);
@@ -90,8 +112,10 @@ const form = reactive({
 
   petrol: null,
   diesel: null,
+  hev: null,
   phev: null,
-  mhev: null,
+  mhevPetrol: null,
+  mhevDiesel: null,
   electric: null,
 
   twoDoors: null,
@@ -159,7 +183,7 @@ const handleAnswers = (data) => {
 const makeRequest = async () => {
   const response = await CarsService.getCars(form);
   countCars.value = response.count;
-  if (response.count === 0) {
+  if (response.count === 0 && !showModalDiesel.value && !showModalElectric) {
     showModal.value = true;
   }
 }
@@ -172,8 +196,20 @@ onBeforeMount(async () => {
       isReady.value = true;
     }
 )
+
+watch(() => form.diesel, () => {
+  if (form.shortDistance && form.diesel) {
+    showModalDiesel.value = true;
+  }
+})
+
+watch(() => form.electric, () => {
+  if (form.longDistance && form.electric) {
+    showModalDiesel.value = true;
+  }
+})
 </script>
-<style  lang="less">
+<style lang="less">
 
 </style>
 <style scoped lang="less">
@@ -240,9 +276,9 @@ onBeforeMount(async () => {
 
 :deep(.modal-vue3-content) {
   border: none !important;
-  color: rgba(255, 255, 255, 0.85)!important;
+  color: rgba(255, 255, 255, 0.85) !important;
   background: rgba(36, 36, 36, 0.85) !important;
-  box-shadow: 0 2px 3px rgb(0 0 0 / 40%)!important;
+  box-shadow: 0 2px 3px rgb(0 0 0 / 40%) !important;
 }
 
 :deep(.modal-vue3-footer) {

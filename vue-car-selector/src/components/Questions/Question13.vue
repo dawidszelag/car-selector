@@ -3,9 +3,9 @@
     <question-label
         number="13"
         help-text="- select one"
-        question="What drive line would you like?"/>
+        question="Drive line?"/>
     <div class="answers-box">
-      <radio-fields name="question13" keyValue="fwd" label="FRONT WHEEL DRIVE - good economical all rounder"
+      <radio-fields name="question13" keyValue="fwd" label="FRONT WHEEL DRIVE - a solid economical all-rounder"
                     @change="keyHandler"/>
       <radio-fields name="question13" keyValue="rwd" label="REAR WHEEL DRIVE - sportier feel" @change="keyHandler"/>
       <radio-fields name="question13" keyValue="awd" label="ALL-WHEEL DRIVE - great for all seasons"

@@ -7,8 +7,8 @@
     <div class="answers-box">
       <checkout-field v-model="question.youngDriver" label="16-23"/>
       <checkout-field v-model="question.driver2345" label="23-45"/>
-      <checkout-field v-model="question.middleAgedDriver" label="45-60"/>
-      <checkout-field v-model="question.olderDriver" label="60+"/>
+      <checkout-field v-model="question.middleAgedDriver" label="45-65"/>
+      <checkout-field v-model="question.olderDriver" label="65+"/>
     </div>
   </div>
 </template>
