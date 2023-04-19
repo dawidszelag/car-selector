@@ -350,7 +350,7 @@ def get_question_8_filter(filters: CarsFilters):
         question |= Q(fuel_type=FuelType.MHEV_PETROL)
 
     if filters.mhev_diesel:
-        question |= Q(fuel_type=FuelType.MHEV_PETROL)
+        question |= Q(fuel_type=FuelType.MHEV_DIESEL)
 
 
     return question
