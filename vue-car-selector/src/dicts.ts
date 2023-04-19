@@ -8,14 +8,18 @@ export const FuelType = {
     1: 'Petrol',
     2: 'Diesel',
     3: 'Electric',
-    4: 'Plug in Hybrid & Petrol',
-    5: 'Hybrid Petrol',
+    4: 'Hybrid petrol',
+    5: 'Plug in Hybrid Petrol',
+    6: 'Mild Hybrid Petrol',
+    7: 'Mild Hybrid Diesel',
 }
 
 export enum FuelTypeEnum {
     PETROL = 1,
     DIESEL,
     ELECTRIC,
-    PHEV,
     HYBRID,
+    PHEV ,
+    MHEV_PETROL ,
+    MHEV_DIESEL ,
 }
