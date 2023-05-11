@@ -12,7 +12,7 @@
     </div>
     <div class="footer">
       <div class="nav-button" @click="appStore.showResults=false" v-if="appStore.showResults">
-        BACK TO FORM
+        BACK TO QUESTIONS
       </div>
     </div>
   </div>

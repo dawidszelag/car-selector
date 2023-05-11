@@ -2,7 +2,7 @@
   <Modal
       :cancelButton="{text: 'No', onclick: handleClickCancel, loading: true}"
          :okButton="{text: 'Yes', onclick: handleClickOk, loading: true}">
-    Did the proposed car suggestions turn out to be close to your preferences?
+    Was the selection helpful? Yes/No
   </Modal>
 </template>
 

@@ -1,30 +1,30 @@
 <template>
   <div class="section-text-d" style="margin-top: 40px;">
     DETAILS
-    <div class="section-text-subtitle">SPECS AND FEATURES</div>
+    <div class="section-text-subtitle">MORE INFORMATION</div>
   </div>
   <div class="details-box">
     <ul v-for="section in CAR_DETAILS">
       <li v-for="item in section">
-        <div class="name">{{ item.name }}</div>
+        <div class="name" v-html="item.name"></div>
         <div class="value">{{ item.value }}</div>
       </li>
     </ul>
     <ul>
       <li>
-        <div class="name">SAFETY ADULT</div>
+        <div class="name">SAFETY ADULT (ANCAP)</div>
         <div class="value">{{ car.safety_adult ?? '--' }}/100</div>
       </li>
       <li>
-        <div class="name">SAFETY CHILD</div>
+        <div class="name">SAFETY CHILD (ANCAP)</div>
         <div class="value">{{ car.safety_child ?? '--' }}/100</div>
       </li>
       <li>
-        <div class="name">SAFETY PEDESTRIAN PROTECTION</div>
+        <div class="name">SAFETY PEDESTRIAN PROTECTION (ANCAP)</div>
         <div class="value">{{ car.safety_road_user ?? '--' }}/100</div>
       </li>
       <li>
-        <div class="name">SAFETY SYSTEMS</div>
+        <div class="name">SAFETY SYSTEMS (ANCAP)</div>
         <div class="value">{{ car.safety_systems ?? '--' }}/100</div>
       </li>
     </ul>
@@ -97,11 +97,11 @@ const PHEV = [
   [
     {
       name: "ENGINE SIZE",
-      value: `${car.engine_size ?? '--'} cm3`
+      value: `${Math.round((car.engine_size/1000) * 10)/10 ?? '--'} L`
     },
     {
-      name: "CYLINDERS &  ENGINE CONFIGURATION",
-      value: `${car.cylinders ?? '--'} ${car.engine_configuration ?? '--'} `
+      name: "CYLINDERS & ENGINE CONFIGURATION",
+      value: `${car.cylinders ?? '--'} / ${car.engine_configuration ?? '--'}`
     },
     {
       name: "POWER (kW/HP) + POWER (rpm)",
@@ -143,7 +143,7 @@ const PHEV = [
       value: `${FuelType[car.fuel_type] ?? '--'}`
     },
     {
-      name: "FUEL AVERAGE DISTANCE",
+      name: "FUEL AVERAGE DISTANCE <span class='small-text'> (calculated charged every 100 km)</span>",
       value: `${car.fuel_average_distance ?? '--'} km`
     },
     {
@@ -226,11 +226,11 @@ const PETROL_CAR = [
   [
     {
       name: "ENGINE SIZE",
-      value: `${car.engine_size ?? '--'} cm3`
+      value: `${Math.round((car.engine_size/1000) * 10)/10 ?? '--'} L`
     },
     {
-      name: "CYLINDERS &  ENGINE CONFIGURATION",
-      value: `${car.cylinders ?? '--'} ${car.engine_configuration ?? '--'} `
+      name: "CYLINDERS & ENGINE CONFIGURATION",
+      value: `${car.cylinders ?? '--'} / ${car.engine_configuration ?? '--'}`
     },
     {
       name: "POWER (kW/HP) + POWER (rpm)",
@@ -269,7 +269,7 @@ const PETROL_CAR = [
       value: `${FuelType[car.fuel_type] ?? '--'}`
     },
     {
-      name: "FUEL AVERAGE DISTANCE",
+      name: "FUEL AVERAGE DISTANCE  <span class='small-text'> (calculated charged every 100 km)</span>",
       value: `${car.fuel_average_distance ?? '--'} km`
     },
     {
@@ -295,7 +295,12 @@ const CAR_DETAILS = computed(() => {
 
 
 </script>
+<style>
 
+.small-text{
+  font-size: 10px;
+}
+</style>
 <style scoped>
 .details-box {
   padding: 20px 40px;
@@ -329,4 +334,5 @@ const CAR_DETAILS = computed(() => {
   text-align: left;
   width: 40%;
 }
+
 </style>

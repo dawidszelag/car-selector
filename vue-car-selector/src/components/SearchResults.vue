@@ -1,7 +1,7 @@
 <template>
   <div class="results-container">
     <div class="section-title">
-      Car suggestion
+      YOUR TAILORED MADE SELECTION
       <div class="subtitle">We have found {{ countCars }} cars that you may like</div>
     </div>
     <div class="results">

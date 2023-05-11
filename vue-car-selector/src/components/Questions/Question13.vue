@@ -3,7 +3,7 @@
     <question-label
         number="13"
         help-text="- select one"
-        question="Drive line?"/>
+        question="Drivetrain?"/>
     <div class="answers-box">
       <radio-fields name="question13" keyValue="fwd" label="FRONT WHEEL DRIVE - a solid economical all-rounder"
                     @change="keyHandler"/>

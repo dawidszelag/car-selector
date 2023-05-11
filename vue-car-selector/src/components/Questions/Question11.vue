@@ -14,7 +14,7 @@
       <checkout-field v-model="question.elderly_front_seat" label="an elderly"/>
 
       <div class="section-text"> BACK SEAT:</div>
-      <checkout-field v-model="question.children" label="1 or 2 children in child seat(s)"/>
+      <checkout-field v-model="question.children" label="1 or 2 children - including child seat(s)"/>
       <checkout-field v-model="question.regularly_plus_one_adult" label="1 or 2 adults"/>
       <checkout-field v-model="question.three_adults_back_seat" label="3 adults"/>
       <checkout-field v-model="question.elderly_back_seat" label="1 or 2 elderly"/>

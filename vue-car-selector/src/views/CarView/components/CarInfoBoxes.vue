@@ -40,7 +40,7 @@ const DEFAULT_SUMMARY = [
   },
   {
     name: "ENGINE SIZE",
-    value: `${car.engine_size ?? '--'} cm3`
+    value: `${Math.round((car.engine_size/1000) * 10)/10 ?? '--'} L`
   },
   {
     name: "POWER",

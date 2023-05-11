@@ -3,7 +3,7 @@
     <question-label
         number="7"
         help-text="- select all that apply"
-        question="Size wise?"/>
+        question="Size-wise?"/>
     <div class="answers-box">
       <checkout-field v-model="question.compact" label="compact"/>
       <checkout-field v-model="question.medium" label="medium"/>

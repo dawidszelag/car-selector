@@ -2,7 +2,7 @@ import os
 from typing import List
 
 from ninja import Schema, Field
-from django.db.models import Max, Min, Q, OuterRef, Subquery
+from django.db.models import Max, F, Avg, Q, OuterRef, Subquery, FloatField
 from ninja import ModelSchema
 from pydantic.main import BaseModel
 
@@ -70,6 +70,9 @@ class CarsFilters(Schema):
     comfort: bool = None
     overall_style: bool = None
     min_5_years_warranty: bool = None
+    highest_safety_ratings: bool = None
+    low_fuel_economy: bool = None
+
     practicality_cabin: bool = None
     premium_cabin: bool = None
     folding_back_seats: bool = None
@@ -217,7 +220,15 @@ class CarsService:
         _filter &= get_question_15_2_filter(filters)
 
         images = CarImage.objects.filter(car_id=OuterRef("id"))
-        return Car.objects.annotate(thumbnail=Subquery(images.values('image')[:1])).filter(_filter)
+        return Car.objects.annotate(
+            thumbnail=Subquery(images.values('image')[:1]),
+            avr_safe_rating=Avg(
+                F('safety_adult') + F('safety_child') + F('safety_road_user') + F('safety_systems'),
+                output_field=FloatField()
+            ) / 4
+        ).filter(_filter).order_by('markets__price', '-avr_safe_rating', '-warranty_years_au', '-warranty_years_nz',
+                                   'fuel_combined', '-comfort', '-practicality', '-min_boot_space', '-style',
+                                   '-electric_range', '-fast_charging_time', )
 
     def get_brands(self) -> List[CarBrandOut]:
         return [CarBrandOut(id=brand.id,
@@ -336,7 +347,6 @@ def get_question_8_filter(filters: CarsFilters):
     if filters.diesel:
         question |= Q(fuel_type=FuelType.DIESEL)
 
-
     if filters.electric:
         question |= Q(fuel_type=FuelType.ELECTRIC)
 
@@ -351,7 +361,6 @@ def get_question_8_filter(filters: CarsFilters):
 
     if filters.mhev_diesel:
         question |= Q(fuel_type=FuelType.MHEV_DIESEL)
-
 
     return question
 
@@ -457,6 +466,12 @@ def get_question_15_filter(filters: CarsFilters):
 
     if filters.min_5_years_warranty:
         question &= Q(warranty_years_au__gte=5)
+
+    if filters.highest_safety_ratings:
+        question &= Q(avr_safe_rating__gte=80)
+
+    if filters.low_fuel_economy:
+        question &= Q(fuel_combined__lte=8)
 
     if filters.premium_cabin:
         question &= Q(cabin__gte=5)

@@ -59,6 +59,8 @@ export default {
 }
 
 .model_view .model_img .model_name {
+  background: rgba(0, 0, 0, 0.24);
+  padding: 2px;
   position: absolute;
   bottom: 10px;
   left: 10px;

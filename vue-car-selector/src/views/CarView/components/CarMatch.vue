@@ -2,7 +2,7 @@
   <div>
     <div class="section-text-d" style="margin-top: 20px">
       WHAT'S SPECIAL?
-      <div class="section-text-subtitle"> CARMATCH ASSESSMENTS</div>
+      <div class="section-text-subtitle"> CARMATCH ASSESSMENT</div>
     </div>
     <div class="carmatch">
       <div class="badge">

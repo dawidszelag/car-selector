@@ -10,6 +10,8 @@
       <checkout-field v-model="question.comfort" label="comfort"/>
       <checkout-field v-model="question.overall_style" label="overall style"/>
       <checkout-field v-model="question.min_5_years_warranty" label="minimum 5 years warranty"/>
+      <checkout-field v-model="question.highest_safety_ratings" label="highest safety ratings"/>
+      <checkout-field v-model="question.low_fuel_economy" label="low fuel economy"/>
 
       <div class="section-text">CABIN</div>
       <checkout-field v-model="question.practicality_cabin" label="practicality - cabin & space"/>
@@ -126,10 +128,10 @@ import QuestionLabel from "../QuestionLabel";
 import CheckoutField from "../CheckboxField";
 import Slider from '@vueform/slider'
 
-const MAX_RANGE_KM = 2143;
+const MAX_RANGE_KM = 2200;
 const MAX_ENGINE_SIZE = 7;
 const MAX_ACCELERATE = 20;
-const MAX_POWER_KW = 588;
+const MAX_POWER_KW = 600;
 const emit = defineEmits(['answers'])
 
 const range_km = reactive({
@@ -142,6 +144,9 @@ const question = reactive({
   comfort: null,
   overall_style: null,
   min_5_years_warranty: null,
+  highest_safety_ratings: null,
+  low_fuel_economy: null,
+
   practicality_cabin: null,
   premium_cabin: null,
   folding_back_seats: null,
@@ -208,6 +213,8 @@ const emitData = () => {
         comfort: question.comfort,
         overallStyle: question.overall_style,
         min5YearsWarranty: question.min_5_years_warranty,
+        highestSafetyRatings: question.highest_safety_ratings,
+        lowFuelEconomy: question.low_fuel_economy,
         practicalityCabin: question.practicality_cabin,
         premiumCabin: question.premium_cabin,
         foldingBackSeats: question.folding_back_seats,
