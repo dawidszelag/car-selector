@@ -59,7 +59,7 @@ export default {
 }
 
 .model_view .model_img .model_name {
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   text-align: center;
