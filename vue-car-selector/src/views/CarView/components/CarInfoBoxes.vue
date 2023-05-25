@@ -47,7 +47,7 @@ const DEFAULT_SUMMARY = [
     value: `${car.power_kw ?? '--'} kW / ${car.power_hp ?? '--'} HP`
   },
   {
-    name: "DRIVE",
+    name: "DRIVETRAIN",
     value: `${DriveType[car.drive] ?? '--'}`
   },
 ]
@@ -66,7 +66,7 @@ const ELECTRIC_SUMMARY = [
     value: `${car.power_kw ?? '--'} kW / ${car.power_hp ?? '--'} HP`
   },
   {
-    name: "DRIVE",
+    name: "DRIVETRAIN",
     value: `${DriveType[car.drive] ?? '--'}`
   },
 ]

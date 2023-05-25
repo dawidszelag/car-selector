@@ -44,7 +44,7 @@
       <div class="slider">
         <span>0 km</span>
         <Slider :min="0"
-                :step="1"
+                :step="10"
                 :max="MAX_RANGE_KM"
                 class="range-km"
                 :format="{
@@ -65,7 +65,7 @@
                 :format="{
                   suffix: ' L'
                 }"
-                merge="2"
+                :merge="2"
                 class="fuel-economy"
                 connects='c-slider-connects'
                 v-model="fuel_economy.value"
@@ -79,9 +79,11 @@
         <span>0 kW</span>
         <Slider :min="0"
                 :max="MAX_POWER_KW"
+                :step="10"
                 class="power-kw"
                 :format="{
-                  suffix: ' kW'
+                  suffix: ' kW',
+                  decimals: 0
                 }"
                 connects='c-slider-connects'
                 v-model="question.power__gte"/>

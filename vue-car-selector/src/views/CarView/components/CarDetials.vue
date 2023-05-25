@@ -97,7 +97,7 @@ const PHEV = [
   [
     {
       name: "ENGINE SIZE",
-      value: `${Math.round((car.engine_size/1000) * 10)/10 ?? '--'} L`
+      value: `${car.engine_size ?? '--'} cm³`
     },
     {
       name: "CYLINDERS & ENGINE CONFIGURATION",
@@ -143,7 +143,7 @@ const PHEV = [
       value: `${FuelType[car.fuel_type] ?? '--'}`
     },
     {
-      name: "FUEL AVERAGE DISTANCE <span class='small-text'> (calculated charged every 100 km)</span>",
+      name: "FUEL AVERAGE DISTANCE <span class='small-text'> (when charged every 100 km)</span>",
       value: `${car.fuel_average_distance ?? '--'} km`
     },
     {
@@ -226,7 +226,7 @@ const PETROL_CAR = [
   [
     {
       name: "ENGINE SIZE",
-      value: `${Math.round((car.engine_size/1000) * 10)/10 ?? '--'} L`
+      value: `${car.engine_size ?? '--'} cm³`
     },
     {
       name: "CYLINDERS & ENGINE CONFIGURATION",

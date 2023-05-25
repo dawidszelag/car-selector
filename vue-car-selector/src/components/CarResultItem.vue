@@ -6,7 +6,7 @@
           <div v-if="modelInfo.thumbnail" class="img" v-bind:style="modelImg"></div>
           <div v-else class="img"
                style="background: url('https://via.placeholder.com/800x500') no-repeat center;"></div>
-          <div class="model_name">{{ modelInfo.name }}</div>
+          <div class="model_name"><span>{{ modelInfo.name }}</span></div>
         </div>
         <button @click="viewSubModel" class="btn_view">VIEW CAR DETAILS</button>
       </div>
@@ -59,11 +59,17 @@ export default {
 }
 
 .model_view .model_img .model_name {
-  background: rgba(0, 0, 0, 0.24);
-  padding: 2px;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  padding: 4px;
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 35px;
   font-weight: 700;
   font-size: 12px;
 }
