@@ -105,7 +105,7 @@ const PHEV = [
     },
     {
       name: "POWER (kW/HP) + POWER (rpm)",
-      value: `${car.power_kw ?? '--'} kW/${car.power_hp ?? '--'} hp @ ${car.power_rpm ?? '--'} rpm `
+      value: `${car.power_kw ?? '--'} kW/${(1.34102209*car.power_kw).toFixed(0)  ?? '--'} hp @ ${car.power_rpm ?? '--'} rpm `
     },
     {
       name: "TORQUE + TORQUE Nm",
@@ -179,7 +179,7 @@ const ELECTRIC = [
   [
     {
       name: "POWER (kW/HP) + POWER (rpm)",
-      value: `${car.power_kw ?? '--'} kW/${car.power_hp ?? '--'} hp @ ${car.power_rpm ?? '--'} rpm `
+      value: `${car.power_kw ?? '--'} kW/${(1.34102209*car.power_kw).toFixed(0)  ?? '--'} hp @ ${car.power_rpm ?? '--'} rpm `
     },
     {
       name: "TORQUE + TORQUE Nm",
@@ -234,7 +234,7 @@ const PETROL_CAR = [
     },
     {
       name: "POWER (kW/HP) + POWER (rpm)",
-      value: `${car.power_kw ?? '--'} kW/${car.power_hp ?? '--'} hp @ ${car.power_rpm ?? '--'} rpm `
+      value: `${car.power_kw ?? '--'} kW/${(1.34102209*car.power_kw).toFixed(0)  ?? '--'} hp @ ${car.power_rpm ?? '--'} rpm `
     },
     {
       name: "TORQUE + TORQUE Nm",

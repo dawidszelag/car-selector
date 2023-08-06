@@ -61,7 +61,7 @@
       <div class="slider">
         <span>0 L</span>
         <Slider :min="0"
-                :max="25"
+                :max="MAX_FUEL_ECONOMY"
                 :format="{
                   suffix: ' L'
                 }"
@@ -70,7 +70,7 @@
                 connects='c-slider-connects'
                 v-model="fuel_economy.value"
                 v-bind="fuel_economy"/>
-        <span>{{ 25 }} L</span>
+        <span>{{ MAX_FUEL_ECONOMY }} L</span>
       </div>
 
       <div class="section-text" style="margin-top: 30px">LET’S TALK NUMBERS</div>
@@ -81,10 +81,7 @@
                 :max="MAX_POWER_KW"
                 :step="10"
                 class="power-kw"
-                :format="{
-                  suffix: ' kW',
-                  decimals: 0
-                }"
+                :format="hp_label_computed"
                 connects='c-slider-connects'
                 v-model="question.power__gte"/>
         <span>{{ MAX_POWER_KW }} kW</span>
@@ -125,12 +122,14 @@
 </template>
 
 <script setup>
-import {reactive, watch} from "vue";
+import {computed, reactive, ref, watch} from "vue";
 import QuestionLabel from "../QuestionLabel";
 import CheckoutField from "../CheckboxField";
 import Slider from '@vueform/slider'
 
+
 const MAX_RANGE_KM = 2200;
+const MAX_FUEL_ECONOMY = 25;
 const MAX_ENGINE_SIZE = 7;
 const MAX_ACCELERATE = 20;
 const MAX_POWER_KW = 600;
@@ -140,7 +139,7 @@ const range_km = reactive({
   value: [0, MAX_RANGE_KM]
 })
 const fuel_economy = reactive({
-  value: [0, 25]
+  value: [0, MAX_FUEL_ECONOMY]
 })
 const question = reactive({
   comfort: null,
@@ -175,9 +174,14 @@ const question = reactive({
   first_time_drive: null,
 
 })
+const hp_label_computed = ref({
+  suffix: ' kW',
+  decimals: 0
+})
+
 
 watch(() => question.acceleration__lte, () => {
-  if (question.acceleration__lte === 0) {
+  if (question.acceleration__lte === 0 || question.acceleration__lte === MAX_ACCELERATE) {
     question.acceleration__lte = null;
   }
 })
@@ -195,12 +199,12 @@ watch(() => question.engine__gte, () => {
 })
 
 watch(range_km, () => {
-  question.km_range__lte !== MAX_RANGE_KM ? question.km_range__lte = range_km.value[1] : question.km_range__lte = null;
+  range_km.value[1] !== MAX_RANGE_KM ? question.km_range__lte = range_km.value[1] : question.km_range__lte = null;
   range_km.value[0] ? question.km_range__gte = range_km.value[0] : question.km_range__gte = null;
 })
 
 watch(fuel_economy, () => {
-  question.fuel_economy__lte !== 25 ? question.fuel_economy__lte = fuel_economy.value[1] : question.fuel_economy__lte = null;
+  fuel_economy.value[1] !== MAX_FUEL_ECONOMY ? question.fuel_economy__lte = fuel_economy.value[1] : question.fuel_economy__lte = null;
   fuel_economy.value[0] ? question.fuel_economy__gte = fuel_economy.value[0] : question.fuel_economy__gte = null;
 })
 

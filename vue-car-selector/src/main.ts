@@ -7,7 +7,7 @@ import {OpenAPI} from "./api";
 
 import 'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.css'
 
-OpenAPI.BASE = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:9000";
+OpenAPI.BASE = import.meta.env.VITE_BACKEND_URL || "http://144.91.87.153:9000";
 const pinia = createPinia()
 const app = createApp(App);
 app.use(router);
