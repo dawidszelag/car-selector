@@ -449,7 +449,7 @@ def get_question_14_filter(filters: CarsFilters):
         question &= Q(transmission__icontains='manual')
 
     if filters.automatic:
-        question &= Q(transmission__icontains='automa')
+        question &= Q(transmission__icontains='automa') | Q(transmission__icontains='Reduction')
 
     return question
 
