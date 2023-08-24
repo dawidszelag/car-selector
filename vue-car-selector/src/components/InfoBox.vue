@@ -4,7 +4,9 @@
       <div class="box-info__title">
         <img :src="CarMatchText">
       </div>
-      <img :src="InfoText">
+      <div class="box-info__subtitle">
+        <img :src="InfoText">
+      </div>
     </div>
   </div>
 </template>
@@ -25,7 +27,12 @@ import InfoText from "@/assets/welcome-tx.png"
   &__title {
     margin-bottom: 70px;
   }
-  img{
+
+  &__subtitle {
+    margin: 0 50px;
+  }
+
+  img {
     max-width: 100%;
   }
 
