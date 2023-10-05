@@ -335,7 +335,7 @@ def get_question_7_filter(filters: CarsFilters):
         question |= Q(medium=filters.medium)
 
     if filters.large:
-        question |= Q(medium=filters.large)
+        question |= Q(large=filters.large)
     return question
 
 
