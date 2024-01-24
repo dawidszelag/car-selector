@@ -7,17 +7,13 @@ services:
     ports:
       - "${REDIS_PORT}:6379"
 
-  web-backend:
+  django:
     build: ./django_car_selector
     env_file:
       - .env
-    command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
-
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - ./django_car_selector:/usr/src/app
-    ports:
-      - "${BACKEND_PORT}:8000"
     depends_on:
       - redis
 
@@ -32,13 +28,24 @@ services:
     depends_on:
       - redis
 
-  web-fontend:
+  frontend:
     build:
       context: ./vue-car-selector
       args:
         - VITE_BACKEND_URL=${BACKEND_URL}
-
-    ports:
-      - "${FRONTEND_PORT}:3000"
     volumes:
       - './vue-car-selector/nginx.conf:/etc/nginx/conf.d/default.conf'
+
+  nginx:
+      image: nginx:1.13
+      container_name: nginx
+      ports:
+        - "8080:443"
+      volumes:
+        - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+        - ./nginx/htpasswd:/etc/nginx/conf.d/.htpasswd:ro
+        - ./nginx/ssl:/etc/nginx/certs:ro
+        - ./django_car_selector/media:/media
+      depends_on:
+        - django
+        - frontend
