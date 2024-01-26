@@ -22,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'eh)js2+vbzq$66%5cb4q(4$dwmw^&p5xa(#_yitnpaa4ri+u3!'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+CSRF_TRUSTED_ORIGINS = ["https://www.carmatch.tech", "https://carmatch.tech"] 
 # Application definition
 
 INSTALLED_APPS = [
@@ -122,7 +122,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = ''
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (os.path.join('static'),)
