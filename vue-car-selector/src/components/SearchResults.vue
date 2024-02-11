@@ -8,7 +8,7 @@
       <car-result-item
           v-for="(car, index) in carList"
           :key="car.id"
-          :class="{'inactive-car': index >= 5}"
+          :class="{'gray-mask': index >= 5}"
           class="car-item"
           :modelInfo="car"/>
     </div>
@@ -86,10 +86,21 @@ onBeforeMount(async () => {
   display: flex;
   justify-content: center;
 }
-.inactive-car {
-  opacity: 0.7;
+.gray-mask {
+  position: relative;
 }
 
+.gray-mask::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background: rgba(106, 106, 106, 0.3); /* Półprzezroczysta czarna maska; zmień kolor tła na szary, jeśli potrzebujesz */
+  z-index: 1;
+}
 .show-car-button {
   cursor: pointer;
   padding: 10px 40px;
