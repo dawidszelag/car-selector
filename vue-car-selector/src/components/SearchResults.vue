@@ -2,7 +2,8 @@
   <div class="results-container">
     <div class="section-title">
       YOUR TAILORED RECOMMENDATION
-      <div class="subtitle">We have found {{ countCars }} cars that you may like</div>
+      <div class="subtitle">We have found {{ countCars }} cars that you may like small</div>
+      <div class="subtitle" v-if="countCars>5"><small>(The top 5 of them are most suited to your needs)</small></div>
     </div>
     <div class="results">
       <car-result-item
@@ -86,6 +87,7 @@ onBeforeMount(async () => {
   display: flex;
   justify-content: center;
 }
+
 .gray-mask {
   position: relative;
 }
@@ -98,9 +100,10 @@ onBeforeMount(async () => {
   right: 0;
   bottom: 0;
   pointer-events: none;
-  background: rgba(106, 106, 106, 0.3); /* Półprzezroczysta czarna maska; zmień kolor tła na szary, jeśli potrzebujesz */
+  background: rgba(106, 106, 106, 0.6); /* Półprzezroczysta czarna maska; zmień kolor tła na szary, jeśli potrzebujesz */
   z-index: 1;
 }
+
 .show-car-button {
   cursor: pointer;
   padding: 10px 40px;
