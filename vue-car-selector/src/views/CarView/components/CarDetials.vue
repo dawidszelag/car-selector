@@ -72,7 +72,7 @@
       </li>
       <li>
         <div class="name">TARE MASS (KG)</div>
-        <div class="value">{{ car.tare_mass ?? '--' }}</div>
+        <div class="value">{{ car.tare_mass ?? '--' }} kg</div>
       </li>
       <li>
         <div class="name">GROUND CLEARANCE</div>
@@ -104,7 +104,7 @@ const PHEV = [
       value: `${car.cylinders ?? '--'} / ${car.engine_configuration ?? '--'}`
     },
     {
-      name: "POWER (kW/HP) + POWER (rpm)",
+      name: "POWER (kW/hp) + POWER (rpm)",
       value: `${car.power_kw ?? '--'} kW/${(1.34102209*car.power_kw).toFixed(0)  ?? '--'} hp @ ${car.power_rpm ?? '--'} rpm `
     },
     {
@@ -165,8 +165,8 @@ const PHEV = [
       value: `${car.electric_range ?? '--'} km`
     },
     {
-      name: "CHARGING TIME 0 - 100% @ 7.4 kWH",
-      value: `${DataTime.convertToTime(car.charging_time)}`
+      name: "CHARGING TIME 0 - 100% @ 7.4 kW",
+      value: `${DataTime.convertToTime(car.charging_time * 60)}`
     },
     {
       name: "CHARGING MAXIMUM SPEED",
@@ -178,7 +178,7 @@ const PHEV = [
 const ELECTRIC = [
   [
     {
-      name: "POWER (kW/HP) + POWER (rpm)",
+      name: "POWER (kW/hp) + POWER (rpm)",
       value: `${car.power_kw ?? '--'} kW/${(1.34102209*car.power_kw).toFixed(0)  ?? '--'} hp @ ${car.power_rpm ?? '--'} rpm `
     },
     {
@@ -208,7 +208,7 @@ const ELECTRIC = [
       value: `${car.electric_range ?? '--'} km`
     },
     {
-      name: "CHARGING TIME 0 - 100% @ 7.4 kWH",
+      name: "CHARGING TIME 0 - 100% @ 7.4 kW",
       value: `${DataTime.convertToTime(car.charging_time * 60)}`
     },
     {
@@ -233,7 +233,7 @@ const PETROL_CAR = [
       value: `${car.cylinders ?? '--'} / ${car.engine_configuration ?? '--'}`
     },
     {
-      name: "POWER (kW/HP) + POWER (rpm)",
+      name: "POWER (kW/hp) + POWER (rpm)",
       value: `${car.power_kw ?? '--'} kW/${(1.34102209*car.power_kw).toFixed(0)  ?? '--'} hp @ ${car.power_rpm ?? '--'} rpm `
     },
     {

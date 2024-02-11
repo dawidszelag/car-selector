@@ -85,6 +85,9 @@ const bodies = ref([]);
 const budget = ref(null);
 const isReady = ref(false);
 const countCars = ref(0)
+import {useAppStore} from "../store";
+
+const appStore = useAppStore();
 const form = reactive({
   annaForWomen: null,
 
@@ -176,6 +179,7 @@ function onIntersectionObserver([{isIntersecting}]) {
 
 const handleAnswers = (data) => {
   Object.assign(form, data)
+  appStore.setForm(form);
   makeRequest();
 }
 

@@ -2,7 +2,7 @@
   <div class="top-container" style="margin-top: 40px;">
     <div class="top">
       <div> ${{ Formatter.formatPrice(car.price_au) }}</div>
-      <span class="section-text-subtitle">price</span>
+      <span class="section-text-subtitle">PRICE</span>
     </div>
     <div class="top">
       <div> {{ car.warranty_years_au ?? '--' }} {{ car.warranty_years_au === 1 ? 'YEAR' : 'YEARS' }}</div>
@@ -19,8 +19,8 @@
   </div>
   <div class="top-container">
     <div class="top-bottom" v-for="item in CAR_SUMMARY" :key="item.name">
-      <div>{{ item.value.toUpperCase() }}</div>
-      <span class="section-text-subtitle">{{ item.name.toUpperCase() }}</span>
+      <div>{{ item.value }}</div>
+      <span class="section-text-subtitle">{{ item.name }}</span>
     </div>
   </div>
 </template>
@@ -36,38 +36,38 @@ const { car } = props;
 const DEFAULT_SUMMARY = [
   {
     name: "FUEL TYPE",
-    value: `${FuelType[car.fuel_type] ?? '--'}`
+    value: `${FuelType[car.fuel_type] ?? '--'}`.toUpperCase()
   },
   {
     name: "ENGINE SIZE",
-    value: `${Math.round((car.engine_size/1000) * 10)/10 ?? '--'} L`
+    value: `${Math.round((car.engine_size/1000) * 10)/10 ?? '--'} L`.toUpperCase()
   },
   {
     name: "POWER",
-    value: `${car.power_kw ?? '--'} kW / ${(1.34102209*car.power_kw).toFixed(0) ?? '--'} HP`
+    value: `${car.power_kw ?? '--'} kW / ${(1.34102209*car.power_kw).toFixed(0) ?? '--'} hp`
   },
   {
     name: "DRIVETRAIN",
-    value: `${DriveType[car.drive] ?? '--'}`
+    value: `${DriveType[car.drive] ?? '--'}`.toUpperCase()
   },
 ]
 
 const ELECTRIC_SUMMARY = [
   {
     name: "FUEL TYPE",
-    value: `${FuelType[car.fuel_type] ?? '--'}`
+    value: `${FuelType[car.fuel_type] ?? '--'}`.toUpperCase()
   },
   {
     name: "RANGE (MAX)",
-    value: `${car.electric_range ?? '--'} km`
+    value: `${car.electric_range ?? '--'} km`.toUpperCase()
   },
   {
     name: "POWER",
-    value: `${car.power_kw ?? '--'} kW / ${(1.34102209*car.power_kw).toFixed(0) ?? '--'} HP`
+    value: `${car.power_kw ?? '--'} kW / ${(1.34102209*car.power_kw).toFixed(0) ?? '--'} hp`
   },
   {
     name: "DRIVETRAIN",
-    value: `${DriveType[car.drive] ?? '--'}`
+    value: `${DriveType[car.drive] ?? '--'}`.toUpperCase()
   },
 ]
 
@@ -109,7 +109,6 @@ const CAR_SUMMARY= computed(() => {
 
 
 span {
-  text-transform: uppercase;
   display: block;
   font-size: 12px;
 }

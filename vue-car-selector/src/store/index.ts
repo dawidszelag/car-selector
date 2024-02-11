@@ -14,10 +14,10 @@ export const useAppStore = defineStore('appStore', {
             this.form = {...form}
         },
         resetFeedback(){
-            this.showFeedBack = false;
+            this.showFeedBack = true;
         },
         setFeedback(){
-            this.showFeedBack = true;
+            this.showFeedBack = false;
         }
     },
 })

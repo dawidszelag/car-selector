@@ -76,15 +76,18 @@
       <div class="section-text" style="margin-top: 30px">LET’S TALK NUMBERS</div>
       <div class="section-subtext">POWER - minimum kW</div>
       <div class="slider">
-        <span>0 kW</span>
-        <Slider :min="0"
-                :max="MAX_POWER_KW"
-                :step="10"
-                class="power-kw"
-                :format="hp_label_computed"
-                connects='c-slider-connects'
-                v-model="question.power__gte"/>
-        <span>{{ MAX_POWER_KW }} kW</span>
+        <span>0 kW / 0 hp</span>
+        <Slider
+            :key="refreshSlider"
+            @slide="updateSliderLabel"
+            :min="0"
+            :max="MAX_POWER_KW"
+            :step="10"
+            class="power-kw"
+            :format="powerLabel"
+            connects='c-slider-connects'
+            v-model="question.power__gte"/>
+        <span>{{ MAX_POWER_KW }} kW / {{ (MAX_POWER_KW / HP_TO_KW).toFixed(0) }} hp</span>
       </div>
 
 
@@ -127,6 +130,7 @@ import QuestionLabel from "../QuestionLabel";
 import CheckoutField from "../CheckboxField";
 import Slider from '@vueform/slider'
 
+const HP_TO_KW = 0.735499;
 
 const MAX_RANGE_KM = 2200;
 const MAX_FUEL_ECONOMY = 25;
@@ -174,10 +178,15 @@ const question = reactive({
   first_time_drive: null,
 
 })
-const hp_label_computed = ref({
-  suffix: ' kW',
-  decimals: 0
-})
+
+const refreshSlider = ref(0);
+const powerLabel = () => {
+  return `${question.power__gte || 0} kW / ${(question.power__gte / HP_TO_KW).toFixed(0)} hp`
+}
+
+const updateSliderLabel = (value) => {
+  question.power__gte = value;
+}
 
 
 watch(() => question.acceleration__lte, () => {
@@ -188,7 +197,12 @@ watch(() => question.acceleration__lte, () => {
 
 watch(() => question.power__gte, () => {
   if (question.power__gte === 0) {
+    refreshSlider.value++;
     question.power__gte = null;
+  }
+
+  else if (question.power__gte === MAX_POWER_KW) {
+    refreshSlider.value++;
   }
 })
 

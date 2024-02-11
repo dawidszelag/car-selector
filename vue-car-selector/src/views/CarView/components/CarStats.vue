@@ -31,14 +31,14 @@ const ELECTRIC = [
     value: props.car.charging_time,
     textValue: DataTime.convertToTime(props.car.charging_time * 60),
     title: "CHARGING TIME",
-    subtitle: "0 - 100% @ 7.4 kWH"
+    subtitle: "0 - 100% @ 7.4 kW"
   },
   {
     max: props.car.stats?.max_electric_fast_charging_time,
     value: props.car.fast_charging_time,
     textValue: DataTime.convertToTime(props.car.fast_charging_time),
     title: "FAST CHARGING",
-    subtitle: "10-80% @ 150 kWh"
+    subtitle: "10-80% @ 150 kW"
   }
 ]
 const PETROL_CAR = [
@@ -52,7 +52,7 @@ const PETROL_CAR = [
   {
     max: props.car.stats?.max_fuel_efficiency,
     value: props.car.fuel_combined,
-    textValue: (props.car.fuel_combined || '--') + ' L',
+    textValue: (props.car.fuel_combined || '--') + ' L/100 km',
     title: "FUEL EFFICIENCY",
     subtitle: "L/100KM"
   }
@@ -70,7 +70,7 @@ const PHEV = [
     value: props.car.charging_time,
     textValue: DataTime.convertToTime(props.car.charging_time * 60),
     title: "CHARGING TIME",
-    subtitle: "0 - 100% @ 7.4 kWH"
+    subtitle: "0 - 100% @ 7.4 kW"
   }
 ];
 

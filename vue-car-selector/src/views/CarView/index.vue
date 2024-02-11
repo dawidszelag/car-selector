@@ -38,7 +38,7 @@ const route = useRoute();
 const appStore =  useAppStore()
 const showModal = ref(false)
 onBeforeMount(async () => {
-  car.value = await CarsService.getCarDetails({carId: route.params.carId as number})
+  car.value = await CarsService.getCarDetails({carId: route.params.carId as unknown as number})
 })
 
 const carBGImage = computed(() => {
@@ -46,10 +46,9 @@ const carBGImage = computed(() => {
 })
 
 const handleBackToList = ()=>{
-  if (!appStore.showFeedBack){
-
-    appStore.setFeedback();
+  if (appStore.showFeedBack){
     showModal.value = true;
+    appStore.setFeedback();
   }
   else{
     router.push({name: 'home'})

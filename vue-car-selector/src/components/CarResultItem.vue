@@ -42,7 +42,7 @@ export default {
 <style scoped>
 .model_view .img {
   width: 100%;
-  min-height: 160px;
+  min-height: 230px;
   margin-bottom: 5px;
   background-size: cover;
   -webkit-background-size: cover;
@@ -71,7 +71,7 @@ export default {
   right: 0;
   height: 35px;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 15px;
 }
 
 .model_view .btn_view {
@@ -81,7 +81,7 @@ export default {
   border: none;
   color: white;
   font-weight: 800;
-  font-size: 13px;
+  font-size: 16px;
 }
 
 .model_view .btn_view:hover {

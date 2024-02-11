@@ -8,7 +8,7 @@
     <div class="content">
       <InfoBox class="box"/>
       <Questions class="box" @ready="handlerFormReady" v-if="!appStore.showResults"/>
-      <SearchResults class="box" v-else/>
+      <SearchResults class="box box-results" v-else/>
     </div>
     <div class="footer">
       <div class="nav-button" @click="appStore.showResults=false" v-if="appStore.showResults">
@@ -47,6 +47,10 @@ const handlerFormReady = (_form: {}) => {
     overflow-x: hidden;
     padding: 100px 10%;
     height: 100vh;
+  }
+
+  .box-results {
+    padding: 100px 6.5%;
   }
 }
 

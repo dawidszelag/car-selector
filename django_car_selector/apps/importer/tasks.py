@@ -44,12 +44,12 @@ def add_cars_to_database(clear_data):
             car.model = get_car_model(row['MODEL'], row['MAKE'])
             car.body = get_car_body(row['BODY'])
             car.hot_hatch = convert_value_to_bool(row['SPORTSCAR      HOT HATCH (H)'])
-            car.transmission = str(row['TRANSMISSION']).strip()
+            car.transmission = convert_value_to_str(row['TRANSMISSION'])
             car.drive = get_drivel_type(row['DRIVE'])
-            car.engine_location = str(row['ENGINE LOCATION']).strip()
-            car.engine_configuration = str(row['ENGINE CONFIGURATION']).strip()
+            car.engine_location = convert_value_to_str(row['ENGINE LOCATION'])
+            car.engine_configuration = convert_value_to_str(row['ENGINE CONFIGURATION'])
             car.fuel_type = get_fuel_type(row['FUEL TYPE'])
-            car.badge = str(row['BADGE']).strip()
+            car.badge = convert_value_to_str(row['BADGE'])
 
             car.doors = convert_value_to_int(row['DOORS'])
             car.seats = convert_value_to_int(row['SEATS'])
@@ -59,9 +59,9 @@ def add_cars_to_database(clear_data):
             car.cylinders = convert_value_to_int(row['CYLINDERS'])
             car.power_kw = convert_value_to_int(row['POWERkW'])
             car.power_hp = convert_value_to_int(row['POWERHP *1.341'])
-            car.power_rpm = str(row['POWER (rpm)']).strip()
+            car.power_rpm = convert_value_to_str(row['POWER (rpm)'])
             car.torque_nm = convert_value_to_int(row['TORQUE Nm'])
-            car.torque_rpm = str(row['TORQUE RPM']).strip()
+            car.torque_rpm = convert_value_to_str(row['TORQUE RPM'])
             car.acceleration = convert_value_to_float(row['ACCELERATION 0-100 SEC'])
             car.top_speed = convert_value_to_int(row['TOP SPEED KM/H)'])
             car.fuel_capacity = convert_value_to_int(row['FUEL CAPACITY L'])
@@ -158,6 +158,14 @@ def convert_value_to_int(value):
     if int_value == 0:
         return None
     return int_value
+
+
+def convert_value_to_str(value):
+    str_value = str(value).upper().strip()
+    if str_value == 'TBC' or str_value == 'N/A':
+        return None
+
+    return str(value).strip()
 
 
 def convert_value_to_bool(value):

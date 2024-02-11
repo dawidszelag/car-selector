@@ -36,10 +36,17 @@ const handleClickCancel = () => {
 
 :deep(.modal-vue3-footer) {
   border-top: none !important;
+  flex-direction: row-reverse;
+  justify-content: flex-start !important;
 }
 
 
 :deep(.modal-vue3-footer-ok) {
   background: linear-gradient(rgba(215, 29, 128, 0.9), rgba(196, 44, 140, 0.9)) !important;
+  margin-right: 20px!important;
+}
+
+:deep(.modal-vue3-footer-cancel) {
+  margin-right: 0!important;
 }
 </style>

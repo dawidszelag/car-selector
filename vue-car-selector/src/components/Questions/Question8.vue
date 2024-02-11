@@ -16,15 +16,44 @@
       <checkout-field v-model="question.doesnt_matter" label="doesn’t matter"/>
     </div>
     <div>
-
     </div>
   </div>
+  <Modal
+      :okButton="showDieselInfo=false"
+      v-model:visible="showDieselInfo">
+    For short distances and local driving, diesel is not recommended. Instead, we suggest the following:
+    - petrol
+    - hybrid petrol - HEV
+    - plug-in hybrid petrol – PHEV mild hybrid petrol - MHEV
+    - electric
+  </Modal>
+
+  <Modal
+      :okButton="showElectricInfo=false"
+      v-model:visible="showElectricInfo">
+    For long distances, an electric car is not recommended. Instead, we suggest the following:
+    - petrol
+    - diesel
+    - hybrid petrol - HEV
+    - plug-in hybrid petrol - PHEV
+    - mild hybrid petrol - MHEV
+    - mild hybrid diesel - MHEV
+  </Modal>
 </template>
 
 <script setup>
-import {reactive, watch} from "vue";
+import {reactive, ref, watch} from "vue";
 import QuestionLabel from "../QuestionLabel";
 import CheckoutField from "../CheckboxField";
+import {Modal} from "usemodal-vue3";
+
+import {useAppStore} from "../../store";
+
+
+const showDieselInfo = ref(false);
+const showElectricInfo = ref(false);
+
+const appStore = useAppStore();
 
 const emit = defineEmits(['answers'])
 const question = reactive({
@@ -39,6 +68,19 @@ const question = reactive({
   doesnt_matter: null,
 })
 
+watch(() => question.diesel, () => {
+      if (question.diesel && appStore.form?.shortDistance) {
+        showDieselInfo.value = true;
+      }
+    }
+)
+
+watch(() => question.electric, () => {
+      if (question.electric && appStore.form?.longDistance) {
+        showElectricInfo.value = true;
+      }
+    }
+)
 
 watch(() => question.unsure, () => {
       if (question.unsure) {
