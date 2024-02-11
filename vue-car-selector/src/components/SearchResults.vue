@@ -6,8 +6,9 @@
     </div>
     <div class="results">
       <car-result-item
-          v-for="car in carList"
+          v-for="(car, index) in carList"
           :key="car.id"
+          :class="{'inactive-car': index >= 5}"
           class="car-item"
           :modelInfo="car"/>
     </div>
@@ -84,6 +85,9 @@ onBeforeMount(async () => {
 .button-container {
   display: flex;
   justify-content: center;
+}
+.inactive-car {
+  opacity: 0.7;
 }
 
 .show-car-button {
