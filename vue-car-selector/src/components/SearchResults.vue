@@ -2,7 +2,7 @@
   <div class="results-container">
     <div class="section-title">
       YOUR TAILORED RECOMMENDATION
-      <div class="subtitle">We have found {{ countCars }} cars that you may like small</div>
+      <div class="subtitle">We have found {{ countCars }} cars that you may like</div>
       <div class="subtitle" v-if="countCars>5"><small>(The top 5 of them are most suited to your needs)</small></div>
     </div>
     <div class="results">
