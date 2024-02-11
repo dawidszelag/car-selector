@@ -37,7 +37,7 @@
       <checkout-field v-model="question.heavy_off_road" label="heavy off-road"/>
       <checkout-field v-model="question.tall_driver" label="tall driver - over 1.9 m"/>
       <checkout-field v-model="question.first_time_drive" label="new driver"/>
-      <checkout-field v-model="question.rapid_charging" label="rapid charging - over 200 kWh (electric cars)"/>
+      <checkout-field v-model="question.rapid_charging" label="rapid charging - over 200 kW (electric cars)"/>
 
       <div class="section-text" style="margin-top: 30px">HOW EFFICIENT?</div>
       <div class="section-subtext">RANGE (km) - including ELECTRIC cars</div>
